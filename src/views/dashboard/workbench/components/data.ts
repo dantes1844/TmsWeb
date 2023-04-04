@@ -7,6 +7,12 @@ interface GroupItem {
   group: string;
 }
 
+export interface TodoItem {
+  title: string;
+  status: string;
+  id: number;
+}
+
 interface NavItem {
   title: string;
   icon: string;
@@ -153,4 +159,12 @@ export const groupItems: GroupItem[] = [
     group: '架构组',
     date: '2021-04-01',
   },
+];
+
+export const toDoList: TodoItem[] = [
+  { title: '新建厂站审批流程1', status: '待审批', id: 1 },
+  { title: '扩建厂站审批流程3', status: '待提交', id: 2 },
+  { title: '用户曾同方上传了新的知识库文件', status: '待审批', id: 3 },
+  { title: '新建厂站审批流程2', status: '待提交', id: 4 },
+  { title: '新建厂站审批流程4', status: '待阅示', id: 5 },
 ];

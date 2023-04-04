@@ -65,6 +65,10 @@
 <style lang="less">
   @prefix-cls: ~'@{namespace}-header-notify';
 
+  .ant-popover-content {
+    width: 375px;
+  }
+
   .@{prefix-cls} {
     padding-top: 2px;
 

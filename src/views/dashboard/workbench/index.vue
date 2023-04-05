@@ -6,7 +6,7 @@
           <img class="xl:h-60 mx-auto h-fit" src="../../../assets/svg/illustration.svg" />
         </Card>
       </div>
-      <div class="w-2/3 mr-4 h-60">
+      <div class="w-2/3 h-60">
         <short-cut />
       </div>
     </div>

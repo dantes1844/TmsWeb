@@ -7,7 +7,7 @@ interface GroupItem {
   group: string;
 }
 
-export interface TodoItem {
+interface TodoItem {
   title: string;
   status: string;
   id: number;
@@ -167,4 +167,72 @@ export const toDoList: TodoItem[] = [
   { title: '用户曾同方上传了新的知识库文件', status: '待审批', id: 3 },
   { title: '新建厂站审批流程2', status: '待提交', id: 4 },
   { title: '新建厂站审批流程4', status: '待阅示', id: 5 },
+];
+
+interface ShortCut {
+  id: number;
+  color: string;
+  icon: string;
+  title: string;
+  url?: string;
+}
+
+export const shortCuts: ShortCut[] = [
+  {
+    id: 1,
+    url: '/system/account',
+    color: '#F87171',
+    icon: 'ant-design:profile-filled',
+    title: '用户管理',
+  },
+  {
+    id: 2,
+    url: '/system/dept',
+    color: '#FBBF24',
+    icon: 'ant-design:deployment-unit-outlined',
+    title: '部门管理',
+  },
+  {
+    id: 3,
+    url: '/system/role',
+    color: '#6EE7B7',
+    icon: 'ion:key-outline',
+    title: '角色管理',
+  },
+  {
+    id: 4,
+    url: '/menus',
+    color: '#C7D2FE',
+    icon: 'ant-design:menu-fold-outlined',
+    title: '菜单管理',
+  },
+  {
+    id: 5,
+    url: '/notices',
+    color: '#FBBF24',
+    icon: 'ant-design:notification-filled',
+    title: '通知管理',
+  },
+  {
+    id: 6,
+    url: '/tasks',
+    color: '#C7D2FE',
+    icon: 'ant-design:file-done-outlined',
+    title: '任务管理',
+  },
+  { id: 7, url: '/logs', color: '#F87171', icon: 'ant-design:history-outlined', title: '日志管理' },
+  {
+    id: 8,
+    url: '/files',
+    color: '#6366F1',
+    icon: 'ant-design:paper-clip-outlined',
+    title: '知识库管理',
+  },
+  {
+    id: 9,
+    url: '/settings',
+    color: '#F9A8D4',
+    icon: 'ant-design:setting-outlined',
+    title: '系统管理',
+  },
 ];

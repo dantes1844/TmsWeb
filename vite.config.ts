@@ -22,7 +22,7 @@ export default defineApplicationConfig({
           ws: true,
         },
         '/api': {
-          target: 'http://139.9.141.130:44343',
+          target: 'http://localhost:44343',
           changeOrigin: true,
           ws: true,
         },

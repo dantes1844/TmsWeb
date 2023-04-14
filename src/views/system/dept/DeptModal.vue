@@ -8,8 +8,7 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './dept.data';
-
-  import { getDeptList } from '/@/api/demo/system';
+  import { createDept, getDeptList, updateDept } from '/@/api/department/dept';
 
   export default defineComponent({
     name: 'DeptModal',
@@ -37,7 +36,7 @@
         }
         const treeData = await getDeptList();
         updateSchema({
-          field: 'parentDept',
+          field: 'parentId',
           componentProps: { treeData },
         });
       });
@@ -47,9 +46,16 @@
       async function handleSubmit() {
         try {
           const values = await validate();
+
+          const dept = Object.assign({}, values);
           setModalProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
+
+          if (dept.id > 0) {
+            await updateDept(dept);
+          } else {
+            await createDept(dept);
+          }
+
           closeModal();
           emit('success');
         } finally {

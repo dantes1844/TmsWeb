@@ -33,12 +33,12 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getDeptList } from '/@/api/demo/system';
 
   import { useModal } from '/@/components/Modal';
   import DeptModal from './DeptModal.vue';
 
   import { columns, searchFormSchema } from './dept.data';
+  import { deleteDept, getDeptPage } from '/@/api/department/dept';
 
   export default defineComponent({
     name: 'DeptManagement',
@@ -47,13 +47,13 @@
       const [registerModal, { openModal }] = useModal();
       const [registerTable, { reload }] = useTable({
         title: '部门列表',
-        api: getDeptList,
+        api: getDeptPage,
         columns,
         formConfig: {
           labelWidth: 120,
           schemas: searchFormSchema,
         },
-        pagination: false,
+        pagination: true,
         striped: false,
         useSearchForm: true,
         showTableSetting: true,
@@ -82,8 +82,9 @@
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      async function handleDelete(record: Recordable) {
+        await deleteDept({ id: record.id });
+        reload();
       }
 
       function handleSuccess() {

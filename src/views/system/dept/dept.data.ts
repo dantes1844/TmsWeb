@@ -1,4 +1,5 @@
-import { BasicColumn, FormSchema } from '/@/components/Table';
+import { BasicColumn } from '/@/components/Table';
+import { FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 
@@ -20,7 +21,7 @@ export const columns: BasicColumn[] = [
     width: 80,
     customRender: ({ record }) => {
       const status = record.status;
-      const enable = ~~status === 0;
+      const enable = ~~status === 1;
       const color = enable ? 'green' : 'red';
       const text = enable ? '启用' : '停用';
       return h(Tag, { color: color }, () => text);
@@ -37,6 +38,11 @@ export const columns: BasicColumn[] = [
   },
 ];
 
+const options = [
+  { label: '启用', value: 1 },
+  { label: '停用', value: 0 },
+];
+
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'deptName',
@@ -49,10 +55,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '状态',
     component: 'Select',
     componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
-      ],
+      options: options,
     },
     colProps: { span: 8 },
   },
@@ -60,13 +63,20 @@ export const searchFormSchema: FormSchema[] = [
 
 export const formSchema: FormSchema[] = [
   {
+    field: 'id',
+    label: '唯一编号',
+    component: 'InputNumber',
+    required: false,
+    show: false,
+  },
+  {
     field: 'deptName',
     label: '部门名称',
     component: 'Input',
     required: true,
   },
   {
-    field: 'parentDept',
+    field: 'parentId',
     label: '上级部门',
     component: 'TreeSelect',
 
@@ -78,7 +88,7 @@ export const formSchema: FormSchema[] = [
       },
       getPopupContainer: () => document.body,
     },
-    required: true,
+    //required: true,
   },
   {
     field: 'orderNo',
@@ -92,10 +102,7 @@ export const formSchema: FormSchema[] = [
     component: 'RadioButtonGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
-      ],
+      options: options,
     },
     required: true,
   },

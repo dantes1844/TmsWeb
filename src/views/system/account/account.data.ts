@@ -1,15 +1,17 @@
-import { getAllRoleList, isAccountExist } from '/@/api/demo/system';
-import { BasicColumn, FormSchema } from '/@/components/Table';
+// import { isAccountExist } from '/@/api/demo/system';
+import { BasicColumn } from '/@/components/Table';
+import { FormSchema } from '/@/components/Table';
+import { getAllRoleList } from '/@/api/role/role';
 
 export const columns: BasicColumn[] = [
   {
     title: '用户名',
-    dataIndex: 'account',
+    dataIndex: 'userName',
     width: 120,
   },
   {
     title: '昵称',
-    dataIndex: 'nickname',
+    dataIndex: 'name',
     width: 120,
   },
   {
@@ -18,30 +20,26 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
+    title: '电话',
+    dataIndex: 'phoneNumber',
+    width: 120,
+  },
+  {
     title: '创建时间',
-    dataIndex: 'createTime',
+    dataIndex: 'creationTime',
     width: 180,
-  },
-  {
-    title: '角色',
-    dataIndex: 'role',
-    width: 200,
-  },
-  {
-    title: '备注',
-    dataIndex: 'remark',
   },
 ];
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'account',
+    field: 'userName',
     label: '用户名',
     component: 'Input',
     colProps: { span: 8 },
   },
   {
-    field: 'nickname',
+    field: 'name',
     label: '昵称',
     component: 'Input',
     colProps: { span: 8 },
@@ -50,7 +48,14 @@ export const searchFormSchema: FormSchema[] = [
 
 export const accountFormSchema: FormSchema[] = [
   {
-    field: 'account',
+    field: 'id',
+    label: '唯一编号',
+    component: 'Input',
+    required: false,
+    show: false,
+  },
+  {
+    field: 'userName',
     label: '用户名',
     component: 'Input',
     helpMessage: ['本字段演示异步验证', '不能输入带有admin的用户名'],
@@ -59,39 +64,59 @@ export const accountFormSchema: FormSchema[] = [
         required: true,
         message: '请输入用户名',
       },
-      {
-        validator(_, value) {
-          return new Promise((resolve, reject) => {
-            isAccountExist(value)
-              .then(() => resolve())
-              .catch((err) => {
-                reject(err.message || '验证失败');
-              });
-          });
-        },
-      },
+      // {
+      //   validator(_, value) {
+      //     return new Promise((resolve, reject) => {
+      //       isAccountExist(value)
+      //         .then(() => resolve())
+      //         .catch((err) => {
+      //           reject(err.message || '验证失败');
+      //         });
+      //     });
+      //   },
+      // },
     ],
   },
   {
-    field: 'pwd',
+    field: 'password',
     label: '密码',
     component: 'InputPassword',
     required: true,
-    ifShow: false,
+    ifShow: true,
+  },
+  {
+    field: 'isActive',
+    label: '激活',
+    component: 'RadioGroup',
+    required: true,
+    ifShow: true,
+    componentProps: {
+      options: [
+        {
+          label: '启用',
+          value: true,
+        },
+        {
+          label: '禁用',
+          value: false,
+        },
+      ],
+    },
   },
   {
     label: '角色',
-    field: 'role',
+    field: 'roleNames',
     component: 'ApiSelect',
     componentProps: {
       api: getAllRoleList,
-      labelField: 'roleName',
-      valueField: 'roleValue',
+      labelField: 'name',
+      valueField: 'name',
+      mode: 'multiple',
     },
     required: true,
   },
   {
-    field: 'dept',
+    field: 'deptId',
     label: '所属部门',
     component: 'TreeSelect',
     componentProps: {
@@ -105,22 +130,20 @@ export const accountFormSchema: FormSchema[] = [
     required: true,
   },
   {
-    field: 'nickname',
+    field: 'name',
     label: '昵称',
     component: 'Input',
     required: true,
   },
-
   {
     label: '邮箱',
     field: 'email',
     component: 'Input',
     required: true,
   },
-
   {
-    label: '备注',
-    field: 'remark',
-    component: 'InputTextArea',
+    field: 'phoneNumber',
+    label: '电话',
+    component: 'Input',
   },
 ];

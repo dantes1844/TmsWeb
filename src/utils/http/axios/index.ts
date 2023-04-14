@@ -229,12 +229,16 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
       {
         // See https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication#authentication_schemes
         // authentication schemes，e.g: Bearer
+        // authenticationScheme: 'Bearer',
         authenticationScheme: 'Bearer',
         timeout: 10 * 1000,
         // 基础接口地址
         // baseURL: globSetting.apiUrl,
 
-        headers: { 'Content-Type': ContentTypeEnum.JSON },
+        headers: {
+          'Content-Type': ContentTypeEnum.JSON,
+          'Accept-Language': 'zh-Hans',
+        },
         // 如果是form-data格式
         // headers: { 'Content-Type': ContentTypeEnum.FORM_URLENCODED },
         // 数据处理方式

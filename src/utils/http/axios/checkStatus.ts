@@ -37,7 +37,7 @@ export function checkStatus(
       }
       break;
     case 403:
-      errMessage = t('sys.api.errMsg403');
+      errMessage = t('sys.api.errMsg403') + '<br/>' + msg;
       break;
     // 404请求不存在
     case 404:

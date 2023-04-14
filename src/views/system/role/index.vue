@@ -33,12 +33,12 @@
   import { defineComponent } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getRoleListByPage } from '/@/api/demo/system';
 
   import { useDrawer } from '/@/components/Drawer';
   import RoleDrawer from './RoleDrawer.vue';
 
   import { columns, searchFormSchema } from './role.data';
+  import { getRoleListByPage, deleteRole } from '/@/api/role/role';
 
   export default defineComponent({
     name: 'RoleManagement',
@@ -79,8 +79,9 @@
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      async function handleDelete(record: Recordable) {
+        await deleteRole(record);
+        await reload();
       }
 
       function handleSuccess() {

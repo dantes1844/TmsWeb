@@ -1,45 +1,35 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Switch } from 'ant-design-vue';
-import { setRoleStatus } from '/@/api/demo/system';
 import { useMessage } from '/@/hooks/web/useMessage';
+import { setRoleStatus } from '/@/api/role/role';
 
 export const columns: BasicColumn[] = [
   {
     title: '角色名称',
-    dataIndex: 'roleName',
+    dataIndex: 'name',
     width: 200,
   },
   {
-    title: '角色值',
-    dataIndex: 'roleValue',
-    width: 180,
-  },
-  {
-    title: '排序',
-    dataIndex: 'orderNo',
-    width: 50,
-  },
-  {
-    title: '状态',
-    dataIndex: 'status',
+    title: '默认角色',
+    dataIndex: 'isDefault',
     width: 120,
     customRender: ({ record }) => {
       if (!Reflect.has(record, 'pendingStatus')) {
         record.pendingStatus = false;
       }
       return h(Switch, {
-        checked: record.status === '1',
-        checkedChildren: '已启用',
-        unCheckedChildren: '已禁用',
+        checked: record.isDefault,
+        checkedChildren: '是',
+        unCheckedChildren: '否',
         loading: record.pendingStatus,
         onChange(checked: boolean) {
           record.pendingStatus = true;
-          const newStatus = checked ? '1' : '0';
+          const newStatus = checked ? true : false;
           const { createMessage } = useMessage();
           setRoleStatus(record.id, newStatus)
             .then(() => {
-              record.status = newStatus;
+              record.isDefault = newStatus;
               createMessage.success(`已成功修改角色状态`);
             })
             .catch(() => {
@@ -52,32 +42,23 @@ export const columns: BasicColumn[] = [
       });
     },
   },
-  {
-    title: '创建时间',
-    dataIndex: 'createTime',
-    width: 180,
-  },
-  {
-    title: '备注',
-    dataIndex: 'remark',
-  },
 ];
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'roleNme',
+    field: 'name',
     label: '角色名称',
     component: 'Input',
     colProps: { span: 8 },
   },
   {
-    field: 'status',
-    label: '状态',
+    field: 'isDefault',
+    label: '默认角色',
     component: 'Select',
     componentProps: {
       options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
+        { label: '是', value: true },
+        { label: '否', value: false },
       ],
     },
     colProps: { span: 8 },
@@ -86,38 +67,34 @@ export const searchFormSchema: FormSchema[] = [
 
 export const formSchema: FormSchema[] = [
   {
-    field: 'roleName',
+    field: 'id',
+    label: '唯一编号',
+    component: 'InputNumber',
+    required: false,
+    show: false,
+  },
+  {
+    field: 'name',
     label: '角色名称',
     required: true,
     component: 'Input',
   },
   {
-    field: 'roleValue',
-    label: '角色值',
-    required: true,
-    component: 'Input',
-  },
-  {
-    field: 'status',
-    label: '状态',
+    field: 'isDefault',
+    label: '默认角色',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: false,
     componentProps: {
       options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
+        { label: '是', value: true },
+        { label: '否', value: false },
       ],
     },
   },
-  {
-    label: '备注',
-    field: 'remark',
-    component: 'InputTextArea',
-  },
-  {
-    label: ' ',
-    field: 'menu',
-    slot: 'menu',
-    component: 'Input',
-  },
+  // {
+  //   label: ' ',
+  //   field: 'menu',
+  //   slot: 'menu',
+  //   component: 'Input',
+  // },
 ];

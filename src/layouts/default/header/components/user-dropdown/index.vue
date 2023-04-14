@@ -25,6 +25,11 @@
           icon="ion:lock-closed-outline"
         />
         <MenuItem
+          key="password"
+          :text="t('layout.header.changePassword')"
+          icon="ion:lock-closed-outline"
+        />
+        <MenuItem
           key="logout"
           :text="t('layout.header.dropdownItemLoginOut')"
           icon="ion:power-outline"
@@ -54,8 +59,9 @@
   import { openWindow } from '/@/utils';
 
   import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
+  import { router } from '/@/router';
 
-  type MenuEvent = 'logout' | 'doc' | 'lock';
+  type MenuEvent = 'logout' | 'doc' | 'lock' | 'password';
 
   export default defineComponent({
     name: 'UserDropdown',
@@ -96,6 +102,10 @@
         openWindow(DOC_URL);
       }
 
+      function changePassword() {
+        router.push({ path: '/system/changePassword' });
+      }
+
       function handleMenuClick(e: MenuInfo) {
         switch (e.key as MenuEvent) {
           case 'logout':
@@ -106,6 +116,9 @@
             break;
           case 'lock':
             handleLock();
+            break;
+          case 'password':
+            changePassword();
             break;
         }
       }
@@ -126,13 +139,13 @@
   @prefix-cls: ~'@{namespace}-header-user-dropdown';
 
   .@{prefix-cls} {
-    align-items: center;
     height: @header-height;
     padding: 0 0 0 10px;
     padding-right: 10px;
     overflow: hidden;
     font-size: 12px;
     cursor: pointer;
+    align-items: center;
 
     img {
       width: 24px;

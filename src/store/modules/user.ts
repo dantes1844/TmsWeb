@@ -6,8 +6,13 @@ import { RoleEnum } from '/@/enums/roleEnum';
 import { PageEnum } from '/@/enums/pageEnum';
 import { ROLES_KEY, TOKEN_KEY, USER_INFO_KEY } from '/@/enums/cacheEnum';
 import { getAuthCache, setAuthCache } from '/@/utils/auth';
-import { GetUserInfoModel, LoginParams } from '/@/api/sys/model/userModel';
-import { doLogout, getUserInfo, loginApi } from '/@/api/sys/user';
+import {
+  AbpUserInfoModel,
+  GetUserInfoModel,
+  LoginParams,
+  TokenParams,
+} from '/@/api/sys/model/userModel';
+import { doLogout, getTokenApi } from '/@/api/sys/user';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { router } from '/@/router';
@@ -16,6 +21,7 @@ import { RouteRecordRaw } from 'vue-router';
 import { PAGE_NOT_FOUND_ROUTE } from '/@/router/routes/basic';
 import { isArray } from '/@/utils/is';
 import { h } from 'vue';
+import { CurrentUser, useConfigurationStore } from '/@/store/modules/configuration';
 
 interface UserState {
   userInfo: Nullable<UserInfo>;
@@ -89,12 +95,16 @@ export const useUserStore = defineStore({
       },
     ): Promise<GetUserInfoModel | null> {
       try {
-        const { goHome = true, mode, ...loginParams } = params;
-        const data = await loginApi(loginParams, mode);
-        const { token } = data;
+        const { goHome = true, mode } = params;
+        //const data = await loginApi(loginParams, mode);
 
+        const tokenParams: TokenParams = {
+          username: params.userNameOrEmailAddress,
+          password: params.password,
+        };
+        const token = await getTokenApi(tokenParams, mode);
         // save token
-        this.setToken(token);
+        this.setToken(token.access_token);
         return this.afterLoginAction(goHome);
       } catch (error) {
         return Promise.reject(error);
@@ -103,7 +113,11 @@ export const useUserStore = defineStore({
     async afterLoginAction(goHome?: boolean): Promise<GetUserInfoModel | null> {
       if (!this.getToken) return null;
       // get user info
-      const userInfo = await this.getUserInfoAction();
+      const configurationStore = useConfigurationStore();
+      await configurationStore.initConfiguration();
+      const currentUser = configurationStore.getCurrentUser;
+
+      const userInfo = await this.getUserInfoAction(currentUser);
 
       const sessionTimeout = this.sessionTimeout;
       if (sessionTimeout) {
@@ -122,19 +136,26 @@ export const useUserStore = defineStore({
       }
       return userInfo;
     },
-    async getUserInfoAction(): Promise<UserInfo | null> {
+    async getUserInfoAction(currentUser: CurrentUser): Promise<UserInfo | null> {
       if (!this.getToken) return null;
-      const userInfo = await getUserInfo();
+      const userInfo: AbpUserInfoModel = { ...currentUser };
       const { roles = [] } = userInfo;
       if (isArray(roles)) {
-        const roleList = roles.map((item) => item.value) as RoleEnum[];
+        const roleList = roles.map((item) => item) as RoleEnum[];
         this.setRoleList(roleList);
       } else {
         userInfo.roles = [];
         this.setRoleList([]);
       }
-      this.setUserInfo(userInfo);
-      return userInfo;
+      const user = {
+        roles: [], //TODO 从数据库中拿并赋值
+        userId: userInfo.id,
+        avatar: '',
+        username: userInfo.userName,
+        realName: userInfo.userName,
+      } as UserInfo;
+      this.setUserInfo(user);
+      return user;
     },
     /**
      * @description: logout

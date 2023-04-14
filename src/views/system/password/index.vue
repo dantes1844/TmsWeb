@@ -15,6 +15,14 @@
   import { BasicForm, useForm } from '/@/components/Form';
 
   import { formSchema } from './pwd.data';
+  import { resetPassword } from '/@/api/sys/user';
+  import { useConfigurationStore } from '/@/store/modules/configuration';
+  import { PageEnum } from '/@/enums/pageEnum';
+  import { router } from '/@/router';
+  import { useUserStore } from '/@/store/modules/user';
+
+  const userStore = useUserStore();
+
   export default defineComponent({
     name: 'ChangePassword',
     components: { BasicForm, PageWrapper },
@@ -31,11 +39,17 @@
         try {
           const values = await validate();
           const { passwordOld, passwordNew } = values;
-
-          // TODO custom api
-          console.log(passwordOld, passwordNew);
-          // const { router } = useRouter();
-          // router.push(pageEnum.BASE_LOGIN);
+          const store = useConfigurationStore();
+          const { id } = store.getCurrentUser;
+          await resetPassword({
+            userId: id,
+            password: passwordNew,
+            oldPassword: passwordOld,
+            resetToken: 'any character',
+          });
+          userStore.setToken(undefined);
+          userStore.setSessionTimeout(true);
+          router.push(PageEnum.BASE_LOGIN);
         } catch (error) {}
       }
 

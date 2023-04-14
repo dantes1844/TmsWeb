@@ -2,6 +2,14 @@
  * @description: Login interface parameters
  */
 export interface LoginParams {
+  userNameOrEmailAddress: string;
+  password: string;
+  rememberMe?: boolean;
+}
+
+export interface TokenParams {
+  grant_type?: string;
+  client_id?: string;
   username: string;
   password: string;
 }
@@ -19,6 +27,19 @@ export interface LoginResultModel {
   token: string;
   role: RoleInfo;
 }
+/**
+ * @description: 拿令牌返回值的对象
+ */
+export interface TokenResultModel {
+  expires_in: number;
+  access_token: string;
+  token_type: string;
+}
+
+export interface LoginResultWithoutToken {
+  result: number;
+  description: string;
+}
 
 /**
  * @description: Get user information return value
@@ -35,4 +56,20 @@ export interface GetUserInfoModel {
   avatar: string;
   // 介绍
   desc?: string;
+}
+
+export interface AbpUserInfoModel {
+  name: string;
+  userName: string;
+  roles: string[];
+  email: string;
+  id: string;
+}
+
+export interface ResetPasswordModel {
+  userId: string;
+  password: string;
+  oldPassword: string;
+
+  resetToken: string;
 }

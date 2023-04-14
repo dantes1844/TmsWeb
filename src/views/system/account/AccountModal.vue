@@ -8,7 +8,8 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { accountFormSchema } from './account.data';
-  import { getDeptList } from '/@/api/demo/system';
+  import { getDeptList } from '/@/api/department/dept';
+  import { createAccount, updateAccount } from '/@/api/account/account';
 
   export default defineComponent({
     name: 'AccountModal',
@@ -33,7 +34,8 @@
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
 
-        if (unref(isUpdate)) {
+        var refIsUpdate = unref(isUpdate);
+        if (refIsUpdate) {
           rowId.value = data.record.id;
           setFieldsValue({
             ...data.record,
@@ -43,11 +45,12 @@
         const treeData = await getDeptList();
         updateSchema([
           {
-            field: 'pwd',
-            show: !unref(isUpdate),
+            field: 'password',
+            show: !refIsUpdate,
+            required: !refIsUpdate,
           },
           {
-            field: 'dept',
+            field: 'deptId',
             componentProps: { treeData },
           },
         ]);
@@ -59,8 +62,12 @@
         try {
           const values = await validate();
           setModalProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
+          const model = Object.assign({}, values);
+          if (model.id) {
+            await updateAccount(model);
+          } else {
+            await createAccount(model);
+          }
           closeModal();
           emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
         } finally {

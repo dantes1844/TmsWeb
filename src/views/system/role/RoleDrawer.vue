@@ -28,13 +28,14 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
 
-  import { getMenuList } from '/@/api/demo/system';
+  import { createRole, updateRole } from '/@/api/role/role';
+  import { getMenuList } from '/@/api/sys/menu';
 
   export default defineComponent({
     name: 'RoleDrawer',
     components: { BasicDrawer, BasicForm, BasicTree },
     emits: ['success', 'register'],
-    setup(_, { emit }) {
+    setup: function (_, { emit }) {
       const isUpdate = ref(true);
       const treeData = ref<TreeItem[]>([]);
 
@@ -50,7 +51,9 @@
         setDrawerProps({ confirmLoading: false });
         // 需要在setFieldsValue之前先填充treeData，否则Tree组件可能会报key not exist警告
         if (unref(treeData).length === 0) {
-          treeData.value = (await getMenuList()) as any as TreeItem[];
+          try {
+            treeData.value = (await getMenuList()) as any as TreeItem[];
+          } catch (err) {}
         }
         isUpdate.value = !!data?.isUpdate;
 
@@ -67,8 +70,14 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
+
+          const role = Object.assign({}, values);
+          if (!role.id || role.id == '') {
+            await createRole(role);
+          } else {
+            await updateRole(role);
+          }
+
           closeDrawer();
           emit('success');
         } finally {

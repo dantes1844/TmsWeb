@@ -215,7 +215,7 @@ export const shortCuts: ShortCut[] = [
   },
   {
     id: 6,
-    url: '/tasks',
+    url: '/task/index',
     color: '#C7D2FE',
     icon: 'ant-design:file-done-outlined',
     title: '任务管理',

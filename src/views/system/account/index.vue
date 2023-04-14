@@ -1,7 +1,12 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
     <DeptTree class="w-1/4 xl:w-1/5" @select="handleSelect" />
-    <BasicTable @register="registerTable" class="w-3/4 xl:w-4/5" :searchInfo="searchInfo">
+    <BasicTable
+      @register="registerTable"
+      @reset-fields="resetTreeSelected"
+      class="w-3/4 xl:w-4/5"
+      :searchInfo="searchInfo"
+    >
       <template #toolbar>
         <a-button type="primary" @click="handleCreate">新增账号</a-button>
       </template>
@@ -41,7 +46,6 @@
   import { defineComponent, reactive } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getAccountList } from '/@/api/demo/system';
   import { PageWrapper } from '/@/components/Page';
   import DeptTree from './DeptTree.vue';
 
@@ -50,6 +54,7 @@
 
   import { columns, searchFormSchema } from './account.data';
   import { useGo } from '/@/hooks/web/usePage';
+  import { deleteAccount, getAccountList } from '/@/api/account/account';
 
   export default defineComponent({
     name: 'AccountManagement',
@@ -58,7 +63,7 @@
       const go = useGo();
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
-      const [registerTable, { reload, updateTableDataRecord }] = useTable({
+      const [registerTable, { reload }] = useTable({
         title: '账号列表',
         api: getAccountList,
         rowKey: 'id',
@@ -97,24 +102,29 @@
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      async function handleDelete(record: Recordable) {
+        await deleteAccount(record.id);
+        reload();
       }
 
       function handleSuccess({ isUpdate, values }) {
-        if (isUpdate) {
-          // 演示不刷新表格直接更新内部数据。
-          // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
-          const result = updateTableDataRecord(values.id, values);
-          console.log(result);
-        } else {
-          reload();
-        }
+        // if (isUpdate) {
+        //   // 演示不刷新表格直接更新内部数据。
+        //   // 注意：updateTableDataRecord要求表格的rowKey属性为string并且存在于每一行的record的keys中
+        //   const result = updateTableDataRecord(values.id, values);
+        //   console.log(result);
+        // } else {
+        //}
+        reload();
       }
 
       function handleSelect(deptId = '') {
         searchInfo.deptId = deptId;
         reload();
+      }
+
+      function resetTreeSelected() {
+        searchInfo.deptId = null;
       }
 
       function handleView(record: Recordable) {
@@ -131,6 +141,7 @@
         handleSelect,
         handleView,
         searchInfo,
+        resetTreeSelected,
       };
     },
   });

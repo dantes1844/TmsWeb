@@ -40,6 +40,32 @@ const dashboardRoute = {
     },
   ],
 };
+// single
+const taskRoute = {
+  path: '/task',
+  name: 'Task',
+  component: 'LAYOUT',
+  redirect: '/task/index',
+  meta: {
+    title: '任务',
+    hideChildrenInMenu: true,
+    icon: 'bx:bx-home',
+  },
+  children: [
+    {
+      path: 'index',
+      name: 'Index',
+      component: '/task/index',
+      meta: {
+        hideMenu: true,
+        hideBreadcrumb: true,
+        title: '看板',
+        currentActiveMenu: '/task',
+        icon: 'bx:bx-home',
+      },
+    },
+  ],
+};
 
 const backRoute = {
   path: 'back',
@@ -254,11 +280,11 @@ export default [
       switch (id) {
         case '1':
           dashboardRoute.redirect = dashboardRoute.path + '/' + dashboardRoute.children[0].path;
-          menu = [dashboardRoute, authRoute, levelRoute, sysRoute, linkRoute];
+          menu = [taskRoute, dashboardRoute, authRoute, levelRoute, sysRoute, linkRoute];
           break;
         case '2':
           dashboardRoute.redirect = dashboardRoute.path + '/' + dashboardRoute.children[1].path;
-          menu = [dashboardRoute, authRoute, levelRoute, linkRoute];
+          menu = [taskRoute, dashboardRoute, authRoute, levelRoute, linkRoute];
           break;
         default:
           menu = [];

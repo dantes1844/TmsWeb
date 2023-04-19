@@ -17,7 +17,7 @@ export default defineApplicationConfig({
     server: {
       proxy: {
         '/connect': {
-          target: 'http://139.9.141.130:44343',
+          target: 'http://localhost:44343',
           changeOrigin: true,
           ws: true,
         },

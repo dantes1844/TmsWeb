@@ -208,7 +208,7 @@ export const shortCuts: ShortCut[] = [
   },
   {
     id: 5,
-    url: '/notices',
+    url: '/notices/index',
     color: '#FBBF24',
     icon: 'ant-design:notification-filled',
     title: '通知管理',
@@ -220,17 +220,23 @@ export const shortCuts: ShortCut[] = [
     icon: 'ant-design:file-done-outlined',
     title: '任务管理',
   },
-  { id: 7, url: '/logs', color: '#F87171', icon: 'ant-design:history-outlined', title: '日志管理' },
+  {
+    id: 7,
+    url: '/logs/system',
+    color: '#F87171',
+    icon: 'ant-design:history-outlined',
+    title: '日志管理'
+  },
   {
     id: 8,
-    url: '/files',
+    url: '/files/index',
     color: '#6366F1',
     icon: 'ant-design:paper-clip-outlined',
     title: '知识库管理',
   },
   {
     id: 9,
-    url: '/settings',
+    url: '/settings/index',
     color: '#F9A8D4',
     icon: 'ant-design:setting-outlined',
     title: '系统管理',

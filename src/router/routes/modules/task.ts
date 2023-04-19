@@ -2,7 +2,7 @@ import type { AppRouteModule } from '/@/router/types';
 
 import { LAYOUT } from '/@/router/constant';
 
-const dashboard: AppRouteModule = {
+const taskRoute: AppRouteModule = {
   path: '/task',
   name: 'Task',
   component: LAYOUT,
@@ -10,19 +10,37 @@ const dashboard: AppRouteModule = {
   meta: {
     orderNo: 10,
     icon: 'ion:grid-outline',
-    title: '任务',
+    title: '任务管理',
   },
   children: [
     {
       path: 'index',
-      name: 'Index',
+      name: 'TaskIndex',
       component: () => import('/@/views/task/index/index.vue'),
       meta: {
         // affix: true,
-        title: '看板',
+        title: '任务模板',
+      },
+    },
+    {
+      path: 'search',
+      name: 'TaskSearch',
+      component: () => import('/@/views/task/search/index.vue'),
+      meta: {
+        // affix: true,
+        title: '任务查询',
+      },
+    },
+    {
+      path: 'send',
+      name: 'TaskSend',
+      component: () => import('/@/views/task/send/index.vue'),
+      meta: {
+        // affix: true,
+        title: '任务下发',
       },
     },
   ],
 };
 
-export default dashboard;
+export default taskRoute

@@ -1,39 +1,102 @@
 <template>
-  <div class="p-4">
-    <div class="md:flex">
-      <template v-for="(item, index) in growCardList" :key="item.title">
-        <Card
-          size="small"
-          :loading="loading"
-          :title="item.title"
-          class="md:w-1/4 w-full !md:mt-0"
-          :class="{ '!md:mr-4': index + 1 < 4, '!mt-4': index > 0 }"
-        >
-          <template #extra>
-            <Tag :color="item.color">{{ item.action }}</Tag>
-          </template>
-
-          <div class="py-4 px-4 flex justify-between items-center">
-            <CountTo prefix="$" :startVal="1" :endVal="item.value" class="text-2xl" />
-            <Icon :icon="item.icon" :size="40" />
-          </div>
-
-          <div class="p-2 px-4 flex justify-between">
-            <span>总{{ item.title }}</span>
-            <CountTo prefix="$" :startVal="1" :endVal="item.total" />
-          </div>
-        </Card>
+  <div>
+    <BasicTable @register="registerTable">
+      <template #toolbar>
+        <a-button type="primary" @click="handleCreate"> 发布通知 </a-button>
       </template>
-    </div>
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <TableAction
+            :actions="[
+              {
+                icon: 'clarity:note-edit-line',
+                onClick: handleEdit.bind(null, record),
+              },
+              {
+                icon: 'ant-design:delete-outlined',
+                color: 'error',
+                popConfirm: {
+                  title: '是否确认删除',
+                  placement: 'left',
+                  confirm: handleDelete.bind(null, record),
+                },
+              },
+            ]"
+          />
+        </template>
+      </template>
+    </BasicTable>
+    <NoticeDrawer @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts" setup>
-  import { Card } from 'ant-design-vue';
-  import { growCardList } from '../../dashboard/analysis/data';
+<script lang="ts">
+  import { defineComponent } from 'vue';
 
-  defineProps({
-    loading: {
-      type: Boolean,
+  import { BasicTable, useTable, TableAction } from '/@/components/Table';
+
+  import { useDrawer } from '/@/components/Drawer';
+  import NoticeDrawer from './NoticeDrawer.vue';
+
+  import { columns, searchFormSchema } from './notice.data';
+  import { getNoticePages, deleteNotice } from '/@/api/notice/notice';
+  import { CreateNoticeModel } from '/@/api/notice/model/noticeModel';
+
+  export default defineComponent({
+    name: 'NoticeManagement',
+    components: { BasicTable, NoticeDrawer, TableAction },
+    setup() {
+      const [registerDrawer, { openDrawer }] = useDrawer();
+      const [registerTable, { reload }] = useTable({
+        title: '通知列表',
+        api: getNoticePages,
+        columns,
+        formConfig: {
+          labelWidth: 120,
+          schemas: searchFormSchema,
+        },
+        useSearchForm: true,
+        showTableSetting: true,
+        bordered: true,
+        showIndexColumn: false,
+        actionColumn: {
+          width: 80,
+          title: '操作',
+          dataIndex: 'action',
+          // slots: { customRender: 'action' },
+          fixed: undefined,
+        },
+      });
+
+      function handleCreate() {
+        openDrawer(true, {
+          isUpdate: false,
+        });
+      }
+
+      function handleEdit(record: CreateNoticeModel) {
+        openDrawer(true, {
+          record,
+          isUpdate: true,
+        });
+      }
+
+      async function handleDelete(record: number) {
+        await deleteNotice(record);
+        await reload();
+      }
+
+      function handleSuccess() {
+        reload();
+      }
+
+      return {
+        registerTable,
+        registerDrawer,
+        handleCreate,
+        handleEdit,
+        handleDelete,
+        handleSuccess,
+      };
     },
   });
 </script>

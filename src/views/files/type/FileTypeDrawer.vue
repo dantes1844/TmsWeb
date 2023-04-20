@@ -7,18 +7,7 @@
     width="500px"
     @ok="handleSubmit"
   >
-    <BasicForm @register="registerForm">
-      <template #menu="{ model, field }">
-        <BasicTree
-          v-model:value="model[field]"
-          :treeData="treeData"
-          :fieldNames="{ title: 'menuName', key: 'id' }"
-          checkable
-          toolbar
-          title="菜单分配"
-        />
-      </template>
-    </BasicForm>
+    <BasicForm @register="registerForm"/>
   </BasicDrawer>
 </template>
 <script lang="ts">
@@ -28,7 +17,7 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
 
-  import { createRole, updateRole } from '/@/api/role/role';
+  import { createFileType, updateFileType } from '/@/api/file/filetype/filetype';
 
   export default defineComponent({
     name: 'FileTypeDrawer',
@@ -65,11 +54,11 @@
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
 
-          const role = Object.assign({}, values);
-          if (!role.id || role.id == '') {
-            await createRole(role);
+          const fileType = Object.assign({}, values);
+          if (!fileType.id || fileType.id == '') {
+            await createFileType(fileType);
           } else {
-            await updateRole(role);
+            await updateFileType(fileType);
           }
 
           closeDrawer();

@@ -39,7 +39,7 @@
 
   import { columns, searchFormSchema } from './notice.data';
   import { getNoticePages, deleteNotice } from '/@/api/notice/notice';
-  import { CreateNoticeModel } from '/@/api/notice/model/noticeModel';
+  import {CreateNoticeModel, NoticeDetail} from '/@/api/notice/model/noticeModel';
 
   export default defineComponent({
     name: 'NoticeManagement',
@@ -80,8 +80,8 @@
         });
       }
 
-      async function handleDelete(record: number) {
-        await deleteNotice(record);
+      async function handleDelete(record: NoticeDetail) {
+        await deleteNotice(record.id);
         await reload();
       }
 

@@ -7,7 +7,17 @@ import { setRoleStatus } from '/@/api/role/role';
 export const columns: BasicColumn[] = [
   {
     title: '分类名称',
-    dataIndex: 'name',
+    dataIndex: 'typeName',
+    width: 200,
+  },
+  {
+    title: '创建者',
+    dataIndex: 'userName',
+    width: 200,
+  },
+  {
+    title: '排序',
+    dataIndex: 'sequence',
     width: 200,
   },
   {
@@ -25,7 +35,7 @@ export const columns: BasicColumn[] = [
         loading: record.pendingStatus,
         onChange(checked: boolean) {
           record.pendingStatus = true;
-          const newStatus = checked ? true : false;
+          const newStatus = checked;
           const { createMessage } = useMessage();
           setRoleStatus(record.id, newStatus)
             .then(() => {
@@ -46,7 +56,7 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'name',
+    field: 'typeName',
     label: '分类名称',
     component: 'Input',
     colProps: { span: 8 },
@@ -74,10 +84,16 @@ export const formSchema: FormSchema[] = [
     show: false,
   },
   {
-    field: 'name',
+    field: 'typeName',
     label: '分类名称',
     required: true,
     component: 'Input',
+  },
+  {
+    field: 'sequence',
+    label: '排序',
+    required: true,
+    component: 'InputNumber',
   },
   {
     field: 'isDefault',

@@ -38,7 +38,7 @@
   import FileTypeDrawer from './FileTypeDrawer.vue';
 
   import { columns, searchFormSchema } from './types.data';
-  import { getRoleListByPage, deleteRole } from '/@/api/role/role';
+  import { getFileTypeListByPage, deleteFileType } from '/@/api/file/filetype/filetype';
 
   export default defineComponent({
     name: 'FileTypeManagement',
@@ -47,7 +47,7 @@
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
         title: '分类列表',
-        api: getRoleListByPage,
+        api: getFileTypeListByPage,
         columns,
         formConfig: {
           labelWidth: 120,
@@ -80,7 +80,7 @@
       }
 
       async function handleDelete(record: Recordable) {
-        await deleteRole(record);
+        await deleteFileType(record);
         await reload();
       }
 

@@ -3,8 +3,9 @@ export interface NoticeDetail {
   title: string;
   noticeType: NoticeType;
   status: number;
-  files: string | null;
+  file: string | null;
   time: string;
+  content: string;
 }
 
 export interface CreateNoticeModel {
@@ -12,7 +13,7 @@ export interface CreateNoticeModel {
   title: string;
   noticeType: NoticeType;
   status: number;
-  files: string | null;
+  file: string | null;
   time: string;
 }
 

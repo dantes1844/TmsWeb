@@ -7,18 +7,7 @@
     width="500px"
     @ok="handleSubmit"
   >
-    <BasicForm @register="registerForm">
-      <template #menu="{ model, field }">
-        <BasicTree
-          v-model:value="model[field]"
-          :treeData="treeData"
-          :fieldNames="{ title: 'menuName', key: 'id' }"
-          checkable
-          toolbar
-          title="菜单分配"
-        />
-      </template>
-    </BasicForm>
+    <BasicForm @register="registerForm" />
   </BasicDrawer>
 </template>
 <script lang="ts">
@@ -70,11 +59,11 @@
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
 
-          const role = Object.assign({}, values);
-          if (!role.id || role.id > 0) {
-            await createNotice(role);
+          const notice = Object.assign({}, values);
+          if (!notice.id || notice.id > 0) {
+            await createNotice(notice);
           } else {
-            await updateNotice(role);
+            await updateNotice(notice);
           }
 
           closeDrawer();

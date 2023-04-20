@@ -37,10 +37,10 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '附件',
-    dataIndex: 'files',
+    dataIndex: 'file',
     width: 200,
     customRender: ({ record }) => {
-      const status = record.files;
+      const status = record.file;
       if(status && status!=''){
         return h(Button, { type: 'link' }, () => status);
       }
@@ -119,11 +119,16 @@ export const editFormSchema: FormSchema[] = [
     },
   },
   {
-    field: 'status',
+    field: 'content',
     label: '通知内容',
     component: 'InputTextArea',
     componentProps: {
       rows: 30
     },
+  },
+  {
+    field: 'file',
+    label: '附件',
+    component: 'Input',
   },
 ];

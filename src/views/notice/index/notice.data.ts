@@ -123,7 +123,7 @@ export const editFormSchema: FormSchema[] = [
     label: '通知内容',
     component: 'InputTextArea',
     componentProps: {
-      rows: 30
+      rows: 20
     },
   },
   {

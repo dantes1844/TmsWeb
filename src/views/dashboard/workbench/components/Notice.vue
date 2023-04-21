@@ -34,7 +34,7 @@ import { defineComponent, onMounted, ref } from "vue";
       let notices = ref<NoticeDetail[]>([]);
 
       function changeTab(tab: number | null) {
-        getNoticePages({ noticeType: tab, title: null } as NoticeParams).then(res=>{
+        getNoticePages({ noticeType: tab } as NoticeParams).then(res=>{
           notices.value = res.items;
         })
       }
@@ -43,7 +43,12 @@ import { defineComponent, onMounted, ref } from "vue";
         changeTab(null)
       })
 
-      return { items: groupItems, tabs: NoticeTypeTabs, changeTab, notices };
+      return {
+        items: groupItems,
+        tabs: NoticeTypeTabs,
+        changeTab,
+        notices
+      };
     },
   });
 </script>

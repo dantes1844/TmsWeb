@@ -41,9 +41,8 @@ export const NoticeTypeTabs: NoticeTypeTab[] = [
   { NoticeType: NoticeType.Files, Name: '知识库' },
   { NoticeType: NoticeType.Others, Name: '其他' },
 ]
-
 export interface NoticeParams{
-  title: string;
+  title?: string;
   noticeType: NoticeType;
 }
 

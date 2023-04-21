@@ -3,6 +3,7 @@ import { NoticeType, NoticeTypeItem } from '@/api/notice/model/noticeModel';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 import { Button } from 'ant-design-vue';
+import { formatToDateTime } from '@/utils/dateUtil';
 
 
 export const columns: BasicColumn[] = [
@@ -47,9 +48,17 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '发布时间',
-    dataIndex: 'time',
+    title: '发布人',
+    dataIndex: 'userName',
     width: 200,
+  },
+  {
+    title: '发布时间',
+    dataIndex: 'creationTime',
+    width: 200,
+    customRender:({record})=>{
+      return formatToDateTime(record.creationTime);
+    }
   },
 ];
 

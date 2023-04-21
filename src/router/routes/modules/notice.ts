@@ -9,7 +9,7 @@ const noticesRoute: AppRouteModule = {
   redirect: '/notices/index',
   meta: {
     orderNo: 10,
-    icon: 'ion:grid-outline',
+    icon: 'ion:notifications-outline',
     title: '通知管理',
   },
   children: [

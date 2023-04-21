@@ -9,7 +9,7 @@ const taskRoute: AppRouteModule = {
   redirect: '/task/index',
   meta: {
     orderNo: 10,
-    icon: 'ion:grid-outline',
+    icon: 'ion:file-tray-stacked-outline',
     title: '任务管理',
   },
   children: [
@@ -19,7 +19,7 @@ const taskRoute: AppRouteModule = {
       component: () => import('/@/views/task/index/index.vue'),
       meta: {
         // affix: true,
-        title: '任务模板',
+        title: '任务看板',
       },
     },
     {

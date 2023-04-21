@@ -9,7 +9,7 @@ const taskRoute: AppRouteModule = {
   redirect: '/files/index',
   meta: {
     orderNo: 10,
-    icon: 'ion:grid-outline',
+    icon: 'ion:albums-outline',
     title: '知识库管理',
   },
   children: [

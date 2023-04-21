@@ -9,7 +9,7 @@ const logsRoute: AppRouteModule = {
   redirect: '/logs/system',
   meta: {
     orderNo: 10,
-    icon: 'ion:grid-outline',
+    icon: 'ion:book-outline',
     title: '日志管理',
   },
   children: [

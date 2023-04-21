@@ -5,7 +5,7 @@ enum Api {
   SaveFileType = '/app/file-type',
   SetFileTypeStatus = '/roles/setStatus',
   FileTypePageList = '/app/file-type/pages',
-  GetAllFileTypeList = '/file-type/all',
+  GetAllFileTypeList = '/app/file-type',
 }
 
 export type FileTypeParams = {

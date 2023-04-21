@@ -5,6 +5,8 @@ import {
   NoticeParams,
   NoticeToggleParams
 } from '@/api/notice/model/noticeModel';
+import { BasicFetchResult } from "@/api/model/baseModel";
+import { FileTypeListItem } from "@/api/file/filetype/filetype";
 
 enum Api {
   NoticePages = '/app/notice/pages',
@@ -15,7 +17,7 @@ enum Api {
 }
 
 export const getNoticePages = (params?: NoticeParams) =>{
-  return defHttp.get<NoticeDetail>(
+  return defHttp.get<NoticePageListGetResultModel>(
     { url: Api.NoticePages, params },
     { isTransformResponse: false },
   );
@@ -44,3 +46,4 @@ export const toggleNoticeDisabled = (params?: NoticeToggleParams) =>
     { url: Api.ToggleNoticeDisabled, params },
     { isTransformResponse: false },
   );
+export type NoticePageListGetResultModel = BasicFetchResult<NoticeDetail>;

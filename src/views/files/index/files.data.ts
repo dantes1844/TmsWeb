@@ -1,59 +1,72 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
 import { h } from 'vue';
-import { Switch } from 'ant-design-vue';
-import { useMessage } from '/@/hooks/web/useMessage';
-import { setRoleStatus } from '/@/api/role/role';
+import { Button, Tag } from "ant-design-vue";
+import { getAllFileTypeList } from "@/api/file/filetype/filetype";
 
 export const columns: BasicColumn[] = [
   {
     title: '文件名称',
-    dataIndex: 'name',
+    dataIndex: 'fileName',
     width: 200,
   },
   {
-    title: '默认文件',
-    dataIndex: 'isDefault',
-    width: 120,
+    title: '文件大小',
+    dataIndex: 'size',
+    width: 80,
+  },
+  {
+    title: '文件类型',
+    dataIndex: 'fileTypeName',
+    width: 80,
+  },
+  {
+    title: '文件后缀',
+    dataIndex: 'extension',
+    width: 80,
+  },
+  {
+    title: '上传者',
+    dataIndex: 'creatorName',
+    width: 80,
+  },
+  {
+    title: '是否审核',
+    dataIndex: 'isPublic',
+    width: 80,
     customRender: ({ record }) => {
-      if (!Reflect.has(record, 'pendingStatus')) {
-        record.pendingStatus = false;
-      }
-      return h(Switch, {
-        checked: record.isDefault,
-        checkedChildren: '是',
-        unCheckedChildren: '否',
-        loading: record.pendingStatus,
-        onChange(checked: boolean) {
-          record.pendingStatus = true;
-          const newStatus = checked ? true : false;
-          const { createMessage } = useMessage();
-          setRoleStatus(record.id, newStatus)
-            .then(() => {
-              record.isDefault = newStatus;
-              createMessage.success(`已成功修改文件状态`);
-            })
-            .catch(() => {
-              createMessage.error('修改文件状态失败');
-            })
-            .finally(() => {
-              record.pendingStatus = false;
-            });
-        },
-      });
+      const status = record.isPublic;
+      const enable = ~~status === 0;
+      const color = enable ? 'green' : 'red';
+      const text = enable ? '已审核' : '未审核';
+      return h(Tag, { color: color }, () => text);
+    },
+  },
+  {
+    title: '下载查看',
+    dataIndex: 'filePath',
+    width: 200,
+    customRender: ({ record }) => {
+      return h(Button, { type: 'link' }, () => record.filePath);
     },
   },
 ];
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'name',
+    field: 'fileName',
     label: '文件名称',
     component: 'Input',
     colProps: { span: 8 },
   },
   {
-    field: 'isDefault',
-    label: '默认文件',
+    field: 'extension',
+    label: '文件后缀',
+    component: 'Input',
+    colProps: { span: 8 },
+  },
+  {
+    field: 'isPublic',
+    label: '是否发布',
     component: 'Select',
     componentProps: {
       options: [
@@ -74,21 +87,34 @@ export const formSchema: FormSchema[] = [
     show: false,
   },
   {
-    field: 'name',
+    field: 'fileTypeId',
+    label: '文件分类',
+    required: true,
+    component: 'ApiSelect',
+    componentProps:{
+      api: getAllFileTypeList,
+      // use name as label
+      labelField: 'typeName',
+      // use id as value
+      valueField: 'id',
+    }
+  },
+  {
+    field: 'fileName',
     label: '文件名称',
     required: true,
     component: 'Input',
   },
   {
-    field: 'isDefault',
-    label: '默认文件',
-    component: 'RadioButtonGroup',
-    defaultValue: false,
-    componentProps: {
-      options: [
-        { label: '是', value: true },
-        { label: '否', value: false },
-      ],
-    },
+    field: 'size',
+    label: '文件大小',
+    required: true,
+    component: 'InputNumber',
+  },
+  {
+    field: 'extension',
+    label: '文件后缀',
+    required: true,
+    component: 'Input',
   },
 ];

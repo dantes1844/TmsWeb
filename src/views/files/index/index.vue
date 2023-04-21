@@ -26,7 +26,7 @@
         </template>
       </template>
     </BasicTable>
-    <UploadDrawer @register="registerDrawer" @success="handleSuccess" />
+    <KbsFileDrawer @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
@@ -35,19 +35,19 @@
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
 
   import { useDrawer } from '/@/components/Drawer';
-  import UploadDrawer from './UploadDrawer.vue';
+  import KbsFileDrawer from './KbsFileDrawer.vue';
 
   import { columns, searchFormSchema } from './files.data';
-  import { getRoleListByPage, deleteRole } from '/@/api/role/role';
+  import { getKbsFileListByPage, deleteKbsFile } from '/@/api/file/kbsfile/kbsfile';
 
   export default defineComponent({
     name: 'FileManagement',
-    components: { BasicTable, UploadDrawer, TableAction },
+    components: { BasicTable, KbsFileDrawer, TableAction },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
-        title: '角色列表',
-        api: getRoleListByPage,
+        title: '文档列表',
+        api: getKbsFileListByPage,
         columns,
         formConfig: {
           labelWidth: 120,
@@ -80,7 +80,7 @@
       }
 
       async function handleDelete(record: Recordable) {
-        await deleteRole(record);
+        await deleteKbsFile(record);
         await reload();
       }
 

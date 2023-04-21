@@ -22,15 +22,28 @@ export interface NoticeTypeItem{
   label: string;
 }
 export enum NoticeType {
+  All = null,
   Task = 1,
   Update= 2,
   Files = 3,
-  Others = 4
+  Others = 99
 }
+
+export interface NoticeTypeTab{
+  NoticeType: NoticeType,
+  Name: string;
+}
+
+export const NoticeTypeTabs: NoticeTypeTab[] = [
+  { NoticeType: NoticeType.All  , Name: '全部' },
+  { NoticeType: NoticeType.Update, Name: '升级' },
+  { NoticeType: NoticeType.Task , Name: '任务' },
+  { NoticeType: NoticeType.Files, Name: '知识库' },
+  { NoticeType: NoticeType.Others, Name: '其他' },
+]
 
 export interface NoticeParams{
   title: string;
-  status: number;
   noticeType: NoticeType;
 }
 

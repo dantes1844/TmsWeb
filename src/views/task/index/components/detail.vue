@@ -4,8 +4,8 @@
       <div class="m-2 flex flex-col">
         <span class="text-2xl m-2">{{ title }}</span>
         <div class="flex flex-row">
-          <span class="text-xl ml-2">{{ taskCount }} 项任务/</span>
-          <span class="text-xl ml-2">{{ taskUserCount }} 名人员/</span>
+          <span class="text-xl ml-2">{{ taskCount }}项任务/</span>
+          <span class="text-xl ml-2">{{ taskUserCount }}人/</span>
           <span class="text-xl ml-2">{{ taskDays }}天工时</span>
         </div>
       </div>

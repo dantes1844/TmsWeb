@@ -21,7 +21,7 @@
             <a-tag
               v-for="tag in record.tags"
               :key="tag"
-              :color="tag === 'loser' ? 'volcano' : tag.length > 5 ? 'geekblue' : 'green'"
+              :color="getColor(tag)"
             >
               {{ tag.toUpperCase() }}
             </a-tag>
@@ -61,35 +61,53 @@
           key: '1',
           name: '新建厂站工作一的名称',
           supervisor: '曾同方',
-          tags: ['nice'],
+          tags: ['进行中'],
         },
         {
           key: '2',
           name: '新建厂站工作二的名称',
           supervisor: '万刚毅',
-          tags: ['loser'],
+          tags: ['已过期'],
         },
         {
           key: '3',
           name: '扩建厂站工作一的名称',
           supervisor: '梁建元',
-          tags: ['teacher'],
+          tags: ['未启动'],
         },
         {
           key: '4',
           name: '电器开关柜巡检任务',
           supervisor: '邓华清',
-          tags: ['cool'],
+          tags: ['已结束'],
         },
         {
           key: '5',
           name: 'OMS系统数据同步工作',
           supervisor: '孙志明',
-          tags: ['cool'],
+          tags: ['已结束'],
         },
       ];
 
-      return { items: groupItems, columns: columns, data: data };
+      function getColor(tag){
+        switch (tag){
+          case '未开始':
+            return 'gray';
+          case '进行中':
+            return 'geekblue';
+          case '已结束':
+            return 'green';
+          case '已过期':
+            return 'red';
+        }
+      }
+
+      return {
+        items: groupItems,
+        columns: columns,
+        data: data,
+        getColor
+      };
     },
   });
 </script>

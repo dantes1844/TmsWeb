@@ -12,7 +12,7 @@ import { Button } from "ant-design-vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'finalCheckControls',
+  name: 'FinalCheckControls',
   components: { Button },
   props:{
     item:{

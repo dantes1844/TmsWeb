@@ -60,18 +60,18 @@
 
 <script lang="ts">
 
-import Icon from "@/components/Icon/Icon.vue";
-import { computed, defineComponent, ref } from "vue";
-import todoControls from "@/views/task/index/components/todoControls.vue";
-import inProgressControls from "@/views/task/index/components/inProgressControls.vue";
-import finalCheckControls from "@/views/task/index/components/finalCheckControls.vue";
-import doneControls from "@/views/task/index/components/doneControls.vue";
+import Icon from '@/components/Icon/Icon.vue';
+import { computed, defineComponent } from 'vue';
+import TodoControls from '@/views/task/index/components/todoControls.vue';
+import InProgressControls from '@/views/task/index/components/inProgressControls.vue';
+import FinalCheckControls from '@/views/task/index/components/finalCheckControls.vue';
+import DoneControls from '@/views/task/index/components/doneControls.vue';
 
-import { TaskDetail, TaskStatus } from "@/views/task/index/data";
+import { TaskDetail, TaskStatus } from '@/views/task/index/data';
 
 export default defineComponent({
-  name: "detail",
-  components: { Icon, todoControls, inProgressControls, finalCheckControls, doneControls },
+  name: "Detail",
+  components: { Icon, TodoControls, InProgressControls, FinalCheckControls, DoneControls },
   props: {
     items: {
       type: Array as PropType<TaskDetail[]>,

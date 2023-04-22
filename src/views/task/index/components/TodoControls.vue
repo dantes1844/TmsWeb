@@ -2,7 +2,8 @@
   <div class="my-2 flex flex-row ">
     <div class="w-1/8 m-4"></div>
     <div class="mb-4">
-      <Button class="mr-2" size="medium" shape="round" type="primary">查看统计</Button>
+      <Button class="mr-2" size="medium" shape="round" type="primary">立即开始</Button>
+      <Button class="ml-2" size="medium" shape="round">取消任务</Button>
     </div>
   </div>
 </template>
@@ -12,7 +13,7 @@ import { Button } from "ant-design-vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'doneControls',
+  name: 'TodoControls',
   components: { Button },
   props:{
     item:{

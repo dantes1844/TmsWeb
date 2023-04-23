@@ -7,7 +7,7 @@ const commonConfig: UserConfig = {
     host: true,
   },
   esbuild: {
-    drop: ['console', 'debugger'],
+    drop: [], // 'console', 'debugger' //这里加了这两个之后调试的时候debugger会丢失
   },
   build: {
     reportCompressedSize: false,

@@ -84,22 +84,18 @@ const storage = createStorage({
   storage: localStorage,
 });
 
-const configurationStorageKey = 'CACHE_CONFIGURATION';
+export const configurationStorageKey = 'CACHE_CONFIGURATION';
 export const useConfigurationStore = defineStore({
   id: 'configuration',
   state: (): Configuration => {
     return { ...defaultConfiguration };
   },
   getters: {
-    getCurrentUser(): CurrentUser {
-      const { currentUser } = storage.get(configurationStorageKey);
-      this.currentUser = currentUser;
-      return currentUser;
+    getCurrentUser(state): CurrentUser {
+      return state.currentUser;
     },
-    getAuth(): Auth {
-      const { auth } = storage.get(configurationStorageKey);
-      this.auth = auth;
-      return auth;
+    getAuth(state): Auth {
+      return state.auth;
     },
   },
   actions: {

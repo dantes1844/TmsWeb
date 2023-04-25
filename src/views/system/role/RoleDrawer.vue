@@ -12,7 +12,8 @@
         <BasicTree
           v-model:value="model[field]"
           :treeData="treeData"
-          :fieldNames="{ title: 'menuName', key: 'id' }"
+          :checkedKeys="checkedKeys"
+          :fieldNames="{ title: 'label', key: 'id' }"
           checkable
           toolbar
           title="菜单分配"
@@ -26,10 +27,10 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './role.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { BasicTree, TreeItem } from '/@/components/Tree';
+  import { BasicTree } from '/@/components/Tree';
 
-  import { createRole, updateRole } from '/@/api/role/role';
-  import { getMenuList } from '/@/api/sys/menu';
+  import { createRole, RolePermissionModel, updateRole } from "/@/api/role/role";
+  import { getAllPermissions } from '/@/api/role/role';
 
   export default defineComponent({
     name: 'RoleDrawer',
@@ -37,7 +38,8 @@
     emits: ['success', 'register'],
     setup: function (_, { emit }) {
       const isUpdate = ref(true);
-      const treeData = ref<TreeItem[]>([]);
+      const treeData = ref<RolePermissionModel[]>([]);
+      const checkedKeys = ref<String[]>([]);
 
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
         labelWidth: 90,
@@ -52,10 +54,14 @@
         // 需要在setFieldsValue之前先填充treeData，否则Tree组件可能会报key not exist警告
         if (unref(treeData).length === 0) {
           try {
-            treeData.value = (await getMenuList()) as any as TreeItem[];
+            const roleName = data?.record?.name as string;
+            debugger
+            const { tree } = await getAllPermissions({ roleName: roleName });
+            treeData.value = tree;
           } catch (err) {}
         }
         isUpdate.value = !!data?.isUpdate;
+        checkedKeys.value = data?.record?.permissions;
 
         if (unref(isUpdate)) {
           setFieldsValue({
@@ -91,6 +97,7 @@
         getTitle,
         handleSubmit,
         treeData,
+        checkedKeys,
       };
     },
   });

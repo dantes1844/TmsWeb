@@ -91,10 +91,10 @@ export const formSchema: FormSchema[] = [
       ],
     },
   },
-  // {
-  //   label: ' ',
-  //   field: 'menu',
-  //   slot: 'menu',
-  //   component: 'Input',
-  // },
+  {
+    field: 'permissions',
+    label: '权限',
+    slot: 'menu',
+    component: 'ApiTreeSelect'
+  },
 ];

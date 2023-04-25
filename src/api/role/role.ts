@@ -2,10 +2,12 @@ import { BasicFetchResult, BasicPageParams } from '/@/api/model/baseModel';
 import { defHttp } from '/@/utils/http/axios';
 
 enum Api {
-  SaveRole = '/identity/roles',
+  SaveRole = '/roles/save',
   SetRoleStatus = '/roles/setStatus',
   RolePageList = '/identity/roles/page',
   GetAllRoleList = '/identity/roles/simple-all',
+
+  GetAllPermissions = '/roles/allPermissions',
 }
 
 export type RoleParams = {
@@ -13,9 +15,25 @@ export type RoleParams = {
   roleName: string;
   isDefault: boolean;
   isPublic: boolean;
-  menus: string[];
   extraProperties: Map<string, string>;
+  permissions: string[];
 };
+
+export type RolePermissionParams = {
+  roleName: string;
+}
+
+export type PermissionModel = {
+  id: string;
+  label: string;
+  level: number;
+  children: RolePermissionModel[]
+}
+
+export type RolePermissionModel = {
+  checkedItems: string[];
+  tree: PermissionModel[];
+}
 
 export type RolePageParams = BasicPageParams & RoleParams;
 
@@ -35,6 +53,12 @@ export const getRoleListByPage = (params?: RolePageParams) =>
 export const getAllRoleList = (params?: RoleParams) =>
   defHttp.get<RoleListGetResultModel>(
     { url: Api.GetAllRoleList, params },
+    { isTransformResponse: false },
+  );
+
+export const getAllPermissions = (params?: RolePermissionParams) =>
+  defHttp.get<RolePermissionModel[]>(
+    { url: Api.GetAllPermissions, params },
     { isTransformResponse: false },
   );
 

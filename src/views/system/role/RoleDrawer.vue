@@ -55,7 +55,6 @@
         if (unref(treeData).length === 0) {
           try {
             const roleName = data?.record?.name as string;
-            debugger
             const { tree } = await getAllPermissions({ roleName: roleName });
             treeData.value = tree;
           } catch (err) {}

@@ -16,7 +16,7 @@ enum Api {
   GetToken = '/connect/token',
   Logout = '/api/account/user-logout',
   GetUserInfo = '/connect/userinfo',
-  GetPermCode = '/getPermCode',
+  GetPermCode = '/roles/getPermCode',
   TestRetry = '/testRetry',
   ResetPassword = '/api/account/reset-password',
 }
@@ -89,7 +89,9 @@ export function resetPassword(params: ResetPasswordModel) {
 }
 
 export function getPermCode() {
-  return defHttp.get<string[]>({ url: Api.GetPermCode });
+  return defHttp.get<string[]>({ url: Api.GetPermCode },{
+    isTransformResponse: false
+  });
 }
 
 export function doLogout() {

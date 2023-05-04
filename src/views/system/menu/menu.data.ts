@@ -2,18 +2,17 @@ import { BasicColumn, FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 import Icon from '@/components/Icon/Icon.vue';
+import {MenuType} from "@/api/menu/model/menuModel";
 
 export const columns: BasicColumn[] = [
   {
     title: '菜单名称',
-    dataIndex: 'menuName',
-    width: 200,
+    dataIndex: 'displayName',
     align: 'left',
   },
   {
     title: '图标',
     dataIndex: 'icon',
-    width: 50,
     customRender: ({ record }) => {
       return h(Icon, { icon: record.icon });
     },
@@ -21,7 +20,7 @@ export const columns: BasicColumn[] = [
   {
     title: '权限标识',
     dataIndex: 'permission',
-    width: 180,
+    width:300,
   },
   {
     title: '组件',
@@ -30,12 +29,10 @@ export const columns: BasicColumn[] = [
   {
     title: '排序',
     dataIndex: 'orderNo',
-    width: 50,
   },
   {
     title: '状态',
     dataIndex: 'status',
-    width: 80,
     customRender: ({ record }) => {
       const status = record.status;
       const enable = ~~status === 0;
@@ -46,14 +43,19 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '创建时间',
-    dataIndex: 'createTime',
-    width: 180,
+    dataIndex: 'creationTime',
   },
 ];
 
-const isDir = (type: string) => type === '0';
-const isMenu = (type: string) => type === '1';
-const isButton = (type: string) => type === '2';
+const isDir = (type: MenuType) => type === MenuType.Module;
+const isMenu = (type: MenuType) => type === MenuType.Page
+const isButton = (type: MenuType) => type === MenuType.Button;
+
+export const MenuTypeOptions = [
+  { 'label':'目录', value: MenuType.Module },
+  { 'label':'菜单', value: MenuType.Page },
+  { 'label':'按钮', value: MenuType.Button },
+]
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -74,37 +76,42 @@ export const searchFormSchema: FormSchema[] = [
     },
     colProps: { span: 8 },
   },
+  {
+    field: 'menuType',
+    label: '类型',
+    component: 'Select',
+    componentProps: {
+      options: MenuTypeOptions,
+    },
+    colProps: { span: 8 },
+  },
 ];
 
 export const formSchema: FormSchema[] = [
   {
-    field: 'type',
+    field: 'menuType',
     label: '菜单类型',
     component: 'RadioButtonGroup',
     defaultValue: '0',
     componentProps: {
-      options: [
-        { label: '目录', value: '0' },
-        { label: '菜单', value: '1' },
-        { label: '按钮', value: '2' },
-      ],
+      options: MenuTypeOptions,
     },
     colProps: { lg: 24, md: 24 },
   },
   {
-    field: 'menuName',
+    field: 'displayName',
     label: '菜单名称',
     component: 'Input',
     required: true,
   },
 
   {
-    field: 'parentMenu',
+    field: 'parentId',
     label: '上级菜单',
     component: 'TreeSelect',
     componentProps: {
       fieldNames: {
-        label: 'menuName',
+        label: 'displayName',
         key: 'id',
         value: 'id',
       },
@@ -113,7 +120,7 @@ export const formSchema: FormSchema[] = [
   },
 
   {
-    field: 'orderNo',
+    field: 'order',
     label: '排序',
     component: 'InputNumber',
     required: true,
@@ -123,27 +130,27 @@ export const formSchema: FormSchema[] = [
     label: '图标',
     component: 'IconPicker',
     required: true,
-    ifShow: ({ values }) => !isButton(values.type),
+    ifShow: ({ values }) => !isButton(values.menuType),
   },
 
   {
-    field: 'routePath',
+    field: 'path',
     label: '路由地址',
     component: 'Input',
     required: true,
-    ifShow: ({ values }) => !isButton(values.type),
+    ifShow: ({ values }) => !isButton(values.menuType),
   },
   {
     field: 'component',
     label: '组件路径',
     component: 'Input',
-    ifShow: ({ values }) => isMenu(values.type),
+    ifShow: ({ values }) => isMenu(values.menuType),
   },
   {
     field: 'permission',
     label: '权限标识',
     component: 'Input',
-    ifShow: ({ values }) => !isDir(values.type),
+    ifShow: ({ values }) => !isDir(values.menuType),
   },
   {
     field: 'status',
@@ -168,7 +175,7 @@ export const formSchema: FormSchema[] = [
         { label: '是', value: '1' },
       ],
     },
-    ifShow: ({ values }) => !isButton(values.type),
+    ifShow: ({ values }) => !isButton(values.menuType),
   },
 
   {
@@ -182,7 +189,7 @@ export const formSchema: FormSchema[] = [
         { label: '是', value: '1' },
       ],
     },
-    ifShow: ({ values }) => isMenu(values.type),
+    ifShow: ({ values }) => isMenu(values.menuType),
   },
 
   {
@@ -196,6 +203,6 @@ export const formSchema: FormSchema[] = [
         { label: '否', value: '1' },
       ],
     },
-    ifShow: ({ values }) => !isButton(values.type),
+    ifShow: ({ values }) => !isButton(values.menuType),
   },
 ];

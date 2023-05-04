@@ -17,7 +17,7 @@ enum Api {
 
   ToggleMenuDisabled = '/admin/menus/toggle',
 
-  ApiList = '/menu/apilist',
+  ApiList = '/app/menus',
 }
 
 export const getMenuPages = (params?: MenuParams) =>

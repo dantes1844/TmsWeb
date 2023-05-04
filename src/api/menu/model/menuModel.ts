@@ -18,6 +18,11 @@ export interface CreateMenuModel {
   icon: string;
   url: string;
 }
+export enum MenuType {
+  Module = 1,
+  Page = 2,
+  Button = 3
+}
 
 export type MenuParams = {
   menuName?: string;

@@ -1,11 +1,11 @@
 import {BasicFetchResult} from "@/api/model/baseModel";
 
 export enum JobStatus {
-  UnStart=1,
-  Doing=2,
-  Canceled=4,
-  Agreement=8,
-  Finished=16
+  Todo=1,
+  InProgress=2,
+  FinalCheck=3,
+  Done=4,
+  Canceled=10,
 }
 
 export interface CreateJobModel{

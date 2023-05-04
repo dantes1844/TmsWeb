@@ -30,6 +30,17 @@ export const PAGE_NOT_FOUND_ROUTE: AppRouteRecordRaw = {
     },
   ],
 };
+// 404 on a page
+export const PAGE_BIG_SCREEN_ROUTE: AppRouteRecordRaw = {
+  path: '/index',
+  name: 'PAGE_BIG_SCREEN_NAME',
+  component: () => import('/@/views/bigscreen/index.vue'),
+  meta: {
+    title: 'ErrorPage',
+    hideBreadcrumb: true,
+    hideMenu: true,
+  }
+};
 
 export const REDIRECT_ROUTE: AppRouteRecordRaw = {
   path: '/redirect',

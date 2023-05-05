@@ -46,6 +46,11 @@ export const columns: BasicColumn[] = [
     width: 200,
   },
   {
+    title: '执行人',
+    dataIndex: 'jobUsers',
+    width: 200,
+  },
+  {
     title: '发布时间',
     dataIndex: 'creationTime',
     width: 200,
@@ -99,7 +104,7 @@ export const editFormSchema: FormSchema[] = [
     field: 'jobStatus',
     label: '任务状态',
     component: 'Select',
-    defaultValue: false,
+    defaultValue: JobStatus.Todo,
     componentProps: {
       options: options
     },
@@ -110,6 +115,9 @@ export const editFormSchema: FormSchema[] = [
     component: 'DatePicker',
     required: true,
     defaultValue: new Date(),
+    componentProps:{
+      mode: 'date'
+    }
   },
   {
     field: 'endDate',
@@ -117,16 +125,19 @@ export const editFormSchema: FormSchema[] = [
     component: 'DatePicker',
     required: true,
     defaultValue: new Date(),
+    componentProps:{
+      mode: 'date'
+    }
   },
   {
     field: 'supervisorId',
     label: '负责人',
     component: 'ApiSelect',
-    defaultValue: false,
+    defaultValue: '',
     required: true,
     componentProps: {
       api: getUserList,
-      labelField: 'userName',
+      labelField: 'name',
       valueField: 'id',
     },
   },
@@ -134,14 +145,13 @@ export const editFormSchema: FormSchema[] = [
     field: 'jobUsers',
     label: '执行人',
     component: 'ApiSelect',
-    defaultValue: false,
+    defaultValue: [],
     required: true,
     componentProps: {
       api: getUserList,
       mode:'multiple',
-      labelField: 'userName',
+      labelField: 'name',
       valueField: 'id',
-
     },
   },
   {

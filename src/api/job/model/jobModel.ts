@@ -1,10 +1,10 @@
 import {BasicFetchResult} from "@/api/model/baseModel";
 
 export enum JobStatus {
-  Todo=1,
-  InProgress=2,
-  FinalCheck=3,
-  Done=4,
+  Todo=0,
+  InProgress=1,
+  FinalCheck=2,
+  Done=3,
   Canceled=10,
 }
 
@@ -47,7 +47,7 @@ export interface JobDetail{
   supervisorId: string;
   supervisorUserName: string;
   description: string;
-  members: jobUser[]
+  jobUsers: jobUser[]
 }
 
 export interface JobParams{

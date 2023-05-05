@@ -18,6 +18,7 @@
   import { BasicTree, TreeItem } from '/@/components/Tree';
 
   import { createJob, updateJob } from '/@/api/job/job';
+  import { dateUtil } from '@/utils/dateUtil';
 
   export default defineComponent({
     name: 'JobDrawer',
@@ -60,7 +61,8 @@
           setDrawerProps({ confirmLoading: true });
 
           const job = Object.assign({}, values);
-          debugger;
+          job.startDate = dateUtil(job.startDate).format('YYYY-MM-DD')
+          job.endDate = dateUtil(job.endDate).format('YYYY-MM-DD')
           if (!job.id || job.id === 0) {
             await createJob(job);
           } else {

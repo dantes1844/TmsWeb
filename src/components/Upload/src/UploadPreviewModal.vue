@@ -17,7 +17,7 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { previewProps } from './props';
   import { PreviewFileItem } from './typing';
-  import { downloadByUrl } from '/@/utils/file/download';
+  import { downloadByUrl, downloadByUrlData } from '/@/utils/file/download';
   import { createPreviewColumns, createPreviewActionColumn } from './data';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { isArray } from '/@/utils/is';
@@ -71,8 +71,8 @@
 
       // 下载
       function handleDownload(record: PreviewFileItem) {
-        const { url = '' } = record;
-        downloadByUrl({ url });
+        const { url = '', fileName, mimeType } = record;
+        downloadByUrlData(url,fileName, mimeType);
       }
 
       return {

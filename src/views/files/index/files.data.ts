@@ -2,6 +2,7 @@ import { BasicColumn, FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Button, Tag } from "ant-design-vue";
 import { getAllFileTypeList } from "@/api/file/filetype/filetype";
+import { uploadApi } from '@/api/sys/upload';
 
 export const columns: BasicColumn[] = [
   {
@@ -106,15 +107,12 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
   },
   {
-    field: 'size',
-    label: '文件大小',
-    required: true,
-    component: 'InputNumber',
-  },
-  {
-    field: 'extension',
-    label: '文件后缀',
-    required: true,
-    component: 'Input',
-  },
+    field: 'file',
+    component: 'Upload',
+    label: '附件',
+    rules: [{ required: true, message: '请选择上传文件' }],
+    componentProps: {
+      api: uploadApi,
+    },
+  }
 ];

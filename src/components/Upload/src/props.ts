@@ -1,5 +1,6 @@
 import type { PropType } from 'vue';
 import { FileBasicColumn } from './typing';
+import { UploadApiResult } from '@/api/sys/model/uploadModel';
 
 export const basicProps = {
   helpText: {
@@ -62,8 +63,8 @@ export const uploadContainerProps = {
 
 export const previewProps = {
   value: {
-    type: Array as PropType<string[]>,
-    default: () => [],
+    type: Array as PropType<UploadApiResult[]>,
+    default: () => [] as UploadApiResult[],
   },
 };
 

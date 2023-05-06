@@ -39,9 +39,11 @@
             .filter((item) => !!item)
             .map((item) => {
               return {
-                url: item,
-                type: item.split('.').pop() || '',
-                name: item.split('/').pop() || '',
+                url: item.url,
+                mimeType: item.mimeType,
+                fileName: item.fileName,
+                type: item.url.split('.').pop() || '',
+                name: item.url.split('/').pop() || '',
               };
             });
         },

@@ -22,6 +22,10 @@ export interface PreviewFileItem {
   url: string;
   name: string;
   type: string;
+
+  mimeType: string;
+
+  fileName: string;
 }
 
 export interface FileBasicColumn {

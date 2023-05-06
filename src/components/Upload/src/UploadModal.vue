@@ -61,13 +61,14 @@
   import { warn } from '/@/utils/log';
   import FileList from './FileList.vue';
   import { useI18n } from '/@/hooks/web/useI18n';
+  import { UploadApiResult } from '@/api/sys/model/uploadModel';
 
   export default defineComponent({
     components: { BasicModal, Upload, Alert, FileList },
     props: {
       ...basicProps,
       previewFileList: {
-        type: Array as PropType<string[]>,
+        type: Array as PropType<UploadApiResult[]>,
         default: () => [],
       },
     },
@@ -247,12 +248,12 @@
         if (isUploadingRef.value) {
           return createMessage.warning(t('component.upload.saveWarn'));
         }
-        const fileList: string[] = [];
+        const fileList: UploadApiResult[] = [];
 
         for (const item of fileListRef.value) {
           const { status, responseData } = item;
           if (status === UploadResultStatus.SUCCESS && responseData) {
-            fileList.push(responseData.url);
+            fileList.push(responseData);
           }
         }
         // 存在一个上传成功的即可保存

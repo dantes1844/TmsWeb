@@ -47,6 +47,7 @@
   import { isArray } from '/@/utils/is';
   import UploadModal from './UploadModal.vue';
   import UploadPreviewModal from './UploadPreviewModal.vue';
+  import { UploadApiResult } from '@/api/sys/model/uploadModel';
 
   export default defineComponent({
     name: 'BasicUpload',
@@ -62,7 +63,7 @@
       //   预览modal
       const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
 
-      const fileList = ref<string[]>([]);
+      const fileList = ref<UploadApiResult[]>([]);
 
       const showPreview = computed(() => {
         const { emptyHidePreview } = props;
@@ -84,14 +85,14 @@
       );
 
       // 上传modal保存操作
-      function handleChange(urls: string[]) {
+      function handleChange(urls: UploadApiResult[]) {
         fileList.value = [...unref(fileList), ...(urls || [])];
         emit('update:value', fileList.value);
         emit('change', fileList.value);
       }
 
       // 预览modal保存操作
-      function handlePreviewChange(urls: string[]) {
+      function handlePreviewChange(urls: UploadApiResult[]) {
         fileList.value = [...(urls || [])];
         emit('update:value', fileList.value);
         emit('change', fileList.value);

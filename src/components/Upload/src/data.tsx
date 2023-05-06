@@ -115,7 +115,7 @@ export function createPreviewColumns(): BasicColumn[] {
       },
     },
     {
-      dataIndex: 'name',
+      dataIndex: 'fileName',
       title: t('component.upload.fileName'),
       align: 'left',
     },

@@ -27,7 +27,7 @@ export default defineApplicationConfig({
           ws: true,
         },
         '/upload': {
-          target: 'http://localhost:3300/upload',
+          target: 'http://localhost:44343/api/kbs-files/upload',
           changeOrigin: true,
           ws: true,
           rewrite: (path) => path.replace(new RegExp(`^/upload`), ''),

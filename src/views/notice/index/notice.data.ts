@@ -4,7 +4,7 @@ import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 import { Button } from 'ant-design-vue';
 import { formatToDateTime } from '@/utils/dateUtil';
-
+import { uploadApi } from '@/api/sys/upload';
 
 export const columns: BasicColumn[] = [
   {
@@ -137,7 +137,11 @@ export const editFormSchema: FormSchema[] = [
   },
   {
     field: 'file',
+    component: 'Upload',
     label: '附件',
-    component: 'Input',
-  },
+    rules: [{ required: true, message: '请选择上传文件' }],
+    componentProps: {
+      api: uploadApi,
+    },
+  }
 ];

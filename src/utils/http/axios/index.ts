@@ -209,7 +209,7 @@ const transform: AxiosTransform = {
       throw new Error(error as unknown as string);
     }
 
-    checkStatus(error?.response?.status, msg, errorMessageMode);
+    checkStatus(error, errorMessageMode);
 
     // 添加自动重试机制 保险起见 只针对GET请求
     const retryRequest = new AxiosRetry();
@@ -268,7 +268,7 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           // 是否携带token
           withToken: true,
           retryRequest: {
-            isOpenRetry: true,
+            isOpenRetry: false, // 不启用重试机制
             count: 5,
             waitTime: 100,
           },

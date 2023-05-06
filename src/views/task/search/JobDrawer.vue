@@ -60,7 +60,7 @@
           setDrawerProps({ confirmLoading: true });
 
           const job = Object.assign({}, values);
-          debugger;
+
           if (!job.id || job.id === 0) {
             await createJob(job);
           } else {

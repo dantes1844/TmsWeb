@@ -60,7 +60,7 @@
           setDrawerProps({ confirmLoading: true });
 
           const notice = Object.assign({}, values);
-          debugger;
+
           if (!notice.id || notice.id === 0) {
             await createNotice(notice);
           } else {

@@ -22,7 +22,8 @@ export function checkStatus(
 
   const { status, data } = response;
   const realError = data?.error;
-  const { message, code } = realError;
+  const message = realError?.message;
+  const code = realError?.code;
 
   switch (status) {
     case 400:

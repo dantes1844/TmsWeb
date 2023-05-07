@@ -1,9 +1,12 @@
+import {UploadApiResult} from "@/api/sys/model/uploadModel";
+
 export interface NoticeDetail {
   id: number;
   title: string;
   noticeType: NoticeType;
   status: number;
   file: string | null;
+  files: UploadApiResult[];
   time: string;
   content: string;
 }

@@ -60,6 +60,7 @@
     name: 'AccountManagement',
     components: { BasicTable, PageWrapper, DeptTree, AccountModal, TableAction },
     setup() {
+      let deptId = '';
       const go = useGo();
       const [registerModal, { openModal }] = useModal();
       const searchInfo = reactive<Recordable>({});
@@ -87,7 +88,10 @@
           // slots: { customRender: 'action' },
         },
       });
-
+      function beforeFetch(params: any) {
+        params.deptId = deptId;
+        return params;
+      }
       function handleCreate() {
         openModal(true, {
           isUpdate: false,
@@ -118,9 +122,9 @@
         reload();
       }
 
-      function handleSelect(deptId = '') {
-        searchInfo.deptId = deptId;
-        reload();
+      function handleSelect(deptKey = '') {
+        deptId = deptKey;
+        reload({ searchInfo: { deptId } });
       }
 
       function resetTreeSelected() {

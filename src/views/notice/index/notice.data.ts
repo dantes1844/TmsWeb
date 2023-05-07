@@ -36,17 +36,16 @@ export const columns: BasicColumn[] = [
       return h(Tag, { color: color }, () => text);
     },
   },
-  {
-    title: '附件',
-    dataIndex: 'file',
-    width: 200,
-    customRender: ({ record }) => {
-      const status = record.file;
-      if(status && status!=''){
-        return h(Button, { type: 'link' }, () => status);
-      }
-    },
-  },
+  // {
+  //   title: '附件',
+  //   dataIndex: 'files',
+  //   width: 200,
+  //   customRender: ({ record }) => {
+  //     if(record.files.length>0){
+  //       return h(Button, { type: 'link' }, () => "查看附件");
+  //     }
+  //   },
+  // },
   {
     title: '发布人',
     dataIndex: 'userName',
@@ -136,7 +135,7 @@ export const editFormSchema: FormSchema[] = [
     },
   },
   {
-    field: 'file',
+    field: 'files',
     component: 'Upload',
     label: '附件',
     rules: [{ required: true, message: '请选择上传文件' }],

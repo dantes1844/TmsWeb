@@ -9,12 +9,20 @@
           <TableAction
             :actions="[
               {
+                icon:'bi:eye',
+                tooltip:'查看附件',
+                disabled: record.files.length===0,
+                onClick:handlePreview.bind(null,record),
+              },
+              {
                 icon: 'clarity:note-edit-line',
+                tooltip:'修改',
                 onClick: handleEdit.bind(null, record),
               },
               {
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
+                tooltip:'删除',
                 popConfirm: {
                   title: '是否确认删除',
                   placement: 'left',
@@ -27,10 +35,18 @@
       </template>
     </BasicTable>
     <NoticeDrawer @register="registerDrawer" @success="handleSuccess" />
+
+
+    <UploadPreviewModal
+      :value="fileList"
+      @register="registerPreviewModal"
+      @list-change="handlePreviewChange"
+      @delete="handlePreviewDelete"
+    />
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref, Ref } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
 
@@ -40,10 +56,15 @@
   import { columns, searchFormSchema } from './notice.data';
   import { getNoticePages, deleteNotice } from '/@/api/notice/notice';
   import {CreateNoticeModel, NoticeDetail} from '/@/api/notice/model/noticeModel';
+  import UploadModal from "@/components/Upload/src/UploadModal.vue";
+  import UploadPreviewModal from "@/components/Upload/src/UploadPreviewModal.vue";
+  import {PreviewFileItem} from "@/components/Upload/src/typing";
+  import {UploadApiResult} from "@/api/sys/model/uploadModel";
+  import {useModal} from "@/components/Modal";
 
   export default defineComponent({
     name: 'NoticeManagement',
-    components: { BasicTable, NoticeDrawer, TableAction },
+    components: {UploadPreviewModal, UploadModal, BasicTable, NoticeDrawer, TableAction },
     setup() {
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
@@ -80,6 +101,12 @@
         });
       }
 
+      const fileList = ref<UploadApiResult[]>([]);
+      function handlePreview(record:NoticeDetail){
+        fileList.value = record.files
+        openPreviewModal()
+      }
+
       async function handleDelete(record: NoticeDetail) {
         await deleteNotice(record.id);
         await reload();
@@ -89,6 +116,16 @@
         reload();
       }
 
+      function handlePreviewDelete(){
+
+      }
+      //   预览modal
+      const [registerPreviewModal, { openModal: openPreviewModal }] = useModal();
+
+      function handlePreviewChange(){
+
+      }
+
       return {
         registerTable,
         registerDrawer,
@@ -96,6 +133,11 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        handlePreview,
+        fileList,
+        registerPreviewModal,
+        handlePreviewChange,
+        handlePreviewDelete,
       };
     },
   });

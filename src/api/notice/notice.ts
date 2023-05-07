@@ -6,7 +6,6 @@ import {
   NoticeToggleParams
 } from '@/api/notice/model/noticeModel';
 import { BasicFetchResult } from "@/api/model/baseModel";
-import { FileTypeListItem } from "@/api/file/filetype/filetype";
 
 enum Api {
   NoticePages = '/app/notice/pages',

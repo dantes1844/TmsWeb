@@ -17,7 +17,7 @@ enum Api {
 
   ToggleJobDisabled = '/job/toggle',
 
-  ApiList = '/job/apilist',
+  AllJobs = '/app/job',
 }
 
 export const getJobPages = (params?: JobParams) =>
@@ -27,7 +27,7 @@ export const getJobPages = (params?: JobParams) =>
   );
 export const getJobList = (params?: JobParams) =>
   defHttp.get<JobListGetResultModel>(
-    { url: Api.ApiList, params },
+    { url: Api.AllJobs, params },
     { isTransformResponse: false }
   );
 

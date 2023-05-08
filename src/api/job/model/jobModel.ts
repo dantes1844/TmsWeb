@@ -13,6 +13,8 @@ export interface CreateJobModel{
   jobStatus: JobStatus;
   startDate: string;
   endDate: string;
+
+  parentId: number;
   supervisorId: string;
   description: string;
 }

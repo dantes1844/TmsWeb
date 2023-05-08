@@ -13,6 +13,11 @@
                 onClick: handleEdit.bind(null, record),
               },
               {
+                icon: 'carbon:catalog-publish',
+                disabled: record.jobStatus != JobStatus.Todo,
+                onClick: handleAddJobChild.bind(null, record),
+              },
+              {
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
                 popConfirm: {
@@ -27,6 +32,8 @@
       </template>
     </BasicTable>
     <JobDrawer @register="registerDrawer" @success="handleSuccess" />
+
+    <JobModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
@@ -35,17 +42,26 @@ import { defineComponent } from 'vue';
 import { BasicTable, useTable, TableAction } from '/@/components/Table';
 
 import { useDrawer } from '/@/components/Drawer';
+import JobModal from '@/views/task/send/JobModal.vue';
 import JobDrawer from './JobDrawer.vue';
 
 import { columns, searchFormSchema } from './job.data';
 import { deleteJob, getJobPages } from '/@/api/job/job';
 import { CreateJobModel, JobDetail } from '/@/api/job/model/jobModel';
+import { useModal } from '@/components/Modal';
+import { JobStatus } from '@/api/job/model/jobModel';
 
 export default defineComponent({
   name: 'JobManagement',
-  components: { BasicTable, JobDrawer, TableAction },
+  computed: {
+    JobStatus() {
+      return JobStatus
+    }
+  },
+  components: { BasicTable, JobDrawer, TableAction, JobModal },
   setup() {
     const [registerDrawer, { openDrawer }] = useDrawer();
+    const [registerModal, { openModal }] = useModal();
     const [registerTable, { reload }] = useTable({
       title: '任务列表',
       api: getJobPages,
@@ -80,6 +96,13 @@ export default defineComponent({
       });
     }
 
+    function handleAddJobChild(record:CreateJobModel){
+      openModal(true,{
+        record,
+        isUpdate: record.parentId>0
+      })
+    }
+
     async function handleDelete(record: JobDetail) {
       await deleteJob(record.id);
       await reload();
@@ -92,10 +115,12 @@ export default defineComponent({
     return {
       registerTable,
       registerDrawer,
+      registerModal,
       handleCreate,
       handleEdit,
       handleDelete,
       handleSuccess,
+      handleAddJobChild,
     };
   },
 });

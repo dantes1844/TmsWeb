@@ -4,6 +4,7 @@ import {JobStatus} from '@/api/job/model/jobModel';
 import {getUserList} from '@/api/user/user';
 import {h} from "vue";
 import {Tag} from "ant-design-vue";
+import { getJobList } from '@/api/job/job';
 
 export function getStatusName(status: JobStatus) {
   switch (status) {
@@ -172,6 +173,93 @@ export const editFormSchema: FormSchema[] = [
     component: 'InputTextArea',
     componentProps: {
       rows: 20
+    },
+  },
+];
+export const editSubJobFormSchema: FormSchema[] = [
+  {
+    field: 'id',
+    label: '唯一编号',
+    component: 'InputNumber',
+    required: false,
+    show: false,
+  },
+  {
+    field: 'parentId',
+    label: '父级任务',
+    component: 'ApiSelect',
+    componentProps: {
+      api: getJobList,
+      labelField: 'jobsName',
+      valueField: 'id',
+      params:{
+        jobStatus: JobStatus.Todo
+      }
+    },
+  },
+  {
+    field: 'supervisorUserName',
+    label: '负责人',
+    component: 'Input',
+    defaultValue: '',
+    required: true,
+    componentProps:{
+      disabled: true
+    }
+  },
+  {
+    field: 'jobsName',
+    label: '任务标题',
+    required: true,
+    component: 'Input',
+  },
+  {
+    field: 'jobStatus',
+    label: '任务状态',
+    component: 'Select',
+    defaultValue: JobStatus.Todo,
+    componentProps: {
+      options: options
+    },
+  },
+  {
+    field: 'startDate',
+    label: '开始日期',
+    component: 'DatePicker',
+    required: true,
+    defaultValue: new Date(),
+    componentProps:{
+      mode: 'date'
+    }
+  },
+  {
+    field: 'endDate',
+    label: '结束日期',
+    component: 'DatePicker',
+    required: true,
+    defaultValue: new Date(),
+    componentProps:{
+      mode: 'date'
+    }
+  },
+  {
+    field: 'executorId',
+    label: '执行人',
+    component: 'ApiSelect',
+    defaultValue: null,
+    required: true,
+    componentProps: {
+      api: getUserList,
+      labelField: 'name',
+      valueField: 'id',
+    },
+   },
+  {
+    field: 'description',
+    label: '任务简介',
+    component: 'InputTextArea',
+    componentProps: {
+      rows: 10
     },
   },
 ];

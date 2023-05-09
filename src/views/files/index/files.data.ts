@@ -3,7 +3,12 @@ import { h } from 'vue';
 import { Button, Tag } from "ant-design-vue";
 import { getAllFileTypeList } from "@/api/file/filetype/filetype";
 import { uploadApi } from '@/api/sys/upload';
+import { downloadByUrlData } from '@/utils/file/download';
+import { KbsFileListItem } from '@/api/file/kbsfile/kbsfile';
 
+export  function download(record){
+  return  downloadByUrlData(record.url, record.fileName, record.mimeType);
+}
 export const columns: BasicColumn[] = [
   {
     title: '文件名称',
@@ -45,9 +50,16 @@ export const columns: BasicColumn[] = [
   {
     title: '下载查看',
     dataIndex: 'filePath',
-    width: 200,
+    width: 100,
     customRender: ({ record }) => {
-      return h(Button, { type: 'link' }, () => record.filePath);
+      return h(Button,
+        {
+          type: 'link',
+          onClick(){
+            downloadByUrlData(record.url, record.fileName, record.mimeType)
+          },
+        },
+        () => "下载");
     },
   },
 ];

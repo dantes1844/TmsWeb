@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" @fetch-success="fetchSuccess">
       <template #toolbar>
         <a-button type="primary" @click="handleCreate"> 发布任务 </a-button>
       </template>
@@ -17,6 +17,7 @@
               {
                 icon: 'carbon:catalog-publish',
                 tooltip: '添加子任务',
+                ifShow: !record.parentId,
                 disabled: record.jobStatus != JobStatus.Todo,
                 onClick: handleAddJobChild.bind(null, record),
               },
@@ -42,7 +43,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, nextTick } from 'vue';
 
 import { BasicTable, useTable, TableAction } from '/@/components/Table';
 
@@ -67,7 +68,7 @@ export default defineComponent({
   setup() {
     const [registerDrawer, { openDrawer }] = useDrawer();
     const [registerModal, { openModal }] = useModal();
-    const [registerTable, { reload }] = useTable({
+    const [registerTable, { reload, expandAll }] = useTable({
       title: '任务列表',
       api: getJobPages,
       columns,
@@ -75,10 +76,11 @@ export default defineComponent({
         labelWidth: 120,
         schemas: searchFormSchema,
       },
+      indentSize: 15,
+      isTreeTable: true,
       useSearchForm: true,
       showTableSetting: true,
       bordered: true,
-      showIndexColumn: false,
       actionColumn: {
         width: 80,
         title: '操作',
@@ -95,10 +97,15 @@ export default defineComponent({
     }
 
     function handleEdit(record: CreateJobModel) {
-      openDrawer(true, {
+      const data = {
         record,
         isUpdate: true,
-      });
+      }
+      if(record.parentId){
+        openModal(true,data)
+      }else{
+        openDrawer(true, data);
+      }
     }
 
     function handleAddJobChild(record:CreateJobModel){
@@ -117,6 +124,10 @@ export default defineComponent({
       reload();
     }
 
+    function fetchSuccess(){
+      nextTick(expandAll)
+    }
+
     return {
       registerTable,
       registerDrawer,
@@ -126,6 +137,7 @@ export default defineComponent({
       handleDelete,
       handleSuccess,
       handleAddJobChild,
+      fetchSuccess,
     };
   },
 });

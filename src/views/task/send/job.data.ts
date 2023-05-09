@@ -27,6 +27,7 @@ export const columns: BasicColumn[] = [
     title: '任务标题',
     dataIndex: 'jobsName',
     width: 200,
+    align: 'left',
   },
   {
     title: '任务描述',

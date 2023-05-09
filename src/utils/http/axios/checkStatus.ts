@@ -35,11 +35,12 @@ export function checkStatus(
     case 401:
       userStore.setToken(undefined);
       errMessage = message || t('sys.api.errMsg401');
-      if (stp === SessionTimeoutProcessingEnum.PAGE_COVERAGE) {
-        userStore.setSessionTimeout(true);
-      } else {
-        userStore.logout(true);
-      }
+      // if (stp === SessionTimeoutProcessingEnum.PAGE_COVERAGE) {
+      //   userStore.setSessionTimeout(true);
+      // } else {
+      //
+      // }
+      userStore.logout(true);
       break;
     case 403:
       if(code=="1001"){

@@ -11,6 +11,8 @@
   import { createAccount, updateAccount } from '/@/api/account/account';
   import { cloneDeep } from 'lodash-es';
   import { CreateJobModel } from '@/api/job/model/jobModel';
+  import { createJob, createSubJob, updateJob } from '@/api/job/job';
+  import { dateUtil } from '@/utils/dateUtil';
 
   export default defineComponent({
     name: 'JobModal',
@@ -38,6 +40,7 @@
         rowId.value = data.record.id;
         const subJob: CreateJobModel = cloneDeep(data.record)
         subJob.parentId = data.record.id;
+        subJob['id'] = 0
 
         setFieldsValue({
           ...subJob,
@@ -62,14 +65,21 @@
       async function handleSubmit() {
         try {
           const values = await validate();
+
           setModalProps({ confirmLoading: true });
-          const model = Object.assign({}, values);
-          if (model.id) {
-            await updateAccount(model);
+
+          const job = Object.assign({}, values);
+          job.startDate = dateUtil(job.startDate).format('YYYY-MM-DD')
+          job.endDate = dateUtil(job.endDate).format('YYYY-MM-DD')
+
+          if (job.id) {
+            await updateJob(job);
           } else {
-            await createAccount(model);
+            await createSubJob(job);
           }
+
           closeModal();
+
           emit('success', { isUpdate: unref(isUpdate), values: { ...values, id: rowId.value } });
         } finally {
           setModalProps({ confirmLoading: false });

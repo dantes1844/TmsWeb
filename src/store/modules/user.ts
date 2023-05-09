@@ -173,12 +173,12 @@ export const useUserStore = defineStore({
       if (this.getToken) {
         try {
           await doLogout();
-          storage.remove(configurationStorageKey)
-          clearAuthCache(true)
         } catch {
           console.log('注销Token失败');
         }
       }
+      clearAuthCache(true)
+      storage.remove(configurationStorageKey)
       this.setToken(undefined);
       this.setSessionTimeout(false);
       this.setUserInfo(null);

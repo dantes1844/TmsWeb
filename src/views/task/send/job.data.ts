@@ -1,5 +1,5 @@
 import {BasicColumn, FormSchema} from '/@/components/Table';
-import {formatToDateTime} from '@/utils/dateUtil';
+import { formatToDate, formatToDateTime } from '@/utils/dateUtil';
 import {JobStatus} from '@/api/job/model/jobModel';
 import {getUserList} from '@/api/user/user';
 import {h} from "vue";
@@ -36,7 +36,7 @@ export const columns: BasicColumn[] = [
   {
     title: '任务状态',
     dataIndex: 'jobStatus',
-    width: 200,
+    width: 100,
     customRender: ({record}) => {
       return getStatusName(record.jobStatus);
     },
@@ -44,17 +44,33 @@ export const columns: BasicColumn[] = [
   {
     title: '负责人',
     dataIndex: 'supervisorUserName',
-    width: 200,
+    width: 100,
   },
   {
     title: '执行人',
     dataIndex: 'jobUsers',
-    width: 200,
+    width: 100,
+  },
+  {
+    title: '计划开始时间',
+    dataIndex: 'startDate',
+    width: 120,
+    customRender: ({record}) => {
+      return formatToDate(record.startDate);
+    }
+  },
+  {
+    title: '计划结束时间',
+    dataIndex: 'endDate',
+    width: 120,
+    customRender: ({record}) => {
+      return formatToDate(record.endDate);
+    }
   },
   {
     title: '发布时间',
     dataIndex: 'creationTime',
-    width: 200,
+    width: 160,
     customRender: ({record}) => {
       return formatToDateTime(record.creationTime);
     }
@@ -190,6 +206,7 @@ export const editSubJobFormSchema: FormSchema[] = [
     component: 'ApiSelect',
     componentProps: {
       api: getJobList,
+      disabled: true,
       labelField: 'jobsName',
       valueField: 'id',
       params:{

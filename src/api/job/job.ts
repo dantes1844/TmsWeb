@@ -8,15 +8,11 @@ import {
 
 enum Api {
   JobPages = '/app/job/pages',
-
   CreateJob = '/app/job',
-
   UpdateJob = '/app/job',
-
+  AddSubJob = '/app/job/sub-job',
   DeleteJob = '/app/job',
-
   ToggleJobDisabled = '/job/toggle',
-
   AllJobs = '/app/job',
 }
 
@@ -34,6 +30,12 @@ export const getJobList = (params?: JobParams) =>
 export const createJob = (params?: CreateJobModel) =>
   defHttp.post<JobListGetResultModel>(
     { url: Api.CreateJob, params },
+    { isTransformResponse: false },
+  );
+
+export const createSubJob = (params?: CreateJobModel) =>
+  defHttp.post<JobListGetResultModel>(
+    { url: Api.AddSubJob, params },
     { isTransformResponse: false },
   );
 

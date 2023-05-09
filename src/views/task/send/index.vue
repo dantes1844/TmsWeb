@@ -10,16 +10,21 @@
             :actions="[
               {
                 icon: 'clarity:note-edit-line',
+                tooltip: '修改任务',
+                disabled: record.jobStatus !=JobStatus.Todo,
                 onClick: handleEdit.bind(null, record),
               },
               {
                 icon: 'carbon:catalog-publish',
+                tooltip: '添加子任务',
                 disabled: record.jobStatus != JobStatus.Todo,
                 onClick: handleAddJobChild.bind(null, record),
               },
               {
                 icon: 'ant-design:delete-outlined',
                 color: 'error',
+                tooltip: '删除任务',
+                disabled: record.jobStatus !=JobStatus.Todo,
                 popConfirm: {
                   title: '是否确认删除',
                   placement: 'left',

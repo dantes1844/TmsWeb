@@ -159,7 +159,7 @@ export const useUserStore = defineStore({
         userId: currentUser.id,
         avatar: '',
         username: currentUser.userName,
-        realName: currentUser.userName,
+        realName: currentUser.name,
       } as UserInfo;
 
       this.setUserInfo(user);

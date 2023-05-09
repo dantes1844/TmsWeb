@@ -27,7 +27,11 @@ export function checkStatus(
 
   switch (status) {
     case 400:
-      errMessage = `${message}`;
+      if(realError=='invalid_grant'){
+        errMessage = '用户名或密码错误';
+      }else{
+        errMessage = `${message}`;
+      }
       break;
     // 401: Not logged in
     // Jump to the login page if not logged in, and carry the path of the current page

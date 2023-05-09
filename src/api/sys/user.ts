@@ -51,7 +51,7 @@ export function getTokenApi(params: TokenParams, mode: ErrorMessageMode = 'modal
       },
     },
     {
-      errorMessageMode: mode,
+      errorMessageMode: 'message',
       apiUrl: '', // 这个地址是openiddict提供的，没有api前缀
       isTransformResponse: false,
     },

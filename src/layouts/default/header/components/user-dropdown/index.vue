@@ -1,7 +1,13 @@
 <template>
   <Dropdown placement="bottomLeft" :overlayClassName="`${prefixCls}-dropdown-overlay`">
     <span :class="[prefixCls, `${prefixCls}--${theme}`]" class="flex">
-      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />
+<!--      <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />-->
+      <div class="mr-2 rounded-full h-8 w-8 flex justify-center items-center bg-green-600">
+        <span class="text-2xl">
+        {{ getUserInfo.realName.substring(0,1).toUpperCase()}}
+        </span>
+
+      </div>
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
           {{ getUserInfo.realName }}
@@ -12,26 +18,19 @@
     <template #overlay>
       <Menu @click="handleMenuClick">
         <MenuItem
-          key="doc"
-          :text="t('layout.header.dropdownItemDoc')"
-          icon="ion:document-text-outline"
-          v-if="getShowDoc"
-        />
-        <MenuDivider v-if="getShowDoc" />
-        <MenuItem
           v-if="getUseLockPage"
           key="lock"
-          :text="t('layout.header.tooltipLock')"
+          text="锁屏"
           icon="ion:lock-closed-outline"
         />
         <MenuItem
           key="password"
-          :text="t('layout.header.changePassword')"
+          text="修改密码"
           icon="ion:lock-closed-outline"
         />
         <MenuItem
           key="logout"
-          :text="t('layout.header.dropdownItemLoginOut')"
+          text="退出登录"
           icon="ion:power-outline"
         />
       </Menu>

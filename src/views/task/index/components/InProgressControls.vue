@@ -7,7 +7,7 @@
 <!--        <span class="text-xl inline-block align-middle"></span>-->
       </div>
       <div class="ml-4">
-        <Progress type="circle" :percent="75"/>
+        <Progress type="circle" :percent="item.percent"/>
       </div>
     </div>
   </div>

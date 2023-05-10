@@ -47,8 +47,17 @@ export interface JobDetail{
   endDate: string;
   supervisorId: string;
   supervisorUserName: string;
+  executorId: string;
+  executorName: string;
   description: string;
-  jobUsers: jobUser[]
+  jobUsers: jobUser[];
+  percent: number;
+  rate: number;
+}
+
+export type JobDashboard = {
+  jobStatus: JobStatus;
+  jobs: JobDetail[]
 }
 
 export interface JobParams{

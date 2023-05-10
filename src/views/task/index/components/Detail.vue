@@ -20,11 +20,16 @@
     <div class="h-auto">
       <div v-for="(item,index) in items" :key="index" class="bg-white mt-2 h-auto">
         <div class="flex flex-row">
-          <img src="/src/assets/images/header.jpg" class="rounded-full w-1/8 h-1/4 m-4" alt=""/>
+          <div class="mr-2 rounded-full h-8 w-8 flex justify-center items-center bg-green-600">
+        <span class="text-2xl">
+        {{ item.supervisorUserName.substring(0,1).toUpperCase()}}
+        </span>
+
+        </div>
           <div class="mt-4">
             <span class="bold text-xl">
               <router-link to="">
-                {{ item.title }}
+                {{ item.jobName }}
               </router-link>
             </span>
             <div class="my-2 mr-2">
@@ -33,25 +38,25 @@
             </div>
             <div class="my-2 mr-2">
               <span>负责人：</span>
-              <span>{{ item.supervisor }}</span>
+              <span>{{ item.supervisorUserName }}</span>
             </div>
             <div class="my-2 mr-2">
               <span>执行人：</span>
-              <span>{{ item.members.join("，") }}</span>
+              <span>{{ item.executorName}}</span>
             </div>
             <div class="my-2 mr-2">
               <span>时间：</span>
-              <span>{{ item.startDate }} 至 {{ item.endDate }}</span>
+              <span>{{ formatDate(item.startDate) }} 至 {{ formatDate(item.endDate) }}</span>
             </div>
           </div>
         </div>
 
-        <todo-controls v-if="item.status==TaskStatus.Todo" :item="item"></todo-controls>
-        <in-progress-controls v-if="item.status==TaskStatus.InProgress"
+        <todo-controls v-if="item.jobStatus==JobStatus.Todo" :item="item"></todo-controls>
+        <in-progress-controls v-if="item.jobStatus==JobStatus.InProgress"
                               :item="item"></in-progress-controls>
-        <final-check-controls v-if="item.status==TaskStatus.FinalCheck"
+        <final-check-controls v-if="item.jobStatus==JobStatus.FinalCheck"
                               :item="item"></final-check-controls>
-        <done-controls v-if="item.status==TaskStatus.Done" :item="item"></done-controls>
+        <done-controls v-if="item.jobStatus==JobStatus.Done" :item="item"></done-controls>
 
       </div>
     </div>
@@ -66,15 +71,15 @@ import TodoControls from '@/views/task/index/components/todoControls.vue';
 import InProgressControls from '@/views/task/index/components/inProgressControls.vue';
 import FinalCheckControls from '@/views/task/index/components/finalCheckControls.vue';
 import DoneControls from '@/views/task/index/components/doneControls.vue';
-
-import { TaskDetail, TaskStatus } from '@/views/task/index/data';
+import { JobDetail, JobStatus } from '@/api/job/model/jobModel';
+import { formatToDate } from '@/utils/dateUtil';
 
 export default defineComponent({
   name: "Detail",
   components: { Icon, TodoControls, InProgressControls, FinalCheckControls, DoneControls },
   props: {
     items: {
-      type: Array as PropType<TaskDetail[]>,
+      type: Array as PropType<JobDetail[]>,
       required: true
     },
     title: {
@@ -87,10 +92,10 @@ export default defineComponent({
       return props.items.length;
     });
     const taskUserCount = computed(() => {
-      let userCount = 0;
-      for (let i = 0; i < props.items.length; i++) {
-        userCount += props.items[i]?.members?.length;
-      }
+      let userCount = 1;
+      // for (let i = 0; i < props.items.length; i++) {
+      //   userCount += props.items[i]?.members?.length;
+      // }
       return userCount;
     });
     const taskDays = computed(() => {
@@ -98,8 +103,8 @@ export default defineComponent({
       for (let i = 0; i < props.items.length; i++) {
         const item = props.items[i];
 
-        let start = new Date(item.startDate);
-        let end = new Date(item.endDate);
+        let start = new Date(formatToDate(item.startDate));
+        let end = new Date(formatToDate(item.endDate));
         let diff = (end - start) / (24 * 60 * 60 * 1000);
         console.log(diff);
         dayCount += diff;
@@ -107,11 +112,16 @@ export default defineComponent({
       return dayCount;
     });
 
+    function formatDate(date){
+      return formatToDate(date);
+    }
+
     return {
       taskCount,
       taskUserCount,
       taskDays,
-      TaskStatus
+      JobStatus,
+      formatDate
     };
 
   }

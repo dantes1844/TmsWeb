@@ -25,7 +25,7 @@ export function getStatusName(status: JobStatus) {
 export const columns: BasicColumn[] = [
   {
     title: '任务标题',
-    dataIndex: 'jobsName',
+    dataIndex: 'jobName',
     width: 200,
     align: 'left',
   },
@@ -88,7 +88,7 @@ export const options = [
 
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'jobsName',
+    field: 'jobName',
     label: '任务标题',
     component: 'Input',
     colProps: {span: 8},
@@ -113,7 +113,7 @@ export const editFormSchema: FormSchema[] = [
     show: false,
   },
   {
-    field: 'jobsName',
+    field: 'jobName',
     label: '任务标题',
     required: true,
     component: 'Input',
@@ -208,7 +208,7 @@ export const editSubJobFormSchema: FormSchema[] = [
     componentProps: {
       api: getJobList,
       disabled: true,
-      labelField: 'jobsName',
+      labelField: 'jobName',
       valueField: 'id',
       params:{
         jobStatus: JobStatus.Todo
@@ -226,7 +226,7 @@ export const editSubJobFormSchema: FormSchema[] = [
     }
   },
   {
-    field: 'jobsName',
+    field: 'jobName',
     label: '任务标题',
     required: true,
     component: 'Input',

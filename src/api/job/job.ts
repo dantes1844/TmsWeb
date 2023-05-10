@@ -1,9 +1,9 @@
 import { defHttp } from '/@/utils/http/axios';
 import {
-  CreateJobModel,
+  CreateJobModel, JobDashboard, JobDetail,
   JobListGetResultModel,
-  JobParams,
-  JobToggleParams, UpdateJobModel,
+  JobParams, JobStatus,
+  JobToggleParams, TaskDetail, UpdateJobModel,
 } from '/@/api/job/model/jobModel';
 
 enum Api {
@@ -14,8 +14,14 @@ enum Api {
   DeleteJob = '/app/job',
   ToggleJobDisabled = '/job/toggle',
   AllJobs = '/app/job',
+  JobDashboard='/app/job/dashboards'
 }
 
+export const getDashboards = (params?: JobParams) =>
+  defHttp.get<JobDashboard[]>(
+    { url: Api.JobDashboard, params },
+    { isTransformResponse: false },
+  );
 export const getJobPages = (params?: JobParams) =>
   defHttp.get<JobListGetResultModel>(
     { url: Api.JobPages, params },

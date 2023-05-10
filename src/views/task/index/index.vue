@@ -13,6 +13,7 @@ import { getDashboards } from '@/api/job/job';
 import { defineComponent, onMounted, ref } from 'vue';
 import { JobDetail, JobStatus } from '@/api/job/model/jobModel';
 import Detail from '@/views/task/index/components/Detail.vue';
+import { bus, EventBusType } from '@/utils/event/eventBus';
 
 export default defineComponent({
   props: {
@@ -29,12 +30,20 @@ export default defineComponent({
     const finalCheckList= ref<JobDetail[]>([]);
     const doneList= ref<JobDetail[]>([]);
 
-    onMounted(() => {
+    function loadDashboard(){
       getDashboards().then(res => {
         todoList.value = res.filter(c => c.jobStatus == JobStatus.Todo)[0]?.jobs as JobDetail[];
         inProgressList.value = res.filter(c => c.jobStatus == JobStatus.InProgress)[0]?.jobs  as JobDetail[];
         finalCheckList.value = res.filter(c => c.jobStatus == JobStatus.FinalCheck)[0]?.jobs  as JobDetail[];
         doneList.value = res.filter(c => c.jobStatus == JobStatus.Done)[0]?.jobs  as JobDetail[];
+      });
+    }
+
+    onMounted(() => {
+      loadDashboard();
+
+      bus.on(EventBusType.ReloadJobDashboard, () => {
+        loadDashboard();
       });
     });
 

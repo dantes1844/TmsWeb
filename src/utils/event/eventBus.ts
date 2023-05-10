@@ -5,5 +5,6 @@ const bus = mitt();
 
 enum EventBusType {
   ResetDeptId = 'ResetDeptId',
+  ReloadJobDashboard = 'ReloadJobDashboard',
 }
 export { bus, EventBusType };

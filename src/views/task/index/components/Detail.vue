@@ -46,13 +46,13 @@
           </div>
         </div>
 
-        <todo-controls v-if="item.jobStatus==JobStatus.Todo" :item="item"></todo-controls>
+        <todo-controls v-if="item.jobStatus==JobStatus.Todo"
+                       :item="item"></todo-controls>
         <in-progress-controls v-if="item.jobStatus==JobStatus.InProgress"
                               :item="item"></in-progress-controls>
         <final-check-controls v-if="item.jobStatus==JobStatus.FinalCheck"
                               :item="item"></final-check-controls>
         <done-controls v-if="item.jobStatus==JobStatus.Done" :item="item"></done-controls>
-
       </div>
     </div>
   </div>

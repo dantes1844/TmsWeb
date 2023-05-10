@@ -1,6 +1,6 @@
 <template>
-  <div class="basis-1/4 rounded m-2">
-    <div class="bg-white h-24">
+  <div class="basis-1/4  m-2">
+    <div class="bg-white h-24 rounded">
       <div class="m-2 flex flex-col">
         <span class="text-2xl m-2">{{ title }}</span>
         <div class="flex flex-row">
@@ -18,7 +18,7 @@
     <!--      </Button>-->
     <!--    </div>-->
     <div class="h-auto">
-      <div v-for="(item,index) in items" :key="index" class="bg-white mt-2 h-auto">
+      <div v-for="(item,index) in items" :key="index" class="bg-white mt-2 h-auto rounded">
         <div class="flex flex-row">
           <div class="mt-4 ml-4">
             <span class="bold text-xl">
@@ -87,10 +87,10 @@ export default defineComponent({
       return props.items.length;
     });
     const taskUserCount = computed(() => {
-      let userCount = 1;
-      // for (let i = 0; i < props.items.length; i++) {
-      //   userCount += props.items[i]?.members?.length;
-      // }
+      let userCount = 0;
+      for (let i = 0; i < props.items.length; i++) {
+         userCount += 1;
+      }
       return userCount;
     });
     const taskDays = computed(() => {

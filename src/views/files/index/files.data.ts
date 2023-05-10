@@ -10,10 +10,11 @@ export const columns: BasicColumn[] = [
     title: '文件名称',
     dataIndex: 'fileName',
     width: 200,
+    align: 'left',
   },
   {
     title: '文件大小',
-    dataIndex: 'size',
+    dataIndex: 'sizeDisplay',
     width: 80,
   },
   {

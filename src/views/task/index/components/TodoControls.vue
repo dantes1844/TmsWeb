@@ -10,6 +10,7 @@
       </Button>
       <Button class="ml-2"
               shape="round"
+              @click="cancelJob"
               size="medium">取消任务
       </Button>
     </div>
@@ -21,7 +22,7 @@ import { Button } from 'ant-design-vue';
 import { defineComponent } from 'vue';
 import { useMessage } from '@/hooks/web/useMessage';
 import { bus, EventBusType } from '/@/utils/event/eventBus';
-import { setJobStart } from '@/api/job/job';
+import { setJobStart, setJobCancel } from '@/api/job/job';
 import { JobDetail } from '@/api/job/model/jobModel';
 
 export default defineComponent({
@@ -49,8 +50,22 @@ export default defineComponent({
       });
     }
 
+    function cancelJob(){
+      createConfirm({
+        iconType: 'info',
+        title: '取消任务',
+        content: '如果包含子任务，将会被全部设置为取消状态，确定取消该任务吗？',
+        onOk(){
+          setJobCancel(props.item.id).then(()=>{
+            bus.emit(EventBusType.ReloadJobDashboard);
+          });
+        }
+      });
+    }
+
     return {
-      startJob
+      startJob,
+      cancelJob,
     };
   }
 });

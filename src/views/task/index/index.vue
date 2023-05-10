@@ -10,7 +10,7 @@
 <script lang="ts">
 
 import { getDashboards } from '@/api/job/job';
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
 import { JobDetail, JobStatus } from '@/api/job/model/jobModel';
 import Detail from '@/views/task/index/components/Detail.vue';
 import { bus, EventBusType } from '@/utils/event/eventBus';
@@ -46,6 +46,10 @@ export default defineComponent({
         loadDashboard();
       });
     });
+
+    onBeforeUnmount(() => {
+      bus.all.delete(EventBusType.ReloadJobDashboard);
+    })
 
     return {
       todoList,

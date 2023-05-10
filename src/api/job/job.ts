@@ -29,6 +29,11 @@ export const setJobStart = (id: number) =>
     { url: `${Api.Start}/${id}/start` },
     { isTransformResponse: false },
   );
+export const setJobCancel = (id: number) =>
+  defHttp.post<boolean>(
+    { url: `${Api.Start}/${id}/cancel` },
+    { isTransformResponse: false },
+  );
 export const getJobPages = (params?: JobParams) =>
   defHttp.get<JobListGetResultModel>(
     { url: Api.JobPages, params },

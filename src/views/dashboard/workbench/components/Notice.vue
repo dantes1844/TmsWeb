@@ -34,7 +34,7 @@ import { defineComponent, onMounted, ref } from "vue";
       let notices = ref<NoticeDetail[]>([]);
 
       function changeTab(tab: number | null) {
-        getNoticePages({ noticeType: tab } as NoticeParams).then(res=>{
+        getNoticePages({ noticeType: tab, pageSize: 5, isPublic: true } as NoticeParams).then(res=>{
           notices.value = res.items;
         })
       }

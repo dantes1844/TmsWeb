@@ -1,4 +1,5 @@
 import {UploadApiResult} from "@/api/sys/model/uploadModel";
+import { BasicPageParams } from '@/api/model/baseModel';
 
 export interface NoticeDetail {
   id: number;
@@ -44,7 +45,7 @@ export const NoticeTypeTabs: NoticeTypeTab[] = [
   { NoticeType: NoticeType.Files, Name: '知识库' },
   { NoticeType: NoticeType.Others, Name: '其他' },
 ]
-export interface NoticeParams{
+export type NoticeParams = BasicPageParams & {
   title?: string;
   noticeType: NoticeType;
 }

@@ -20,13 +20,7 @@
     <div class="h-auto">
       <div v-for="(item,index) in items" :key="index" class="bg-white mt-2 h-auto">
         <div class="flex flex-row">
-          <div class="mr-2 rounded-full h-8 w-8 flex justify-center items-center bg-green-600">
-        <span class="text-2xl">
-        {{ item.supervisorUserName.substring(0,1).toUpperCase()}}
-        </span>
-
-        </div>
-          <div class="mt-4">
+          <div class="mt-4 ml-4">
             <span class="bold text-xl">
               <router-link to="">
                 {{ item.jobName }}
@@ -39,11 +33,12 @@
             <div class="my-2 mr-2">
               <span>负责人：</span>
               <span>{{ item.supervisorUserName }}</span>
-            </div>
-            <div class="my-2 mr-2">
-              <span>执行人：</span>
+
+              <span class="ml-4">执行人：</span>
               <span>{{ item.executorName}}</span>
+
             </div>
+
             <div class="my-2 mr-2">
               <span>时间：</span>
               <span>{{ formatDate(item.startDate) }} 至 {{ formatDate(item.endDate) }}</span>

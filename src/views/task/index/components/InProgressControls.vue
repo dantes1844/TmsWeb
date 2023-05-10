@@ -1,15 +1,7 @@
 <template>
-  <div class="my-2 flex flex-row">
-    <div class="w-1/8 m-4"></div>
-    <div class="mb-4 flex flex-row">
-      <div class="align-middle inline-block align-middle text-xl">
-        当前进度
-<!--        <span class="text-xl inline-block align-middle"></span>-->
-      </div>
-      <div class="ml-4">
-        <Progress type="circle" :percent="item.percent"/>
-      </div>
-    </div>
+  <div class="mb-4 flex flex-row">
+    <span class="w-12 ml-4">进度: </span>
+    <Progress :percent="item.percent" type="line" :show-info="true"/>
   </div>
 </template>
 
@@ -31,11 +23,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-
-/deep/.ant-progress-inner{
-  width: 60px !important;
-  height: 60px !important;
-}
-</style>

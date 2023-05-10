@@ -1,7 +1,7 @@
 <template>
   <div class="my-2 flex flex-row ">
     <div class="w-1/8 m-4"></div>
-    <div class="mb-4">
+    <div class="mb-2">
       <Button class="mr-2" size="medium" shape="round" type="primary">结束任务</Button>
     </div>
   </div>

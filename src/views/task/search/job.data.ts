@@ -1,24 +1,8 @@
 import {BasicColumn, FormSchema} from '/@/components/Table';
 import {formatToDateTime} from '@/utils/dateUtil';
-import {JobStatus} from '@/api/job/model/jobModel';
+import { JobStatus, getStatusName } from '@/api/job/model/jobModel';
 import {getUserList} from '@/api/user/user';
 
-export function getStatusName(status: JobStatus){
-  switch (status){
-    case JobStatus.UnStart:
-      return "未开始";
-    case JobStatus.Canceled:
-      return '已取消';
-    case JobStatus.Agreement:
-      return '待审核';
-    case JobStatus.Finished:
-      return '已完成';
-    case JobStatus.Doing:
-      return '进行中';
-    default:
-      return '未开始';
-  }
-}
 
 export const columns: BasicColumn[] = [
   {
@@ -55,11 +39,11 @@ export const columns: BasicColumn[] = [
 ];
 
 export const options = [
-  { label: getStatusName(JobStatus.UnStart), value: JobStatus.UnStart },
+  { label: getStatusName(JobStatus.Todo), value: JobStatus.Todo },
   { label: getStatusName(JobStatus.Canceled), value: JobStatus.Canceled },
-  { label: getStatusName(JobStatus.Doing), value: JobStatus.Doing },
-  { label: getStatusName(JobStatus.Agreement), value: JobStatus.Agreement },
-  { label: getStatusName(JobStatus.Finished), value: JobStatus.Finished },
+  { label: getStatusName(JobStatus.InProgress), value: JobStatus.InProgress },
+  { label: getStatusName(JobStatus.FinalCheck), value: JobStatus.FinalCheck },
+  { label: getStatusName(JobStatus.Done), value: JobStatus.Done },
 ]
 
 export const searchFormSchema: FormSchema[] = [

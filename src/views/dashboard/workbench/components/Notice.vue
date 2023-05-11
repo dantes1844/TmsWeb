@@ -1,7 +1,7 @@
 <template>
   <Card title="公告">
     <template #extra>
-      <a-button type="link" size="small">更多</a-button>
+      <a-button type="link" size="small" @click="more">更多</a-button>
     </template>
     <Tabs @change="changeTab">
       <template v-for="item in tabs" :key="item.NoticeType">
@@ -27,6 +27,7 @@ import { defineComponent, onMounted, ref } from "vue";
   import { groupItems } from './data';
   import { getNoticePages } from "@/api/notice/notice";
   import { NoticeParams, NoticeDetail, NoticeTypeTabs } from "@/api/notice/model/noticeModel";
+import { useRouter } from 'vue-router';
 
   export default defineComponent({
     components: { Card, Tabs, TabPane: Tabs.TabPane, AList: List, AListItem: List.Item },
@@ -39,6 +40,11 @@ import { defineComponent, onMounted, ref } from "vue";
         })
       }
 
+      const router = useRouter();
+      function more(){
+        router.push({path:'/notice/index'});
+      }
+
       onMounted(()=>{
         changeTab(null)
       })
@@ -47,7 +53,8 @@ import { defineComponent, onMounted, ref } from "vue";
         items: groupItems,
         tabs: NoticeTypeTabs,
         changeTab,
-        notices
+        notices,
+        more
       };
     },
   });

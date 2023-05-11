@@ -1,112 +1,69 @@
 <template>
   <Card title="关注的任务">
     <template #extra>
-      <a-button type="link" size="small">更多</a-button>
+      <a-button type="link" size="small" @click="more">更多</a-button>
     </template>
-    <a-table :columns="columns" :data-source="data">
-      <template #headerCell="{ column }">
-        <template v-if="column.key === 'name'">
-          <span> {{ column.name }} </span>
-        </template>
-      </template>
-
+    <Table :columns="columns" :data-source="jobs">
       <template #bodyCell="{ column, record }">
-        <template v-if="column.key === 'name'">
+        <template v-if="column.key === 'jobName'">
           <a class="text-gray-600">
-            {{ record.name }}
+            {{ record.jobName }}
           </a>
         </template>
-        <template v-else-if="column.key === 'tags'">
+        <template v-else-if="column.key === 'jobStatus'">
           <span>
-            <a-tag
-              v-for="tag in record.tags"
-              :key="tag"
-              :color="getColor(tag)"
-            >
-              {{ tag.toUpperCase() }}
-            </a-tag>
+            <Tag :color="getStatusNameAndColor(record.jobStatus).color">
+              {{ getStatusNameAndColor(record.jobStatus).name  }}
+            </Tag>
           </span>
         </template>
       </template>
-    </a-table>
+    </table>
   </Card>
 </template>
 <script lang="ts">
-  import { defineComponent } from 'vue';
+  import { defineComponent, ref } from 'vue';
   import { Card, Table, Tag } from 'ant-design-vue';
-  import { groupItems } from './data';
+  import { getJobPages } from '@/api/job/job';
+  import { JobDetail, getStatusNameAndColor, JobParams } from '@/api/job/model/jobModel';
+  import { useRouter } from 'vue-router';
 
   export default defineComponent({
-    components: { Card, ATable: Table, ATag: Tag },
+    components: { Card, Table, Tag },
     setup() {
+      const jobs = ref<JobDetail[]>([]);
       const columns = [
         {
-          name: '任务名称',
-          dataIndex: 'name',
-          key: 'name',
+          title: '任务名称',
+          dataIndex: 'jobName',
+          key: 'jobName',
         },
         {
           title: '责任人',
-          dataIndex: 'supervisor',
-          key: 'supervisor',
+          dataIndex: 'supervisorUserName',
+          key: 'supervisorUserName',
         },
         {
           title: '任务进度',
-          key: 'tags',
-          dataIndex: 'tags',
-        },
-      ];
-      const data = [
-        {
-          key: '1',
-          name: '新建厂站工作一的名称',
-          supervisor: '曾同方',
-          tags: ['进行中'],
-        },
-        {
-          key: '2',
-          name: '新建厂站工作二的名称',
-          supervisor: '万刚毅',
-          tags: ['已过期'],
-        },
-        {
-          key: '3',
-          name: '扩建厂站工作一的名称',
-          supervisor: '梁建元',
-          tags: ['未启动'],
-        },
-        {
-          key: '4',
-          name: '电器开关柜巡检任务',
-          supervisor: '邓华清',
-          tags: ['已结束'],
-        },
-        {
-          key: '5',
-          name: 'OMS系统数据同步工作',
-          supervisor: '孙志明',
-          tags: ['已结束'],
+          key: 'jobStatus',
+          dataIndex: 'jobStatus',
         },
       ];
 
-      function getColor(tag){
-        switch (tag){
-          case '未开始':
-            return 'gray';
-          case '进行中':
-            return 'geekblue';
-          case '已结束':
-            return 'green';
-          case '已过期':
-            return 'red';
-        }
+      getJobPages({ pageSize: 5, includeChildren: false }  as JobParams).then(res=>{
+        jobs.value = res.items;
+      })
+
+      const router = useRouter();
+      function more(){
+        router.push({path:'/task/send'})
       }
 
       return {
-        items: groupItems,
-        columns: columns,
-        data: data,
-        getColor
+        columns,
+        jobs,
+        getStatusNameAndColor,
+        more,
       };
     },
   });

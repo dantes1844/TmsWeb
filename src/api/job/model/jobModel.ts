@@ -1,4 +1,6 @@
-import {BasicFetchResult} from "@/api/model/baseModel";
+import { BasicFetchResult, BasicPageParams } from '@/api/model/baseModel';
+import { h } from 'vue';
+import { Tag } from 'ant-design-vue';
 
 export enum JobStatus {
   Todo=0,
@@ -6,6 +8,32 @@ export enum JobStatus {
   FinalCheck=2,
   Done=3,
   Canceled=10,
+}
+export type JobStatusNameAndColor = {
+  name: string;
+  color: string;
+}
+
+export function getStatusNameAndColor(status: JobStatus) :JobStatusNameAndColor {
+  switch (status){
+    case JobStatus.Todo:
+      return { name: "未开始", color: ''};
+    case JobStatus.Canceled:
+      return { name: "已取消", color: 'red'};
+    case JobStatus.FinalCheck:
+      return { name: "待审核", color: 'purple'};
+    case JobStatus.Done:
+      return { name: "已完成", color: 'green'};
+    case JobStatus.InProgress:
+      return { name: "进行中", color: 'blue'};
+    default:
+      return { name: "未开始", color: ''};
+  }
+}
+
+export function getStatusName(status: JobStatus) {
+  const nameAndColor = getStatusNameAndColor(status)
+  return h(Tag, { color: nameAndColor.color },()=>nameAndColor.name);
 }
 
 export interface CreateJobModel{
@@ -60,9 +88,10 @@ export type JobDashboard = {
   jobs: JobDetail[]
 }
 
-export interface JobParams{
+export type JobParams = BasicPageParams & {
   jobName: string;
   jobStatus: JobStatus;
+  includeChildren: boolean;
 }
 export interface JobToggleParams{
 

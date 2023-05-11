@@ -1,26 +1,8 @@
 import {BasicColumn, FormSchema} from '/@/components/Table';
 import { formatToDate, formatToDateTime } from '@/utils/dateUtil';
-import {JobStatus} from '@/api/job/model/jobModel';
+import {JobStatus, getStatusName } from '@/api/job/model/jobModel';
 import {getUserList} from '@/api/user/user';
-import {h} from "vue";
-import {Tag} from "ant-design-vue";
 import { getJobList } from '@/api/job/job';
-
-export function getStatusName(status: JobStatus) {
-  switch (status) {
-    case JobStatus.Canceled:
-      return h(Tag, {color: 'red'}, () => '已取消');
-    case JobStatus.FinalCheck:
-      return h(Tag, {color: 'purple'}, () => '待审核');
-    case JobStatus.Done:
-      return h(Tag, {color: 'green'}, () => '已完成');
-    case JobStatus.InProgress:
-      return h(Tag, {color: 'blue'}, () => '进行中');
-    case JobStatus.Todo:
-    default:
-      return h(Tag, {color: ''}, () => '未开始');
-  }
-}
 
 export const columns: BasicColumn[] = [
   {

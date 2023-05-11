@@ -4,8 +4,8 @@ import {
   MenuListGetResultModel,
   MenuParams,
   MenuToggleParams,
+  ShortCutModel
 } from '/@/api/menu/model/menuModel';
-import ShortCut from '@/views/dashboard/workbench/components/ShortCut.vue';
 
 enum Api {
   MenuPages = '/app/menus/pages',
@@ -28,7 +28,7 @@ export const getMenuPages = (params?: MenuParams) =>
     { isTransformResponse: false },
   );
 export const getShortCuts = () =>
-  defHttp.get<ShortCut[]>(
+  defHttp.get<ShortCutModel[]>(
     { url: Api.ShortCuts },
     { isTransformResponse: false },
   );

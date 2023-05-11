@@ -3,7 +3,7 @@
     <Card v-for="(item, index) in shortCuts" :key="index">
       <router-link class="flex text-gray-600" :to="item.url">
         <Icon :icon="item.icon" size="36" :color="item.color" />
-        <span class="text-lg ml-4 mt-1">{{ item.title }}</span>
+        <span class="text-lg ml-4 mt-1">{{ item.displayName }}</span>
       </router-link>
     </Card>
   </div>
@@ -12,10 +12,10 @@
   import { Card } from 'ant-design-vue';
   import Icon from '@/components/Icon/Icon.vue';
   import { getShortCuts } from '@/api/menu/menu';
-  import ShortCut from '@/views/dashboard/workbench/components/ShortCut.vue';
   import { onMounted, ref } from 'vue';
+  import { ShortCutModel } from '@/api/menu/model/menuModel';
 
-  const shortCuts = ref<ShortCut[]>([]);
+  const shortCuts = ref<ShortCutModel[]>([]);
 
   onMounted(()=>{
     getShortCuts().then(res=>{

@@ -34,11 +34,11 @@ export type MenuToggleParams = {
   status: boolean;
 };
 
-interface ShortCut {
+export type ShortCutModel = {
   id: number;
   color: string;
   icon: string;
-  title: string;
+  displayName: string;
   url?: string;
 }
 

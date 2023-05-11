@@ -1,7 +1,7 @@
 <template>
   <Card title="公告">
     <template #extra>
-      <a-button type="link" size="small" @click="more">更多</a-button>
+      <a-button size="small" type="link" @click="more">更多</a-button>
     </template>
     <Tabs @change="changeTab">
       <template v-for="item in tabs" :key="item.NoticeType">
@@ -12,7 +12,9 @@
           <a-list :data-source="notices">
             <template #renderItem="{ item }">
               <a-list-item>
-                <a class="text-gray-600">{{ item.title }}</a>
+                <router-link :to="{path:'/notice/detail',query:{id:item.id}}">
+                  {{ item.title }}
+                </router-link>
               </a-list-item>
             </template>
           </a-list>
@@ -22,40 +24,41 @@
   </Card>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
-  import { Card, Tabs, List } from 'ant-design-vue';
-  import { groupItems } from './data';
-  import { getNoticePages } from "@/api/notice/notice";
-  import { NoticeParams, NoticeDetail, NoticeTypeTabs } from "@/api/notice/model/noticeModel";
+import { defineComponent, onMounted, ref } from 'vue';
+import { Card, List, Tabs } from 'ant-design-vue';
+import { groupItems } from './data';
+import { getNoticePages } from '@/api/notice/notice';
+import { NoticeDetail, NoticeParams, NoticeTypeTabs } from '@/api/notice/model/noticeModel';
 import { useRouter } from 'vue-router';
 
-  export default defineComponent({
-    components: { Card, Tabs, TabPane: Tabs.TabPane, AList: List, AListItem: List.Item },
-    setup() {
-      let notices = ref<NoticeDetail[]>([]);
+export default defineComponent({
+  components: { Card, Tabs, TabPane: Tabs.TabPane, AList: List, AListItem: List.Item },
+  setup() {
+    let notices = ref<NoticeDetail[]>([]);
 
-      function changeTab(tab: number | null) {
-        getNoticePages({ noticeType: tab, pageSize: 5, isPublic: true } as NoticeParams).then(res=>{
-          notices.value = res.items;
-        })
-      }
+    function changeTab(tab: number | null) {
+      getNoticePages({ noticeType: tab, pageSize: 5, isPublic: true } as NoticeParams).then(res => {
+        notices.value = res.items;
+      });
+    }
 
-      const router = useRouter();
-      function more(){
-        router.push({path:'/notice/index'});
-      }
+    const router = useRouter();
 
-      onMounted(()=>{
-        changeTab(null)
-      })
+    function more() {
+      router.push({ path: '/notice/index' });
+    }
 
-      return {
-        items: groupItems,
-        tabs: NoticeTypeTabs,
-        changeTab,
-        notices,
-        more
-      };
-    },
-  });
+    onMounted(() => {
+      changeTab(null);
+    });
+
+    return {
+      items: groupItems,
+      tabs: NoticeTypeTabs,
+      changeTab,
+      notices,
+      more
+    };
+  },
+});
 </script>

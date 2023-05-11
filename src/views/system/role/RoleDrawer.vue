@@ -29,7 +29,12 @@ import { formSchema } from './role.data';
 import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
 import { BasicTree } from '/@/components/Tree';
 
-import { createRole, getAllPermissions, RolePermissionModel, updateRole } from '/@/api/role/role';
+import {
+  createRole,
+  getAllPermissions,
+  PermissionModel,
+  updateRole
+} from '/@/api/role/role';
 
 export default defineComponent({
   name: 'RoleDrawer',
@@ -37,7 +42,7 @@ export default defineComponent({
   emits: ['success', 'register'],
   setup: function(_, { emit }) {
     const isUpdate = ref(true);
-    const treeData = ref<RolePermissionModel[]>([]);
+    const treeData = ref<PermissionModel[]>([]);
     const checkedKeys = ref<String[]>([]);
 
     const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({

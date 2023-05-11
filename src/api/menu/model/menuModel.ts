@@ -28,9 +28,18 @@ export type MenuParams = {
   menuName?: string;
   status?: string;
 };
+
 export type MenuToggleParams = {
   menuName?: string;
   status: boolean;
 };
+
+interface ShortCut {
+  id: number;
+  color: string;
+  icon: string;
+  title: string;
+  url?: string;
+}
 
 export type MenuListGetResultModel = BasicFetchResult<MenuListItem>;

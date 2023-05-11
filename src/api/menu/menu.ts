@@ -5,6 +5,7 @@ import {
   MenuParams,
   MenuToggleParams,
 } from '/@/api/menu/model/menuModel';
+import ShortCut from '@/views/dashboard/workbench/components/ShortCut.vue';
 
 enum Api {
   MenuPages = '/app/menus/pages',
@@ -18,11 +19,17 @@ enum Api {
   ToggleMenuDisabled = '/admin/menus/toggle',
 
   ApiList = '/app/menus',
+  ShortCuts = '/app/menus/quick-start',
 }
 
 export const getMenuPages = (params?: MenuParams) =>
   defHttp.get<MenuListGetResultModel>(
     { url: Api.MenuPages, params },
+    { isTransformResponse: false },
+  );
+export const getShortCuts = () =>
+  defHttp.get<ShortCut[]>(
+    { url: Api.ShortCuts },
     { isTransformResponse: false },
   );
 export const getApiList = (params?: MenuParams) =>

@@ -22,7 +22,7 @@
         <div class="flex flex-row">
           <div class="mt-4 ml-4">
             <span class="bold text-xl">
-              <router-link to="">
+              <router-link :to="{path:'/task/detail', query:{id:item.id}}">
                 {{ item.jobName }}
               </router-link>
             </span>

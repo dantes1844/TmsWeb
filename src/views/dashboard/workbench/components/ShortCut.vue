@@ -11,5 +11,15 @@
 <script lang="ts" setup>
   import { Card } from 'ant-design-vue';
   import Icon from '@/components/Icon/Icon.vue';
-  import { shortCuts } from './data';
+  import { getShortCuts } from '@/api/menu/menu';
+  import ShortCut from '@/views/dashboard/workbench/components/ShortCut.vue';
+  import { onMounted, ref } from 'vue';
+
+  const shortCuts = ref<ShortCut[]>([]);
+
+  onMounted(()=>{
+    getShortCuts().then(res=>{
+      shortCuts.value = res;
+    });
+  })
 </script>

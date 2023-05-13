@@ -13,6 +13,7 @@ enum Api {
   TOKEN_EXPIRED = '/user/tokenExpired',
   Account = '/identity/users',
   CreateAccount = '/identity/create-user',
+  UpdateAccount = '/identity/update-user',
   AccountList = '/identity/user/pages',
 }
 
@@ -41,7 +42,7 @@ export const createAccount = (params: CreateAccountModel) => {
 
 export const updateAccount = (params: UpdateAccountModel) =>
   defHttp.put(
-    { url: `${Api.Account}/${params.id}`, params },
+    { url: `${Api.UpdateAccount}/${params.id}`, params },
     {
       isTransformResponse: false,
     },

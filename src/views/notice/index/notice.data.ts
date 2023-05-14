@@ -2,7 +2,6 @@ import { BasicColumn, FormSchema } from '/@/components/Table';
 import { NoticeType, NoticeTypeItem } from '@/api/notice/model/noticeModel';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
-import { Button } from 'ant-design-vue';
 import { formatToDateTime } from '@/utils/dateUtil';
 import { uploadApi } from '@/api/sys/upload';
 

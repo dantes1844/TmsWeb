@@ -2,6 +2,7 @@
 import { BasicColumn } from '/@/components/Table';
 import { FormSchema } from '/@/components/Table';
 import { getAllRoleList } from '/@/api/role/role';
+import {formatToDateTime} from "@/utils/dateUtil";
 
 export const columns: BasicColumn[] = [
   {
@@ -10,7 +11,7 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
-    title: '昵称',
+    title: '姓名',
     dataIndex: 'name',
     width: 120,
   },
@@ -25,9 +26,17 @@ export const columns: BasicColumn[] = [
     width: 120,
   },
   {
+    title: '部门',
+    dataIndex: 'deptName',
+    width: 120,
+  },
+  {
     title: '创建时间',
     dataIndex: 'creationTime',
     width: 180,
+    customRender:({record})=>{
+      return formatToDateTime(record.creationTime);
+    }
   },
 ];
 

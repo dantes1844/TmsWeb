@@ -16,7 +16,8 @@
   import { formSchema } from './menu.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
 
-  import { getApiList } from '/@/api/menu/menu';
+  import { getApiList, createMenu, updateMenu } from '/@/api/menu/menu';
+  import {createAccount, updateAccount} from "@/api/account/account";
 
   export default defineComponent({
     name: 'MenuDrawer',
@@ -55,8 +56,15 @@
         try {
           const values = await validate();
           setDrawerProps({ confirmLoading: true });
-          // TODO custom api
-          console.log(values);
+
+          const model = Object.assign({}, values);
+          debugger
+          if (model.id) {
+            await updateMenu(model);
+          } else {
+            await createMenu(model);
+          }
+
           closeDrawer();
           emit('success');
         } finally {

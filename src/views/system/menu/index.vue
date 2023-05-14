@@ -33,7 +33,7 @@
   import { defineComponent, nextTick } from 'vue';
 
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-  import { getMenuPages } from '/@/api/menu/menu';
+  import { getMenuPages, deleteMenu } from '/@/api/menu/menu';
 
   import { useDrawer } from '/@/components/Drawer';
   import MenuDrawer from './MenuDrawer.vue';
@@ -83,8 +83,9 @@
         });
       }
 
-      function handleDelete(record: Recordable) {
-        console.log(record);
+      async function handleDelete(record: Recordable) {
+        await deleteMenu(record.id);
+        await reload();
       }
 
       function handleSuccess() {

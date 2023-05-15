@@ -54,6 +54,7 @@
           schemas: searchFormSchema,
         },
         isTreeTable: true,
+        expandRowByClick: true,
         pagination: false,
         striped: false,
         useSearchForm: true,

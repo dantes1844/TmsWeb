@@ -58,7 +58,6 @@
           setDrawerProps({ confirmLoading: true });
 
           const model = Object.assign({}, values);
-          debugger
           if (model.id) {
             await updateMenu(model);
           } else {

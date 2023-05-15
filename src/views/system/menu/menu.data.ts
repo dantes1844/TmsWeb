@@ -18,17 +18,13 @@ export const columns: BasicColumn[] = [
     },
   },
   {
-    title: '权限标识',
-    dataIndex: 'permission',
-    width:300,
-  },
-  {
     title: '组件',
     dataIndex: 'component',
+    align: 'left'
   },
   {
     title: '排序',
-    dataIndex: 'orderNo',
+    dataIndex: 'order',
   },
   {
     title: '状态',
@@ -40,13 +36,9 @@ export const columns: BasicColumn[] = [
       return h(Tag, { color: color }, () => text);
     },
   },
-  {
-    title: '创建时间',
-    dataIndex: 'creationTime',
-  },
 ];
 
-const isDir = (type: MenuType) => type === MenuType.Module;
+// const isDir = (type: MenuType) => type === MenuType.Module;
 const isMenu = (type: MenuType) => type === MenuType.Page
 const isButton = (type: MenuType) => type === MenuType.Button;
 
@@ -156,12 +148,6 @@ export const formSchema: FormSchema[] = [
     label: '组件路径',
     component: 'Input',
     ifShow: ({ values }) => isMenu(values.menuType),
-  },
-  {
-    field: 'permission',
-    label: '权限标识',
-    component: 'Input',
-    ifShow: ({ values }) => !isDir(values.menuType),
   },
   {
     field: 'enabled',

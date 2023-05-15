@@ -14,7 +14,7 @@ import {
 import { deepMerge } from '/@/utils';
 import { dateItemType, handleInputNumberValue, defaultValueComponents } from '../helper';
 import { dateUtil } from '/@/utils/dateUtil';
-import { cloneDeep, set, uniqBy, get } from 'lodash-es';
+import { cloneDeep, set, uniqBy, get, has } from 'lodash-es';
 import { error } from '/@/utils/log';
 
 interface UseFormActionContext {
@@ -113,7 +113,7 @@ export function useFormEvents({
     fields.forEach((key) => {
       const schema = unref(getSchema).find((item) => item.field === key);
       let value = get(values, key);
-      const hasKey = !!get(values, key);
+      const hasKey = has(values, key);
 
       value = handleInputNumberValue(schema?.component, value);
       const { componentProps } = schema || {};
@@ -149,7 +149,8 @@ export function useFormEvents({
           _props?.onChange(fieldValue);
         }
         validKeys.push(key);
-      } else {
+      }
+      else {
         nestKeyArray.forEach((nestKey: string) => {
           try {
             const value = nestKey.split('.').reduce((out, item) => out[item], values);

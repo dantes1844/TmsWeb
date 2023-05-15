@@ -51,8 +51,8 @@ const isMenu = (type: MenuType) => type === MenuType.Page
 const isButton = (type: MenuType) => type === MenuType.Button;
 
 export const MenuTypeOptions = [
-  { 'label':'目录', value: MenuType.Module },
-  { 'label':'菜单', value: MenuType.Page },
+  { 'label':'模块', value: MenuType.Module },
+  { 'label':'页面', value: MenuType.Page },
   { 'label':'按钮', value: MenuType.Button },
 ]
 
@@ -98,7 +98,7 @@ export const formSchema: FormSchema[] = [
     field: 'menuType',
     label: '菜单类型',
     component: 'RadioButtonGroup',
-    defaultValue: '0',
+    defaultValue: MenuType.Module,
     componentProps: {
       options: MenuTypeOptions,
     },
@@ -188,7 +188,6 @@ export const formSchema: FormSchema[] = [
     },
     ifShow: ({ values }) => !isButton(values.menuType),
   },
-
   {
     field: 'keepalive',
     label: '是否缓存',
@@ -201,19 +200,5 @@ export const formSchema: FormSchema[] = [
       ],
     },
     ifShow: ({ values }) => isMenu(values.menuType),
-  },
-
-  {
-    field: 'show',
-    label: '是否显示',
-    component: 'RadioButtonGroup',
-    defaultValue: true,
-    componentProps: {
-      options: [
-        { label: '是', value: true },
-        { label: '否', value: false },
-      ],
-    },
-    ifShow: ({ values }) => !isButton(values.menuType),
   },
 ];

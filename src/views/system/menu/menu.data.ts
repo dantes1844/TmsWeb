@@ -64,13 +64,13 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'status',
+    field: 'enabled',
     label: '状态',
     component: 'Select',
     componentProps: {
       options: [
-        { label: '启用', value: '0' },
-        { label: '停用', value: '1' },
+        { label: '启用', value: true },
+        { label: '停用', value: false },
       ],
     },
     colProps: { span: 8 },
@@ -170,8 +170,8 @@ export const formSchema: FormSchema[] = [
     defaultValue: true,
     componentProps: {
       options: [
-        { label: '启用', value: false },
-        { label: '禁用', value: true },
+        { label: '启用', value: true },
+        { label: '禁用', value: false },
       ],
     },
   },

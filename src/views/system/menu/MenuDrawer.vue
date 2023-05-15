@@ -34,19 +34,19 @@
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-        resetFields();
+        await resetFields();
         setDrawerProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          setFieldsValue({
+          await setFieldsValue({
             ...data.record,
           });
         }
         const treeData = await getApiList();
-        updateSchema({
-          field: 'parentId',
-          componentProps: { treeData },
+          await updateSchema({
+            field: 'parentId',
+            componentProps: { treeData },
         });
       });
 

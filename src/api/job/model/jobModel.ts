@@ -60,6 +60,8 @@ export type JobPageListGetResultModel = BasicFetchResult<JobDetail>;
 
 export type JobListGetResultModel = JobDetail[];
 
+export type JobGanttListGetResultModel = JobGanttDetail[];
+
 export interface jobUser {
   jobId: number;
   jobName: string;
@@ -81,6 +83,13 @@ export interface JobDetail{
   jobUsers: jobUser[];
   percent: number;
   rate: number;
+}
+
+export interface JobGanttDetail{
+  id: number;
+  text: string;
+  progress: number;
+  start_date: string;
 }
 
 export type JobDashboard = {

@@ -19,6 +19,7 @@
   import { BasicTree, TreeItem } from '/@/components/Tree';
   import { getDeptList } from '/@/api/department/dept';
   import { bus, EventBusType } from '/@/utils/event/eventBus';
+  import { DepartmentStatus, DeptListItem } from '@/api/department/model/deptModel';
 
   export default defineComponent({
     name: 'DeptTree',
@@ -30,7 +31,8 @@
       const checkedKeys = ref<string[]>([]);
 
       async function fetch() {
-        treeData.value = (await getDeptList()) as unknown as TreeItem[];
+        const options = { status: DepartmentStatus.Enabled }  as DeptListItem;
+        treeData.value = (await getDeptList(options)) as unknown as TreeItem[];
       }
 
       function handleSelect(keys) {

@@ -21,34 +21,18 @@ export const columns: BasicColumn[] = [
     width: 200,
   },
   {
-    title: '默认分类',
-    dataIndex: 'isDefault',
+    title: '内置分类',
+    dataIndex: 'isStatic',
     width: 120,
     customRender: ({ record }) => {
       if (!Reflect.has(record, 'pendingStatus')) {
         record.pendingStatus = false;
       }
       return h(Switch, {
-        checked: record.isDefault,
+        checked: record.isStatic,
         checkedChildren: '是',
         unCheckedChildren: '否',
         loading: record.pendingStatus,
-        onChange(checked: boolean) {
-          record.pendingStatus = true;
-          const newStatus = checked;
-          const { createMessage } = useMessage();
-          setRoleStatus(record.id, newStatus)
-            .then(() => {
-              record.isDefault = newStatus;
-              createMessage.success(`已成功修改分类状态`);
-            })
-            .catch(() => {
-              createMessage.error('修改分类状态失败');
-            })
-            .finally(() => {
-              record.pendingStatus = false;
-            });
-        },
       });
     },
   },
@@ -62,8 +46,8 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 8 },
   },
   {
-    field: 'isDefault',
-    label: '默认分类',
+    field: 'isStatic',
+    label: '内置分类',
     component: 'Select',
     componentProps: {
       options: [
@@ -96,8 +80,8 @@ export const formSchema: FormSchema[] = [
     component: 'InputNumber',
   },
   {
-    field: 'isDefault',
-    label: '默认分类',
+    field: 'isStatic',
+    label: '内置分类',
     component: 'RadioButtonGroup',
     defaultValue: false,
     componentProps: {

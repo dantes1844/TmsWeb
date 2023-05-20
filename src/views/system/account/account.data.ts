@@ -8,36 +8,31 @@ export const columns: BasicColumn[] = [
   {
     title: '用户名',
     dataIndex: 'userName',
-    width: 120,
   },
   {
     title: '姓名',
     dataIndex: 'name',
-    width: 120,
-  },
-  {
-    title: '邮箱',
-    dataIndex: 'email',
-    width: 120,
-  },
-  {
-    title: '电话',
-    dataIndex: 'phoneNumber',
-    width: 120,
   },
   {
     title: '部门',
     dataIndex: 'deptName',
-    width: 120,
   },
   {
-    title: '创建时间',
-    dataIndex: 'creationTime',
-    width: 180,
-    customRender:({record})=>{
-      return formatToDateTime(record.creationTime);
-    }
+    title: '邮箱',
+    dataIndex: 'email',
   },
+  {
+    title: '电话',
+    dataIndex: 'phoneNumber',
+  },
+  // {
+  //   title: '创建时间',
+  //   dataIndex: 'creationTime',
+  //   width: 180,
+  //   customRender:({record})=>{
+  //     return formatToDateTime(record.creationTime);
+  //   }
+  // },
 ];
 
 export const searchFormSchema: FormSchema[] = [

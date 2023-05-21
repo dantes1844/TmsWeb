@@ -10,6 +10,7 @@ import { BasicFetchResult } from "@/api/model/baseModel";
 enum Api {
   NoticePages = '/app/notice/pages',
   CreateNotice = '/app/notice',
+  GetNotice = '/app/notice',
   UpdateNotice = '/app/notice',
   DeleteNotice = '/app/notice',
   ToggleNoticeDisabled = '/admin/notice/toggle',
@@ -18,6 +19,12 @@ enum Api {
 export const getNoticePages = (params?: NoticeParams) =>{
   return defHttp.get<NoticePageListGetResultModel>(
     { url: Api.NoticePages, params },
+    { isTransformResponse: false },
+  );
+}
+export const getNotice = (id: string) =>{
+  return defHttp.get<NoticeDetail>(
+    { url: `${Api.GetNotice}/${id}` },
     { isTransformResponse: false },
   );
 }

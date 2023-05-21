@@ -17,9 +17,7 @@
 
   const shortCuts = ref<ShortCutModel[]>([]);
 
-  onMounted(()=>{
-    getShortCuts().then(res=>{
-      shortCuts.value = res;
-    });
+  onMounted(async ()=>{
+    shortCuts.value =await getShortCuts();
   })
 </script>

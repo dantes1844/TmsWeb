@@ -6,10 +6,11 @@ export interface NoticeDetail {
   title: string;
   noticeType: NoticeType;
   status: number;
-  file: string | null;
-  files: UploadApiResult[];
-  time: string;
+  file?: string | null;
+  files?: UploadApiResult[];
+  creationTime: string;
   content: string;
+  userName:string;
 }
 
 export interface CreateNoticeModel {

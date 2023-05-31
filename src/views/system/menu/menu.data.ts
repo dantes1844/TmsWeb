@@ -38,7 +38,7 @@ export const columns: BasicColumn[] = [
   },
 ];
 
-// const isDir = (type: MenuType) => type === MenuType.Module;
+const isDir = (type: MenuType) => type === MenuType.Module;
 const isMenu = (type: MenuType) => type === MenuType.Page
 const isButton = (type: MenuType) => type === MenuType.Button;
 
@@ -147,7 +147,7 @@ export const formSchema: FormSchema[] = [
     field: 'component',
     label: '组件路径',
     component: 'Input',
-    ifShow: ({ values }) => isMenu(values.menuType),
+    ifShow: ({ values }) => isMenu(values.menuType) || isDir(values.menuType),
   },
   {
     field: 'enabled',

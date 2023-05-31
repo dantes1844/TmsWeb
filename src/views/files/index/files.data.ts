@@ -33,12 +33,16 @@ export const columns: BasicColumn[] = [
     width: 80,
   },
   {
+    title: '下载次数',
+    dataIndex: 'downloadCount',
+    width: 80,
+  },
+  {
     title: '是否审核',
     dataIndex: 'isPublic',
     width: 80,
     customRender: ({ record }) => {
-      const status = record.isPublic;
-      const enable = ~~status === 0;
+      const enable = record.isPublic;
       const color = enable ? 'green' : 'red';
       const text = enable ? '已审核' : '未审核';
       return h(Tag, { color: color }, () => text);

@@ -24,6 +24,7 @@ export interface KbsFileListItem {
   sequence?: number;
   isDefault: boolean;
   isStatic: boolean;
+  downloadCount: number;
 }
 
 export const getKbsFileListByPage = (params?: KbsFilePageParams) =>

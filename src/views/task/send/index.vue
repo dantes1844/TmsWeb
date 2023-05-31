@@ -71,6 +71,7 @@ export default defineComponent({
     const [registerTable, { reload, expandAll }] = useTable({
       title: '任务列表',
       api: getJobPages,
+
       columns,
       formConfig: {
         labelWidth: 120,

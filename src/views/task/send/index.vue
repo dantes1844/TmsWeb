@@ -2,6 +2,7 @@
   <div>
     <BasicTable @register="registerTable" @fetch-success="fetchSuccess">
       <template #toolbar>
+        <a-button type="primary" @click="handleFeedback"> 任务反馈 </a-button>
         <a-button type="primary" @click="handleCreate"> 发布任务 </a-button>
       </template>
       <template #bodyCell="{ column, record }">
@@ -40,6 +41,8 @@
     <JobDrawer @register="registerDrawer" @success="handleSuccess" />
 
     <JobModal @register="registerModal" @success="handleSuccess" />
+
+    <JobProgressModal @register="registerCommitProgressModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
@@ -49,6 +52,7 @@ import { BasicTable, useTable, TableAction } from '/@/components/Table';
 
 import { useDrawer } from '/@/components/Drawer';
 import JobModal from '@/views/task/send/JobModal.vue';
+import JobProgressModal from '@/views/task/send/JobProgressModal.vue';
 import JobDrawer from './JobDrawer.vue';
 
 import { columns, searchFormSchema } from './job.data';
@@ -64,10 +68,11 @@ export default defineComponent({
       return JobStatus
     }
   },
-  components: { BasicTable, JobDrawer, TableAction, JobModal },
+  components: { BasicTable, JobDrawer, TableAction, JobModal, JobProgressModal },
   setup() {
     const [registerDrawer, { openDrawer }] = useDrawer();
-    const [registerModal, { openModal }] = useModal();
+    const [registerModal, { openModal: editTaskModal }] = useModal();
+    const [registerCommitProgressModal, { openModal: commitProgressModal }] = useModal();
     const [registerTable, { reload, expandAll }] = useTable({
       title: '任务列表',
       api: getJobPages,
@@ -96,6 +101,11 @@ export default defineComponent({
         isUpdate: false,
       });
     }
+    function handleFeedback() {
+      commitProgressModal(true, {
+        isUpdate: false,
+      });
+    }
 
     function handleEdit(record: CreateJobModel) {
       const data = {
@@ -103,14 +113,14 @@ export default defineComponent({
         isUpdate: true,
       }
       if(record.parentId){
-        openModal(true,data)
+        editTaskModal(true,data)
       }else{
         openDrawer(true, data);
       }
     }
 
     function handleAddJobChild(record:CreateJobModel){
-      openModal(true,{
+      editTaskModal(true,{
         record,
         isUpdate: record.parentId>0
       })
@@ -139,6 +149,10 @@ export default defineComponent({
       handleSuccess,
       handleAddJobChild,
       fetchSuccess,
+      registerCommitProgressModal,
+      handleFeedback,
+      editTaskModal,
+      commitProgressModal
     };
   },
 });

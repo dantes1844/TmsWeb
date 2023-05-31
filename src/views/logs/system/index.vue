@@ -1,39 +1,76 @@
 <template>
-  <div class="p-4">
-    <div class="md:flex">
-      <template v-for="(item, index) in growCardList" :key="item.title">
-        <Card
-          size="small"
-          :loading="loading"
-          :title="item.title"
-          class="md:w-1/4 w-full !md:mt-0"
-          :class="{ '!md:mr-4': index + 1 < 4, '!mt-4': index > 0 }"
-        >
-          <template #extra>
-            <Tag :color="item.color">{{ item.action }}</Tag>
-          </template>
-
-          <div class="py-4 px-4 flex justify-between items-center">
-            <CountTo prefix="$" :startVal="1" :endVal="item.value" class="text-2xl" />
-            <Icon :icon="item.icon" :size="40" />
-          </div>
-
-          <div class="p-2 px-4 flex justify-between">
-            <span>总{{ item.title }}</span>
-            <CountTo prefix="$" :startVal="1" :endVal="item.total" />
-          </div>
-        </Card>
+  <div>
+    <BasicTable @register="registerTable">
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.key === 'action'">
+          <TableAction
+            :actions="[
+              {
+                icon: 'ant-design:delete-outlined',
+                color: 'error',
+                popConfirm: {
+                  title: '是否确认删除',
+                  placement: 'left',
+                  confirm: handleDelete.bind(null, record),
+                },
+              },
+            ]"
+          />
+        </template>
       </template>
-    </div>
+    </BasicTable>
   </div>
 </template>
-<script lang="ts" setup>
-import { Card } from 'ant-design-vue';
-import { growCardList } from '../../dashboard/analysis/data';
+<script lang="ts">
+import { defineComponent } from 'vue';
 
-defineProps({
-  loading: {
-    type: Boolean,
+import { BasicTable, useTable, TableAction } from '/@/components/Table';
+
+import { useDrawer } from '/@/components/Drawer';
+
+import { columns, searchFormSchema } from '../log.data';
+import { getSystemLogs } from '@/api/log/log';
+
+export default defineComponent({
+  name: 'SystemLog',
+  components: { BasicTable, TableAction },
+  setup() {
+    const [registerDrawer, { openDrawer }] = useDrawer();
+    const [registerTable, { reload }] = useTable({
+      title: '系统日志',
+      api: getSystemLogs,
+      columns,
+      formConfig: {
+        labelWidth: 120,
+        schemas: searchFormSchema,
+      },
+      useSearchForm: true,
+      showTableSetting: true,
+      bordered: true,
+      showIndexColumn: false,
+      actionColumn: {
+        width: 80,
+        title: '操作',
+        dataIndex: 'action',
+        // slots: { customRender: 'action' },
+        fixed: undefined,
+      },
+    });
+
+    async function handleDelete(record: Recordable) {
+      await reload();
+    }
+
+    function handleSuccess() {
+      reload();
+    }
+
+    return {
+      registerTable,
+      registerDrawer,
+      handleDelete,
+      handleSuccess,
+    };
   },
 });
 </script>

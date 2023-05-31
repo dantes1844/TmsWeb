@@ -10,15 +10,17 @@
       :selectedKeys="checkedKeys"
       :fieldNames="{ key: 'id', title: 'deptName' }"
       @select="handleSelect"
+      ref="treeRef"
     />
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, onMounted, ref, unref } from 'vue';
 
-  import { BasicTree, TreeItem } from '/@/components/Tree';
+import { BasicTree, TreeActionType, TreeItem } from '/@/components/Tree';
   import { getDeptList } from '/@/api/department/dept';
   import { bus, EventBusType } from '/@/utils/event/eventBus';
+  import { DepartmentStatus, DeptListItem } from '@/api/department/model/deptModel';
 
   export default defineComponent({
     name: 'DeptTree',
@@ -29,21 +31,26 @@
       const treeData = ref<TreeItem[]>([]);
       const checkedKeys = ref<string[]>([]);
 
+      const treeRef = ref<Nullable<TreeActionType>>(null);
+
       async function fetch() {
-        treeData.value = (await getDeptList()) as unknown as TreeItem[];
+        const options = { status: DepartmentStatus.Enabled }  as DeptListItem;
+        treeData.value = (await getDeptList(options)) as unknown as TreeItem[];
       }
 
       function handleSelect(keys) {
         emit('select', keys[0]);
       }
 
-      onMounted(() => {
-        fetch();
+      onMounted(async () => {
+        await fetch();
         bus.on(EventBusType.ResetDeptId, () => {
           checkedKeys.value = [];
         });
+        const tree = unref(treeRef);
+        tree?.expandAll(true)
       });
-      return { treeData, handleSelect, checkedKeys };
+      return { treeData, handleSelect, checkedKeys, treeRef };
     },
   });
 </script>

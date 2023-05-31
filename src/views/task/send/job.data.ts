@@ -1,7 +1,7 @@
-import {BasicColumn, FormSchema} from '/@/components/Table';
+import { BasicColumn, FormSchema } from '/@/components/Table';
 import { formatToDate, formatToDateTime } from '@/utils/dateUtil';
-import {JobStatus, getStatusName } from '@/api/job/model/jobModel';
-import {getUserList} from '@/api/user/user';
+import { getStatusName, JobStatus } from '@/api/job/model/jobModel';
+import { getUserList } from '@/api/user/user';
 import { getJobList } from '@/api/job/job';
 
 export const columns: BasicColumn[] = [
@@ -20,7 +20,7 @@ export const columns: BasicColumn[] = [
     title: '任务状态',
     dataIndex: 'jobStatus',
     width: 100,
-    customRender: ({record}) => {
+    customRender: ({ record }) => {
       return getStatusName(record.jobStatus);
     },
   },
@@ -31,14 +31,14 @@ export const columns: BasicColumn[] = [
   },
   {
     title: '执行人',
-    dataIndex: 'jobUsers',
+    dataIndex: 'executorName',
     width: 100,
   },
   {
     title: '计划开始时间',
     dataIndex: 'startDate',
     width: 120,
-    customRender: ({record}) => {
+    customRender: ({ record }) => {
       return formatToDate(record.startDate);
     }
   },
@@ -46,7 +46,7 @@ export const columns: BasicColumn[] = [
     title: '计划结束时间',
     dataIndex: 'endDate',
     width: 120,
-    customRender: ({record}) => {
+    customRender: ({ record }) => {
       return formatToDate(record.endDate);
     }
   },
@@ -54,26 +54,26 @@ export const columns: BasicColumn[] = [
     title: '发布时间',
     dataIndex: 'creationTime',
     width: 160,
-    customRender: ({record}) => {
+    customRender: ({ record }) => {
       return formatToDateTime(record.creationTime);
     }
   },
 ];
 
 export const options = [
-  {label: getStatusName(JobStatus.Todo), value: JobStatus.Todo},
-  {label: getStatusName(JobStatus.InProgress), value: JobStatus.InProgress},
-  {label: getStatusName(JobStatus.FinalCheck), value: JobStatus.FinalCheck},
-  {label: getStatusName(JobStatus.Done), value: JobStatus.Done},
-  {label: getStatusName(JobStatus.Canceled), value: JobStatus.Canceled},
-]
+  { label: getStatusName(JobStatus.Todo), value: JobStatus.Todo },
+  { label: getStatusName(JobStatus.InProgress), value: JobStatus.InProgress },
+  { label: getStatusName(JobStatus.FinalCheck), value: JobStatus.FinalCheck },
+  { label: getStatusName(JobStatus.Done), value: JobStatus.Done },
+  { label: getStatusName(JobStatus.Canceled), value: JobStatus.Canceled },
+];
 
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'jobName',
     label: '任务标题',
     component: 'Input',
-    colProps: {span: 8},
+    colProps: { span: 8 },
   },
   {
     field: 'jobStatus',
@@ -82,7 +82,7 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       options: options
     },
-    colProps: {span: 8},
+    colProps: { span: 8 },
   },
 ];
 
@@ -115,7 +115,7 @@ export const editFormSchema: FormSchema[] = [
     component: 'DatePicker',
     required: true,
     defaultValue: new Date(),
-    componentProps:{
+    componentProps: {
       mode: 'date'
     }
   },
@@ -125,7 +125,7 @@ export const editFormSchema: FormSchema[] = [
     component: 'DatePicker',
     required: true,
     defaultValue: new Date(),
-    componentProps:{
+    componentProps: {
       mode: 'date'
     }
   },
@@ -140,7 +140,7 @@ export const editFormSchema: FormSchema[] = [
       labelField: 'name',
       valueField: 'id',
     },
-   },
+  },
   {
     field: 'executorId',
     label: '执行人',
@@ -152,7 +152,7 @@ export const editFormSchema: FormSchema[] = [
       labelField: 'name',
       valueField: 'id',
     },
-   },
+  },
   // {
   //   field: 'jobUsers',
   //   label: '执行人',
@@ -192,7 +192,7 @@ export const editSubJobFormSchema: FormSchema[] = [
       disabled: true,
       labelField: 'jobName',
       valueField: 'id',
-      params:{
+      params: {
         jobStatus: JobStatus.Todo
       }
     },
@@ -203,7 +203,7 @@ export const editSubJobFormSchema: FormSchema[] = [
     component: 'Input',
     defaultValue: '',
     required: true,
-    componentProps:{
+    componentProps: {
       disabled: true
     }
   },
@@ -228,7 +228,7 @@ export const editSubJobFormSchema: FormSchema[] = [
     component: 'DatePicker',
     required: true,
     defaultValue: new Date(),
-    componentProps:{
+    componentProps: {
       mode: 'date'
     }
   },
@@ -238,7 +238,7 @@ export const editSubJobFormSchema: FormSchema[] = [
     component: 'DatePicker',
     required: true,
     defaultValue: new Date(),
-    componentProps:{
+    componentProps: {
       mode: 'date'
     }
   },
@@ -253,7 +253,7 @@ export const editSubJobFormSchema: FormSchema[] = [
       labelField: 'name',
       valueField: 'id',
     },
-   },
+  },
   {
     field: 'description',
     label: '任务简介',
@@ -262,4 +262,35 @@ export const editSubJobFormSchema: FormSchema[] = [
       rows: 10
     },
   },
+];
+
+export const commitWorkProgressSchema: FormSchema[] = [
+  {
+    field: 'jobId',
+    label: '任务',
+    required: true,
+    component: 'ApiSelect',
+    componentProps: {
+      api: getJobList,
+      labelField: 'jobName',
+      valueField: 'id',
+      params: {
+        jobStatus: JobStatus.InProgress
+      }
+    },
+  },
+  {
+    field: 'percent',
+    label:'进度',
+    required: true,
+    component: 'InputNumber',
+  },
+  {
+    field: 'feedback',
+    label: '说明',
+    component: 'InputTextArea',
+    componentProps: {
+      rows: 5
+    }
+  }
 ];

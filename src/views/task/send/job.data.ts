@@ -294,3 +294,71 @@ export const commitWorkProgressSchema: FormSchema[] = [
     }
   }
 ];
+
+export const milestoneSchema: FormSchema[] = [
+  {
+    field: 'jobId',
+    label: '任务',
+    required: true,
+    component: 'ApiSelect',
+    componentProps: {
+      api: getJobList,
+      labelField: 'jobName',
+      valueField: 'id',
+      params: {
+        jobStatus: JobStatus.InProgress
+      }
+    },
+  },
+  {
+    field: 'percent',
+    label:'里程碑名称',
+    required: true,
+    component: 'Input',
+  },
+  {
+    field: 'percent',
+    label:'截止时间',
+    required: true,
+    component: 'DatePicker',
+  },
+  {
+    field: 'supervisorId',
+    label: '负责人',
+    component: 'ApiSelect',
+    defaultValue: '',
+    required: true,
+    componentProps: {
+      api: getUserList,
+      labelField: 'name',
+      valueField: 'id',
+    },
+  },
+  {
+    field: 'percent',
+    label:'目标',
+    required: true,
+    component: 'InputTextArea',
+    componentProps:{
+      rows: 3
+    }
+  },
+  {
+    field: 'feedback',
+    label: '完成标准',
+    required: true,
+    component: 'InputTextArea',
+    componentProps: {
+      rows: 3
+    }
+  },
+  {
+    field: 'feedback',
+    label: '验收标准',
+    required: true,
+    component: 'InputTextArea',
+    componentProps: {
+      rows: 3
+    }
+  }
+];

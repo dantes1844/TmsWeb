@@ -4,6 +4,7 @@
       <template #toolbar>
         <a-button type="primary" @click="handleFeedback"> 任务反馈 </a-button>
         <a-button type="primary" @click="handleCreate"> 发布任务 </a-button>
+        <a-button type="primary" @click="handleCreateMilestone"> 设置里程碑 </a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -43,6 +44,8 @@
     <JobModal @register="registerModal" @success="handleSuccess" />
 
     <JobProgressModal @register="registerCommitProgressModal" @success="handleSuccess" />
+
+    <MilestoneModal @register="registerMilestoneModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
@@ -54,6 +57,7 @@ import { useDrawer } from '/@/components/Drawer';
 import JobModal from '@/views/task/send/JobModal.vue';
 import JobProgressModal from '@/views/task/send/JobProgressModal.vue';
 import JobDrawer from './JobDrawer.vue';
+import MilestoneModal from './MilestoneModal.vue';
 
 import { columns, searchFormSchema } from './job.data';
 import { deleteJob, getJobPages } from '/@/api/job/job';
@@ -68,11 +72,12 @@ export default defineComponent({
       return JobStatus
     }
   },
-  components: { BasicTable, JobDrawer, TableAction, JobModal, JobProgressModal },
+  components: { BasicTable, JobDrawer, TableAction, JobModal, JobProgressModal, MilestoneModal },
   setup() {
     const [registerDrawer, { openDrawer }] = useDrawer();
     const [registerModal, { openModal: editTaskModal }] = useModal();
     const [registerCommitProgressModal, { openModal: commitProgressModal }] = useModal();
+    const [registerMilestoneModal, { openModal: milestoneModal }] = useModal();
     const [registerTable, { reload, expandAll }] = useTable({
       title: '任务列表',
       api: getJobPages,
@@ -103,6 +108,11 @@ export default defineComponent({
     }
     function handleFeedback() {
       commitProgressModal(true, {
+        isUpdate: false,
+      });
+    }
+    function handleCreateMilestone() {
+      milestoneModal(true, {
         isUpdate: false,
       });
     }
@@ -150,9 +160,12 @@ export default defineComponent({
       handleAddJobChild,
       fetchSuccess,
       registerCommitProgressModal,
+      commitProgressModal,
       handleFeedback,
       editTaskModal,
-      commitProgressModal
+      registerMilestoneModal,
+      milestoneModal,
+      handleCreateMilestone
     };
   },
 });

@@ -120,6 +120,20 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
   },
   {
+    field: 'extension',
+    label: '标签(用逗号分隔)',
+    component: 'Input',
+  },
+  {
+    field: 'extension',
+    label: '内容摘要',
+    required: true,
+    component: 'InputTextArea',
+    componentProps:{
+      rows: 5
+    }
+  },
+  {
     field: 'file',
     component: 'Upload',
     label: '附件',

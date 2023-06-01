@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-2 flex flex-row">
+  <div class="mb-2 flex flex-row pb-2">
     <span class="w-12 ml-4">进度: </span>
     <Progress :percent="item.percent" type="line" :show-info="true"/>
   </div>

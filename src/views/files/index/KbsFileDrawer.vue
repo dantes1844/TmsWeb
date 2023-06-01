@@ -40,7 +40,7 @@
       const treeData = ref<FileTypeListItem[]>([]);
 
       const [registerForm, { resetFields, setFieldsValue, validate }] = useForm({
-        labelWidth: 90,
+        labelWidth: 120,
         baseColProps: { span: 24 },
         schemas: formSchema,
         showActionButtonGroup: false,
@@ -64,7 +64,7 @@
         }
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '新增文档' : '编辑文档'));
+      const getTitle = computed(() => (!unref(isUpdate) ? '上传文档' : '上传文档'));
 
       async function handleSubmit() {
         try {

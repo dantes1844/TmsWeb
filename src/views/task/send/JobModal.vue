@@ -1,5 +1,5 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit" :maskClosable="false">
+  <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit" :maskClosable="false" width="700px">
     <BasicForm @register="registerForm" />
   </BasicModal>
 </template>
@@ -24,7 +24,7 @@
 
       const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
         labelWidth: 100,
-        baseColProps: { span: 24 },
+        baseColProps: { span: 12 },
         schemas: editSubJobFormSchema,
         showActionButtonGroup: false,
         actionColOptions: {

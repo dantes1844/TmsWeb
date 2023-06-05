@@ -258,8 +258,9 @@ export const editSubJobFormSchema: FormSchema[] = [
     field: 'description',
     label: '任务简介',
     component: 'InputTextArea',
+    colProps:{ span: 24 },
     componentProps: {
-      rows: 10
+      rows: 10,
     },
   },
 ];

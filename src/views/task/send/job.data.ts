@@ -99,14 +99,117 @@ export const editFormSchema: FormSchema[] = [
     label: '任务标题',
     required: true,
     component: 'Input',
+    colProps: { span: 24 },
+    componentProps: {
+      disabled: true,
+    }
   },
   {
-    field: 'jobStatus',
-    label: '任务状态',
-    component: 'Select',
-    defaultValue: JobStatus.Todo,
+    field: 'startDate',
+    label: '开始日期',
+    component: 'DatePicker',
+    required: true,
+    defaultValue: new Date(),
     componentProps: {
-      options: options
+      mode: 'date',
+      disabled: true,
+    }
+  },
+  {
+    field: 'endDate',
+    label: '结束日期',
+    component: 'DatePicker',
+    required: true,
+    defaultValue: new Date(),
+    componentProps: {
+      mode: 'date',
+      disabled: true,
+    }
+  },
+  {
+    field: 'supervisorId',
+    label: '负责人',
+    component: 'ApiSelect',
+    defaultValue: '',
+    required: true,
+    componentProps: {
+      api: getUserList,
+      labelField: 'name',
+      valueField: 'id',
+      disabled: true,
+    },
+  },
+  {
+    field: 'executorId',
+    label: '执行人',
+    component: 'ApiSelect',
+    defaultValue: null,
+    required: true,
+    componentProps: {
+      api: getUserList,
+      labelField: 'name',
+      valueField: 'id',
+      disabled: true,
+    },
+  },
+  // {
+  //   field: 'jobUsers',
+  //   label: '执行人',
+  //   component: 'ApiSelect',
+  //   defaultValue: [],
+  //   required: true,
+  //   componentProps: {
+  //     api: getUserList,
+  //     mode:'multiple',
+  //     labelField: 'name',
+  //     valueField: 'id',
+  //   },
+  // },
+  {
+    field: 'description',
+    label: '任务简介',
+    component: 'InputTextArea',
+    colProps: { span: 24 },
+    componentProps: {
+      rows: 5,
+      disabled: true,
+    },
+  },
+  {
+    field: 'comment',
+    label: '审核意见',
+    component: 'InputTextArea',
+    colProps: { span: 24 },
+    componentProps: {
+      rows: 5,
+    },
+  },
+];
+
+export const applyFormSchema: FormSchema[] = [
+  {
+    field: 'id',
+    label: '唯一编号',
+    component: 'InputNumber',
+    required: false,
+    show: false,
+  },
+  {
+    field: 'jobName',
+    label: '任务标题',
+    required: true,
+    component: 'Input',
+  },
+  {
+    field: 'supervisorId',
+    label: '负责人',
+    component: 'ApiSelect',
+    defaultValue: '',
+    required: true,
+    componentProps: {
+      api: getUserList,
+      labelField: 'name',
+      valueField: 'id',
     },
   },
   {
@@ -130,16 +233,29 @@ export const editFormSchema: FormSchema[] = [
     }
   },
   {
-    field: 'supervisorId',
-    label: '负责人',
-    component: 'ApiSelect',
-    defaultValue: '',
-    required: true,
+    field: 'description',
+    label: '任务简介',
+    component: 'InputTextArea',
+    colProps: { span: 24 },
     componentProps: {
-      api: getUserList,
-      labelField: 'name',
-      valueField: 'id',
+      rows: 10
     },
+  },
+];
+
+export const createFormSchema: FormSchema[] = [
+  {
+    field: 'id',
+    label: '唯一编号',
+    component: 'InputNumber',
+    required: false,
+    show: false,
+  },
+  {
+    field: 'jobName',
+    label: '任务标题',
+    required: true,
+    component: 'Input',
   },
   {
     field: 'executorId',
@@ -153,25 +269,33 @@ export const editFormSchema: FormSchema[] = [
       valueField: 'id',
     },
   },
-  // {
-  //   field: 'jobUsers',
-  //   label: '执行人',
-  //   component: 'ApiSelect',
-  //   defaultValue: [],
-  //   required: true,
-  //   componentProps: {
-  //     api: getUserList,
-  //     mode:'multiple',
-  //     labelField: 'name',
-  //     valueField: 'id',
-  //   },
-  // },
+  {
+    field: 'startDate',
+    label: '开始日期',
+    component: 'DatePicker',
+    required: true,
+    defaultValue: new Date(),
+    componentProps: {
+      mode: 'date'
+    }
+  },
+  {
+    field: 'endDate',
+    label: '结束日期',
+    component: 'DatePicker',
+    required: true,
+    defaultValue: new Date(),
+    componentProps: {
+      mode: 'date'
+    }
+  },
   {
     field: 'description',
     label: '任务简介',
     component: 'InputTextArea',
+    colProps: { span: 24 },
     componentProps: {
-      rows: 20
+      rows: 10
     },
   },
 ];
@@ -312,13 +436,13 @@ export const milestoneSchema: FormSchema[] = [
     },
   },
   {
-    field: 'percent',
+    field: 'milestoneName',
     label:'里程碑名称',
     required: true,
     component: 'Input',
   },
   {
-    field: 'percent',
+    field: 'endDate',
     label:'截止时间',
     required: true,
     component: 'DatePicker',
@@ -336,7 +460,7 @@ export const milestoneSchema: FormSchema[] = [
     },
   },
   {
-    field: 'percent',
+    field: 'target',
     label:'目标',
     required: true,
     component: 'InputTextArea',
@@ -345,7 +469,7 @@ export const milestoneSchema: FormSchema[] = [
     }
   },
   {
-    field: 'feedback',
+    field: 'standard',
     label: '完成标准',
     required: true,
     component: 'InputTextArea',
@@ -354,7 +478,7 @@ export const milestoneSchema: FormSchema[] = [
     }
   },
   {
-    field: 'feedback',
+    field: 'finishStandard',
     label: '验收标准',
     required: true,
     component: 'InputTextArea',

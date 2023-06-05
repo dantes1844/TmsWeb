@@ -3,6 +3,7 @@ import { uploadApi } from '@/api/sys/upload';
 
 import { h } from 'vue';
 import { Progress } from 'ant-design-vue';
+import {getUserList} from "@/api/user/user";
 
 export const columns: BasicColumn[] = [
   {
@@ -34,7 +35,6 @@ export const columns: BasicColumn[] = [
     },
   },
 ];
-
 export const searchFormSchema: FormSchema[] = [
   {
     field: 'title',
@@ -64,8 +64,6 @@ export const searchFormSchema: FormSchema[] = [
     }
   }
 ];
-
-
 export const editFormSchema: FormSchema[] = [
   {
     field: 'id',
@@ -109,4 +107,43 @@ export const editFormSchema: FormSchema[] = [
       api: uploadApi,
     },
   }
+];
+
+export const overtimeSchema: FormSchema[] = [
+  {
+    field: 'startDate',
+    label: '加班日期',
+    component: 'DatePicker',
+    required: true,
+    defaultValue: new Date(),
+    componentProps: {
+      mode: 'date',
+    }
+  },
+  {
+    field: 'totalHours',
+    label: '工时(小时)',
+    required: true,
+    component: 'InputNumber',
+  },
+  {
+    field: 'supervisorId',
+    label: '负责人',
+    component: 'ApiSelect',
+    defaultValue: '',
+    required: true,
+    componentProps: {
+      api: getUserList,
+      labelField: 'name',
+      valueField: 'id',
+    },
+  },
+  {
+    field: 'workContent',
+    label: '工作内容',
+    component: 'InputTextArea',
+    componentProps:{
+      rows:3
+    }
+  },
 ];

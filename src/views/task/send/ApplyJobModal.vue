@@ -4,12 +4,15 @@
   </BasicModal>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, unref } from 'vue';
+  import { defineComponent, ref, computed, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { milestoneSchema } from './job.data';
-  import { createJobFeedback } from '@/api/job/jobFeedback';
+  import { applyFormSchema } from './job.data';
 
+  import { cloneDeep } from 'lodash-es';
+  import { CreateJobModel } from '@/api/job/model/jobModel';
+  import { createJob, createSubJob, updateJob } from '@/api/job/job';
+  import { dateUtil } from '@/utils/dateUtil';
 
   export default defineComponent({
     name: 'JobModal',
@@ -19,11 +22,10 @@
       const isUpdate = ref(true);
       const rowId = ref('');
 
-      const [registerForm, { resetFields, validate }] = useForm({
+      const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
         labelWidth: 100,
-        rowProps: { gutter: 24 },
-        baseColProps: { span: 24 },
-        schemas: milestoneSchema,
+        baseColProps: { span: 12 },
+        schemas: applyFormSchema,
         showActionButtonGroup: false,
         actionColOptions: {
           span: 23,
@@ -35,27 +37,13 @@
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
 
-        // rowId.value = data.record.id;
-        // const subJob: CreateJobModel = cloneDeep(data.record)
-        // subJob.parentId = data.record.id;
-        // subJob['id'] = 0
-
-
-        // const treeData = await getDeptList();
-        // updateSchema([
-        //   {
-        //     field: 'password',
-        //     show: !refIsUpdate,
-        //     required: !refIsUpdate,
-        //   },
-        //   {
-        //     field: 'deptId',
-        //     componentProps: { treeData },
-        //   },
-        // ]);
+        rowId.value = data.record.id;
+        const subJob: CreateJobModel = cloneDeep(data.record)
+        subJob.parentId = data.record.id;
+        subJob['id'] = 0
       });
 
-      const getTitle = '设置里程碑';
+      const getTitle = '任务申请';
 
       async function handleSubmit() {
         try {
@@ -64,8 +52,14 @@
           setModalProps({ confirmLoading: true });
 
           const job = Object.assign({}, values);
+          job.startDate = dateUtil(job.startDate).format('YYYY-MM-DD')
+          job.endDate = dateUtil(job.endDate).format('YYYY-MM-DD')
 
-          await createJobFeedback(job)
+          if (job.id) {
+            await updateJob(job);
+          } else {
+            await createSubJob(job);
+          }
 
           closeModal();
 

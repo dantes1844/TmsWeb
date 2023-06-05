@@ -27,6 +27,7 @@
       </template>
     </BasicTable>
     <KbsFileDrawer @register="registerDrawer" @success="handleSuccess" />
+    <UploadFileModal @register="registerVerifyJobModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
@@ -36,14 +37,19 @@
 
   import { useDrawer } from '/@/components/Drawer';
   import KbsFileDrawer from './KbsFileDrawer.vue';
+  import UploadFileModal from "@/views/files/index/UploadFileModal.vue";
 
   import { columns, searchFormSchema } from './files.data';
   import { getKbsFileListByPage, deleteKbsFile } from '/@/api/file/kbsfile/kbsfile';
+  import EditJobModal from "@/views/task/send/EditJobModal.vue";
+  import ApplyJobModal from "@/views/task/send/ApplyJobModal.vue";
+  import {useModal} from "@/components/Modal";
 
   export default defineComponent({
     name: 'FileManagement',
-    components: { BasicTable, KbsFileDrawer, TableAction },
+    components: {ApplyJobModal, EditJobModal, BasicTable, KbsFileDrawer, TableAction,UploadFileModal },
     setup() {
+      const [registerVerifyJobModal, { openModal: verifyJobModal }] = useModal();
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
         title: '文档列表',
@@ -67,7 +73,7 @@
       });
 
       function handleCreate() {
-        openDrawer(true, {
+        verifyJobModal(true, {
           isUpdate: false,
         });
       }
@@ -95,6 +101,8 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        registerVerifyJobModal,
+        verifyJobModal
       };
     },
   });

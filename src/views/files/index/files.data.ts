@@ -121,14 +121,19 @@ export const formSchema: FormSchema[] = [
   },
   {
     field: 'extension',
-    label: '标签(用逗号分隔)',
+    label: '标签',
     component: 'Input',
+    colProps: { span: 24 },
+    componentProps:{
+      placeholder:'支持多个标签，用逗号分隔'
+    }
   },
   {
     field: 'extension',
     label: '内容摘要',
     required: true,
     component: 'InputTextArea',
+    colProps: { span: 24 },
     componentProps:{
       rows: 5
     }

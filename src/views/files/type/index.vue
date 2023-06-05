@@ -27,6 +27,7 @@
       </template>
     </BasicTable>
     <FileTypeDrawer @register="registerDrawer" @success="handleSuccess" />
+    <FileTypeModal @register="registereditFileTypeModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
@@ -36,14 +37,26 @@
 
   import { useDrawer } from '/@/components/Drawer';
   import FileTypeDrawer from './FileTypeDrawer.vue';
+  import FileTypeModal from "@/views/files/type/FileTypeModal.vue";
 
   import { columns, searchFormSchema } from './types.data';
   import { getFileTypeListByPage, deleteFileType } from '/@/api/file/filetype/filetype';
+  import UploadFileModal from "@/views/files/index/UploadFileModal.vue";
+  import KbsFileDrawer from "@/views/files/index/KbsFileDrawer.vue";
+  import {useModal} from "@/components/Modal";
 
   export default defineComponent({
     name: 'FileTypeManagement',
-    components: { BasicTable, FileTypeDrawer, TableAction },
+    components: {
+      KbsFileDrawer,
+      UploadFileModal,
+      BasicTable,
+      FileTypeDrawer,
+      TableAction,
+      FileTypeModal
+    },
     setup() {
+      const [registereditFileTypeModal, { openModal: editFileTypeModal }] = useModal();
       const [registerDrawer, { openDrawer }] = useDrawer();
       const [registerTable, { reload }] = useTable({
         title: '分类列表',
@@ -67,7 +80,7 @@
       });
 
       function handleCreate() {
-        openDrawer(true, {
+        editFileTypeModal(true, {
           isUpdate: false,
         });
       }
@@ -95,6 +108,8 @@
         handleEdit,
         handleDelete,
         handleSuccess,
+        registereditFileTypeModal,
+        editFileTypeModal
       };
     },
   });

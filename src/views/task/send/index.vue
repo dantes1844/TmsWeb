@@ -2,8 +2,10 @@
   <div>
     <BasicTable @register="registerTable" @fetch-success="fetchSuccess">
       <template #toolbar>
-        <a-button type="primary" @click="handleFeedback"> 任务反馈 </a-button>
+<!--        <a-button type="primary" @click="handleFeedback"> 任务反馈 </a-button>-->
         <a-button type="primary" @click="handleCreate"> 发布任务 </a-button>
+        <a-button type="primary" @click="handleApply"> 任务申请 </a-button>
+        <a-button type="primary" @click="handleVerify"> 任务审核 </a-button>
         <a-button type="primary" @click="handleCreateMilestone"> 设置里程碑 </a-button>
       </template>
       <template #bodyCell="{ column, record }">
@@ -43,6 +45,12 @@
 
     <JobModal @register="registerModal" @success="handleSuccess" />
 
+    <CreateJobModal @register="registerCreateJobModal" @success="handleSuccess" />
+
+    <ApplyJobModal @register="registerApplyJobModal" @success="handleSuccess" />
+    <ApplyJobModal @register="registerApplyJobModal" @success="handleSuccess" />
+    <EditJobModal @register="registerVerifyJobModal" @success="handleSuccess" />
+
     <JobProgressModal @register="registerCommitProgressModal" @success="handleSuccess" />
 
     <MilestoneModal @register="registerMilestoneModal" @success="handleSuccess" />
@@ -58,6 +66,9 @@ import JobModal from '@/views/task/send/JobModal.vue';
 import JobProgressModal from '@/views/task/send/JobProgressModal.vue';
 import JobDrawer from './JobDrawer.vue';
 import MilestoneModal from './MilestoneModal.vue';
+import CreateJobModal from "@/views/task/send/CreateJobModal.vue";
+import ApplyJobModal from "@/views/task/send/ApplyJobModal.vue";
+import EditJobModal from "@/views/task/send/EditJobModal.vue";
 
 import { columns, searchFormSchema } from './job.data';
 import { deleteJob, getJobPages } from '/@/api/job/job';
@@ -72,12 +83,15 @@ export default defineComponent({
       return JobStatus
     }
   },
-  components: { BasicTable, JobDrawer, TableAction, JobModal, JobProgressModal, MilestoneModal },
+  components: { BasicTable, JobDrawer, TableAction, JobModal, JobProgressModal, MilestoneModal, CreateJobModal,ApplyJobModal,EditJobModal },
   setup() {
     const [registerDrawer, { openDrawer }] = useDrawer();
     const [registerModal, { openModal: editTaskModal }] = useModal();
     const [registerCommitProgressModal, { openModal: commitProgressModal }] = useModal();
     const [registerMilestoneModal, { openModal: milestoneModal }] = useModal();
+    const [registerCreateJobModal, { openModal: createJobModal }] = useModal();
+    const [registerApplyJobModal, { openModal: applyJobModal }] = useModal();
+    const [registerVerifyJobModal, { openModal: verifyJobModal }] = useModal();
     const [registerTable, { reload, expandAll }] = useTable({
       title: '任务列表',
       api: getJobPages,
@@ -102,7 +116,17 @@ export default defineComponent({
     });
 
     function handleCreate() {
-      openDrawer(true, {
+      createJobModal(true, {
+        isUpdate: false,
+      });
+    }
+    function handleApply() {
+      applyJobModal(true, {
+        isUpdate: false,
+      });
+    }
+    function handleVerify() {
+      verifyJobModal(true, {
         isUpdate: false,
       });
     }
@@ -125,7 +149,7 @@ export default defineComponent({
       if(record.parentId){
         editTaskModal(true,data)
       }else{
-        openDrawer(true, data);
+        verifyJobModal(true, data);
       }
     }
 
@@ -165,7 +189,15 @@ export default defineComponent({
       editTaskModal,
       registerMilestoneModal,
       milestoneModal,
-      handleCreateMilestone
+      handleCreateMilestone,
+      registerCreateJobModal,
+      createJobModal,
+      registerApplyJobModal,
+      applyJobModal,
+      handleApply,
+      registerVerifyJobModal,
+      verifyJobModal,
+      handleVerify,
     };
   },
 });

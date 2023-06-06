@@ -12,7 +12,7 @@ enum Api {
 
 export const getOvertimePages = (params?: OvertimeParams) =>{
   return defHttp.get<OvertimeDetail[]>(
-    { url: `${BasicUrl}/pages`, params },
+    { url: `${Api.BasicUrl}/pages`, params },
     { isTransformResponse: false },
   );
 }

@@ -4,10 +4,10 @@
   </BasicModal>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, computed, unref } from 'vue';
+  import { defineComponent, ref, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { overtimeSchema } from './performance.data'
+  import { overtimeSchema } from './overtime.data'
 
   import { cloneDeep } from 'lodash-es';
   import { CreateJobModel } from '@/api/job/model/jobModel';
@@ -41,6 +41,12 @@
         const subJob: CreateJobModel = cloneDeep(data.record)
         subJob.parentId = data.record.id;
         subJob['id'] = 0
+
+        if (unref(isUpdate)) {
+          setFieldsValue({
+            ...data.record,
+          });
+        }
       });
 
       const getTitle = '加班申请';

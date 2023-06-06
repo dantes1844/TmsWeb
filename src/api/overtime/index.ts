@@ -4,7 +4,7 @@ import {
   UpdateOvertime,
   OvertimeDetail,
   OvertimeParams
-} from '@/api/overtime/model/overtimeModel';
+} from '@/api/overtime/model';
 
 enum Api {
   BasicUrl = '/app/overtime',

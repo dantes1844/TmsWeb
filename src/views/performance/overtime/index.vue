@@ -29,7 +29,7 @@ import {useModal} from "@/components/Modal";
 import { getOvertimePages } from '@/api/overtime';
 import OvertimeModal from "./OvertimeModal.vue";
 import { columns, searchFormSchema } from './overtime.data';
-import { UpdateOvertime } from '@/api/overtime/model/overtimeModel';
+import { UpdateOvertime } from '@/api/overtime/model';
 
 export default defineComponent({
   name: 'OvertimeManagement',

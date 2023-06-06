@@ -39,31 +39,28 @@ export const columns: BasicColumn[] = [
 ];
 export const searchFormSchema: FormSchema[] = [
   {
-    field: 'title',
+    field: 'userName',
     label: '人员',
     component: 'Input',
     colProps: { span: 4 },
   },
   {
-    field: 'minScore',
-    label: '最低分',
-    component: 'InputNumber',
+    field: 'content',
+    label: '工作内容',
+    component: 'Input',
     colProps: { span: 4 },
   },
   {
-    field: 'minScore',
-    label: '最高分',
-    component: 'InputNumber',
+    field: 'isVerified',
+    label: '状态',
+    component: 'Select',
     colProps: { span: 4 },
-  },
-  {
-  field: 'range',
-    label: '时间段',
-    component: 'RangePicker',
-    colProps: { span: 8 },
-    componentProps:{
-
-    }
+    componentProps: {
+    options: [
+      { label: '已审核', value: true },
+      { label: '待审核', value: false },
+    ],
+    },
   }
 ];
 

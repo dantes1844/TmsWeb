@@ -120,7 +120,7 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
   },
   {
-    field: 'extension',
+    field: 'tags',
     label: '标签',
     component: 'Input',
     colProps: { span: 24 },
@@ -129,7 +129,7 @@ export const formSchema: FormSchema[] = [
     }
   },
   {
-    field: 'extension',
+    field: 'content',
     label: '内容摘要',
     required: true,
     component: 'InputTextArea',

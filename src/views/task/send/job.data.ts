@@ -299,6 +299,66 @@ export const createFormSchema: FormSchema[] = [
     },
   },
 ];
+
+export const createComplexJobFormSchema: FormSchema[] = [
+  {
+    field: 'id',
+    label: '唯一编号',
+    component: 'InputNumber',
+    required: false,
+    show: false,
+  },
+  {
+    field: 'jobName',
+    label: '任务标题',
+    required: true,
+    colProps: { span: 24 },
+    component: 'Input',
+  },
+  {
+    field: 'executorId',
+    label: '执行人',
+    component: 'ApiSelect',
+    defaultValue: null,
+    required: true,
+    colProps: { span: 24 },
+    componentProps: {
+      api: getUserList,
+      mode: 'multiple',
+      labelField: 'name',
+      valueField: 'id',
+    },
+  },
+  {
+    field: 'startDate',
+    label: '开始日期',
+    component: 'DatePicker',
+    required: true,
+    defaultValue: new Date(),
+    componentProps: {
+      mode: 'date'
+    }
+  },
+  {
+    field: 'endDate',
+    label: '结束日期',
+    component: 'DatePicker',
+    required: true,
+    defaultValue: new Date(),
+    componentProps: {
+      mode: 'date'
+    }
+  },
+  {
+    field: 'description',
+    label: '任务简介',
+    component: 'InputTextArea',
+    colProps: { span: 24 },
+    componentProps: {
+      rows: 10
+    },
+  },
+];
 export const editSubJobFormSchema: FormSchema[] = [
   {
     field: 'id',

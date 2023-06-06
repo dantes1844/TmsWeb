@@ -7,6 +7,7 @@
         <a-button type="primary" @click="handleApply"> 任务申请 </a-button>
         <a-button type="primary" @click="handleVerify"> 任务审核 </a-button>
         <a-button type="primary" @click="handleCreateMilestone"> 设置里程碑 </a-button>
+        <a-button type="primary" @click="handleCreateComplexJob"> 专用任务 </a-button>
       </template>
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
@@ -41,34 +42,27 @@
         </template>
       </template>
     </BasicTable>
-    <JobDrawer @register="registerDrawer" @success="handleSuccess" />
-
     <JobModal @register="registerModal" @success="handleSuccess" />
-
     <CreateJobModal @register="registerCreateJobModal" @success="handleSuccess" />
-
     <ApplyJobModal @register="registerApplyJobModal" @success="handleSuccess" />
     <ApplyJobModal @register="registerApplyJobModal" @success="handleSuccess" />
     <EditJobModal @register="registerVerifyJobModal" @success="handleSuccess" />
-
     <JobProgressModal @register="registerCommitProgressModal" @success="handleSuccess" />
-
     <MilestoneModal @register="registerMilestoneModal" @success="handleSuccess" />
+    <CreateComplexJobModal @register="registerComplexJobModal" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, nextTick } from 'vue';
-
 import { BasicTable, useTable, TableAction } from '/@/components/Table';
-
-import { useDrawer } from '/@/components/Drawer';
-import JobModal from '@/views/task/send/JobModal.vue';
-import JobProgressModal from '@/views/task/send/JobProgressModal.vue';
+import JobModal from './JobModal.vue';
+import JobProgressModal from './JobProgressModal.vue';
 import JobDrawer from './JobDrawer.vue';
 import MilestoneModal from './MilestoneModal.vue';
-import CreateJobModal from "@/views/task/send/CreateJobModal.vue";
-import ApplyJobModal from "@/views/task/send/ApplyJobModal.vue";
-import EditJobModal from "@/views/task/send/EditJobModal.vue";
+import CreateJobModal from './CreateJobModal.vue';
+import ApplyJobModal from './ApplyJobModal.vue';
+import EditJobModal from './EditJobModal.vue';
+import CreateComplexJobModal from './CreateComplexJobModal.vue';
 
 import { columns, searchFormSchema } from './job.data';
 import { deleteJob, getJobPages } from '/@/api/job/job';
@@ -77,21 +71,31 @@ import { useModal } from '@/components/Modal';
 import { JobStatus } from '@/api/job/model/jobModel';
 
 export default defineComponent({
-  name: 'JobManagement',
   computed: {
     JobStatus() {
       return JobStatus
     }
   },
-  components: { BasicTable, JobDrawer, TableAction, JobModal, JobProgressModal, MilestoneModal, CreateJobModal,ApplyJobModal,EditJobModal },
+  components: {
+    BasicTable,
+    JobDrawer,
+    TableAction,
+    JobModal,
+    JobProgressModal,
+    MilestoneModal,
+    CreateJobModal,
+    ApplyJobModal,
+    EditJobModal,
+    CreateComplexJobModal
+  },
   setup() {
-    const [registerDrawer, { openDrawer }] = useDrawer();
     const [registerModal, { openModal: editTaskModal }] = useModal();
     const [registerCommitProgressModal, { openModal: commitProgressModal }] = useModal();
     const [registerMilestoneModal, { openModal: milestoneModal }] = useModal();
     const [registerCreateJobModal, { openModal: createJobModal }] = useModal();
     const [registerApplyJobModal, { openModal: applyJobModal }] = useModal();
     const [registerVerifyJobModal, { openModal: verifyJobModal }] = useModal();
+    const [registerComplexJobModal, { openModal: openComplexJobModal }] = useModal();
     const [registerTable, { reload, expandAll }] = useTable({
       title: '任务列表',
       api: getJobPages,
@@ -140,6 +144,11 @@ export default defineComponent({
         isUpdate: false,
       });
     }
+    function handleCreateComplexJob() {
+      openComplexJobModal(true, {
+        isUpdate: false,
+      });
+    }
 
     function handleEdit(record: CreateJobModel) {
       const data = {
@@ -175,7 +184,6 @@ export default defineComponent({
 
     return {
       registerTable,
-      registerDrawer,
       registerModal,
       handleCreate,
       handleEdit,
@@ -198,6 +206,9 @@ export default defineComponent({
       registerVerifyJobModal,
       verifyJobModal,
       handleVerify,
+      registerComplexJobModal,
+      openComplexJobModal,
+      handleCreateComplexJob,
     };
   },
 });

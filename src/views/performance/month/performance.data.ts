@@ -111,7 +111,7 @@ export const editFormSchema: FormSchema[] = [
 
 export const overtimeSchema: FormSchema[] = [
   {
-    field: 'startDate',
+    field: 'date',
     label: '加班日期',
     component: 'DatePicker',
     required: true,
@@ -121,7 +121,7 @@ export const overtimeSchema: FormSchema[] = [
     }
   },
   {
-    field: 'totalHours',
+    field: 'hours',
     label: '工时(小时)',
     required: true,
     component: 'InputNumber',
@@ -139,7 +139,7 @@ export const overtimeSchema: FormSchema[] = [
     },
   },
   {
-    field: 'workContent',
+    field: 'content',
     label: '工作内容',
     component: 'InputTextArea',
     componentProps:{

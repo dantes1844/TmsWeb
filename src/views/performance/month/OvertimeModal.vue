@@ -11,7 +11,7 @@
 
   import { cloneDeep } from 'lodash-es';
   import { CreateJobModel } from '@/api/job/model/jobModel';
-  import { createJob, createSubJob, updateJob } from '@/api/job/job';
+  import { createOvertime, updateOvertime } from '@/api/overtime';
   import { dateUtil } from '@/utils/dateUtil';
 
   export default defineComponent({
@@ -52,13 +52,13 @@
           setModalProps({ confirmLoading: true });
 
           const job = Object.assign({}, values);
-          job.startDate = dateUtil(job.startDate).format('YYYY-MM-DD')
-          job.endDate = dateUtil(job.endDate).format('YYYY-MM-DD')
+          job.date = dateUtil(job.date).format('YYYY-MM-DD')
 
+          debugger
           if (job.id) {
-            await updateJob(job);
+            await updateOvertime(job);
           } else {
-            await createSubJob(job);
+            await createOvertime(job);
           }
 
           closeModal();

@@ -42,19 +42,19 @@ export const searchFormSchema: FormSchema[] = [
     field: 'userName',
     label: '人员',
     component: 'Input',
-    colProps: { span: 4 },
+    colProps: { span: 8 },
   },
   {
     field: 'content',
     label: '工作内容',
     component: 'Input',
-    colProps: { span: 4 },
+    colProps: { span: 8 },
   },
   {
     field: 'isVerified',
     label: '状态',
     component: 'Select',
-    colProps: { span: 4 },
+    colProps: { span: 8 },
     componentProps: {
     options: [
       { label: '已审核', value: true },

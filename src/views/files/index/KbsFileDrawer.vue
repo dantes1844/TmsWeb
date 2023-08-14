@@ -26,10 +26,10 @@
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './files.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-  import { BasicTree, TreeItem } from '/@/components/Tree';
+  import { BasicTree } from '/@/components/Tree';
 
   import { createKbsFile, updateKbsFile } from '/@/api/file/kbsfile/kbsfile';
-  import { FileTypeListItem, getAllFileTypeList } from "/@/api/file/filetype/filetype";
+  import { FileTypeListItem, getAllFileTypeList } from '/@/api/file/filetype/filetype';
 
   export default defineComponent({
     name: 'KbsFileDrawer',
@@ -53,7 +53,9 @@
         if (unref(treeData).length === 0) {
           try {
             treeData.value = (await getAllFileTypeList()) as any as FileTypeListItem[];
-          } catch (err) {}
+          } catch (err) {
+            /* empty */
+          }
         }
         isUpdate.value = !!data?.isUpdate;
 

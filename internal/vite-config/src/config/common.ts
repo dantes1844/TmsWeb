@@ -2,12 +2,12 @@ import { presetTypography, presetUno } from 'unocss';
 import UnoCSS from 'unocss/vite';
 import { type UserConfig } from 'vite';
 
-const commonConfig: UserConfig = {
+const commonConfig: (mode: string) => UserConfig = (mode) => ({
   server: {
     host: true,
   },
   esbuild: {
-    drop: [], // 'console', 'debugger' //这里加了这两个之后调试的时候debugger会丢失
+    drop: mode === 'procution' ? ['console', 'debugger'] : [],
   },
   build: {
     reportCompressedSize: false,
@@ -22,6 +22,6 @@ const commonConfig: UserConfig = {
       presets: [presetUno(), presetTypography()],
     }),
   ],
-};
+});
 
 export { commonConfig };

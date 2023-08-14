@@ -70,7 +70,7 @@
   }
 
   .@{prefix-cls} {
-    padding-top: 2px;
+    padding-bottom: 1px;
 
     &__overlay {
       max-width: 360px;
@@ -81,6 +81,8 @@
     }
 
     .ant-badge {
+      display: flex;
+      align-items: center;
       font-size: 18px;
 
       .ant-badge-multiple-words {

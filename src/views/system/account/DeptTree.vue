@@ -15,9 +15,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, ref, unref } from 'vue';
-
-import { BasicTree, TreeActionType, TreeItem } from '/@/components/Tree';
+  import { defineComponent, onMounted, ref, unref } from 'vue';
+  import { BasicTree, TreeActionType, TreeItem } from '/@/components/Tree';
   import { getDeptList } from '/@/api/department/dept';
   import { bus, EventBusType } from '/@/utils/event/eventBus';
   import { DepartmentStatus, DeptListItem } from '@/api/department/model/deptModel';

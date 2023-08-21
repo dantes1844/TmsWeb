@@ -1,10 +1,9 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
 import { uploadApi } from '@/api/sys/upload';
-
-import {getUserList} from "@/api/user/user";
-import {h} from "vue";
-import {Button} from "ant-design-vue";
-import {downloadByUrlData} from "@/utils/file/download";
+import { getUserList } from '@/api/user/user';
+import { h } from 'vue';
+import { Button } from 'ant-design-vue';
+import { downloadByUrlData } from '@/utils/file/download';
 
 export const columns: BasicColumn[] = [
   {
@@ -15,14 +14,16 @@ export const columns: BasicColumn[] = [
     title: '模板文件',
     dataIndex: 'templateFile',
     customRender: ({ record }) => {
-      return h(Button,
+      return h(
+        Button,
         {
           type: 'link',
-          onClick(){
-            downloadByUrlData(record.templateFile, record.templateName, record.mimeType)
+          onClick() {
+            downloadByUrlData(record.templateFile, record.templateName, record.mimeType);
           },
         },
-        () => "下载");
+        () => '下载',
+      );
     },
   },
 ];
@@ -31,7 +32,7 @@ export const searchFormSchema: FormSchema[] = [
     field: 'templateName',
     label: '模板名称',
     component: 'Input',
-    colProps: { span: 8 }
+    colProps: { span: 8 },
   },
 ];
 export const editFormSchema: FormSchema[] = [
@@ -65,7 +66,7 @@ export const editFormSchema: FormSchema[] = [
     label: '通知内容',
     component: 'InputTextArea',
     componentProps: {
-      rows: 20
+      rows: 20,
     },
   },
   {
@@ -76,7 +77,7 @@ export const editFormSchema: FormSchema[] = [
     componentProps: {
       api: uploadApi,
     },
-  }
+  },
 ];
 
 export const overtimeSchema: FormSchema[] = [
@@ -88,7 +89,7 @@ export const overtimeSchema: FormSchema[] = [
     defaultValue: new Date(),
     componentProps: {
       mode: 'date',
-    }
+    },
   },
   {
     field: 'hours',
@@ -112,8 +113,8 @@ export const overtimeSchema: FormSchema[] = [
     field: 'content',
     label: '工作内容',
     component: 'InputTextArea',
-    componentProps:{
-      rows:3
-    }
+    componentProps: {
+      rows: 3,
+    },
   },
 ];

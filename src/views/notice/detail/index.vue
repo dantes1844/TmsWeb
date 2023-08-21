@@ -18,22 +18,21 @@
       </a-card>
       <a-divider />
 
-      <a-card title="通知附件" :bordered="false" class="mt-5" v-if="notice.files?.length>0">
+      <a-card title="通知附件" :bordered="false" class="mt-5" v-if="hasAnyFile">
         <BasicTable @register="registerTimeTable" />
       </a-card>
     </div>
   </PageWrapper>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import { defineComponent, onMounted, ref, computed } from 'vue';
 import { BasicTable, useTable } from '/@/components/Table';
 import { PageWrapper } from '/@/components/Page';
 import { Card, Descriptions, Divider, Empty, Steps, Tabs,PageHeader } from 'ant-design-vue';
 import { getNotice } from '@/api/notice/notice';
-
 import { refundTimeTableData, refundTimeTableSchema } from './data';
 import { useRouter } from 'vue-router';
-import { NoticeDetail, NoticeType } from '@/api/notice/model/noticeModel';
+import { NoticeDetail } from '@/api/notice/model/noticeModel';
 
 export default defineComponent({
   components: {
@@ -61,6 +60,7 @@ export default defineComponent({
     });
 
     let notice= ref<NoticeDetail>({} as NoticeDetail) ;
+    const hasAnyFile = computed(() => notice.value.files && notice.value.files?.length>0);
 
     onMounted(async()=>{
       const { currentRoute } = useRouter();
@@ -72,7 +72,8 @@ export default defineComponent({
 
     return {
       registerTimeTable,
-      notice
+      notice,
+      hasAnyFile
     };
   },
 });

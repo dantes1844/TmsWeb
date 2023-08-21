@@ -175,13 +175,13 @@
         return [
           {
             label: '保存',
-            onClick: handleSave.bind(null, record, column),
+            onClick: handleSave.bind(null, record),
           },
           {
             label: '取消',
             popConfirm: {
               title: '是否取消编辑',
-              confirm: handleCancel.bind(null, record, column),
+              confirm: handleCancel.bind(null, record),
             },
           },
         ];

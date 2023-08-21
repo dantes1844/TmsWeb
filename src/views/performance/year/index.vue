@@ -21,16 +21,16 @@ import { BasicForm, useForm } from '/@/components/Form';
 import { defineComponent, ref } from 'vue';
 import PersonTable from './PersonTable.vue';
 import { PageWrapper } from '/@/components/Page';
-import { schemas, taskSchemas } from './data';
+import { taskSchemas } from './data';
 import { Card } from 'ant-design-vue';
 
 export default defineComponent({
-  name: 'FormHightPage',
+  name: 'year',
   components: { BasicForm, PersonTable, PageWrapper, [Card.name]: Card },
   setup() {
     const tableRef = ref<{ getDataSource: () => any } | null>(null);
 
-    const [registerTask, { validate: validateTaskForm }] = useForm({
+    const [registerTask, { validate }] = useForm({
       layout: 'vertical',
       baseColProps: {
         span: 6,
@@ -45,8 +45,8 @@ export default defineComponent({
           console.log('table data:', tableRef.value.getDataSource());
         }
 
-        const [values, taskValues] = await Promise.all([validate(), validateTaskForm()]);
-        console.log('form data:', values, taskValues);
+        const [values] = await Promise.all([validate()]);
+        console.log('form data:', values);
       } catch (error) {}
     }
 

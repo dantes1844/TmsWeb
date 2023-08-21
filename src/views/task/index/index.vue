@@ -10,7 +10,7 @@
 <script lang="ts">
 
 import { getDashboards } from '@/api/job/job';
-import { defineComponent, onBeforeMount, onBeforeUnmount, onMounted, ref } from 'vue';
+import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue';
 import { JobDetail, JobStatus } from '@/api/job/model/jobModel';
 import Detail from '@/views/task/index/components/Detail.vue';
 import { bus, EventBusType } from '@/utils/event/eventBus';

@@ -67,13 +67,13 @@ export default defineComponent({
       //checkedKeys.value = data?.record?.permissions;
 
       if (unref(isUpdate)) {
-        setFieldsValue({
+        await setFieldsValue({
           ...data.record,
         });
       }
     });
 
-    const getTitle = computed(() => (!unref(isUpdate) ? '新增角色' : '编辑角色'));
+    const getTitle = computed(() => (unref(isUpdate) ? '编辑角色' : '新增角色'));
 
     async function handleSubmit() {
       try {

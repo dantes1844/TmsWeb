@@ -62,10 +62,10 @@
 
 import Icon from '@/components/Icon/Icon.vue';
 import { computed, defineComponent } from 'vue';
-import TodoControls from '@/views/task/index/components/todoControls.vue';
-import InProgressControls from '@/views/task/index/components/inProgressControls.vue';
-import FinalCheckControls from '@/views/task/index/components/finalCheckControls.vue';
-import DoneControls from '@/views/task/index/components/doneControls.vue';
+import TodoControls from '/src/views/task/index/components/TodoControls.vue';
+import InProgressControls from '/src/views/task/index/components/InProgressControls.vue';
+import FinalCheckControls from '/src/views/task/index/components/FinalCheckControls.vue';
+import DoneControls from '/src/views/task/index/components/DoneControls.vue';
 import { JobDetail, JobStatus } from '@/api/job/model/jobModel';
 import { formatToDate } from '@/utils/dateUtil';
 

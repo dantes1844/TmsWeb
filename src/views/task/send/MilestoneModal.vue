@@ -10,7 +10,6 @@
   import { milestoneSchema } from './job.data';
   import { createJobFeedback } from '@/api/job/jobFeedback';
 
-
   export default defineComponent({
     name: 'JobModal',
     components: { BasicModal, BasicForm },
@@ -31,28 +30,9 @@
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-        resetFields();
+        await resetFields();
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
-
-        // rowId.value = data.record.id;
-        // const subJob: CreateJobModel = cloneDeep(data.record)
-        // subJob.parentId = data.record.id;
-        // subJob['id'] = 0
-
-
-        // const treeData = await getDeptList();
-        // updateSchema([
-        //   {
-        //     field: 'password',
-        //     show: !refIsUpdate,
-        //     required: !refIsUpdate,
-        //   },
-        //   {
-        //     field: 'deptId',
-        //     componentProps: { treeData },
-        //   },
-        // ]);
       });
 
       const getTitle = '设置里程碑';

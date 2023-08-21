@@ -36,7 +36,6 @@
     </BasicTable>
     <NoticeDrawer @register="registerDrawer" @success="handleSuccess" />
 
-
     <UploadPreviewModal
       :value="fileList"
       @register="registerPreviewModal"
@@ -46,22 +45,17 @@
   </div>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, Ref } from 'vue';
-
+  import { defineComponent, ref } from 'vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table';
-
   import { useDrawer } from '/@/components/Drawer';
   import NoticeDrawer from './NoticeDrawer.vue';
-
   import { columns, searchFormSchema } from './notice.data';
   import { getNoticePages, deleteNotice } from '/@/api/notice/notice';
   import {CreateNoticeModel, NoticeDetail} from '/@/api/notice/model/noticeModel';
   import UploadModal from "@/components/Upload/src/UploadModal.vue";
   import UploadPreviewModal from "@/components/Upload/src/UploadPreviewModal.vue";
-  import {PreviewFileItem} from "@/components/Upload/src/typing";
   import {UploadApiResult} from "@/api/sys/model/uploadModel";
   import {useModal} from "@/components/Modal";
-
   export default defineComponent({
     name: 'NoticeManagement',
     components: {UploadPreviewModal, UploadModal, BasicTable, NoticeDrawer, TableAction },
@@ -101,7 +95,7 @@
         });
       }
 
-      const fileList = ref<UploadApiResult[]>([]);
+      let fileList = ref<UploadApiResult[]>([]);
       function handlePreview(record:NoticeDetail){
         fileList.value = record.files
         openPreviewModal()

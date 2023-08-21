@@ -2,7 +2,7 @@ import { BasicColumn, FormSchema } from '/@/components/Table';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
 import Icon from '@/components/Icon/Icon.vue';
-import {MenuType} from "@/api/menu/model/menuModel";
+import { MenuType } from '@/api/menu/model/menuModel';
 
 export const columns: BasicColumn[] = [
   {
@@ -20,7 +20,7 @@ export const columns: BasicColumn[] = [
   {
     title: '组件',
     dataIndex: 'component',
-    align: 'left'
+    align: 'left',
   },
   {
     title: '排序',
@@ -39,14 +39,14 @@ export const columns: BasicColumn[] = [
 ];
 
 const isDir = (type: MenuType) => type === MenuType.Module;
-const isMenu = (type: MenuType) => type === MenuType.Page
+const isMenu = (type: MenuType) => type === MenuType.Page;
 const isButton = (type: MenuType) => type === MenuType.Button;
 
 export const MenuTypeOptions = [
-  { 'label':'模块', value: MenuType.Module },
-  { 'label':'页面', value: MenuType.Page },
-  { 'label':'按钮', value: MenuType.Button },
-]
+  { label: '模块', value: MenuType.Module },
+  { label: '页面', value: MenuType.Page },
+  { label: '按钮', value: MenuType.Button },
+];
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -83,7 +83,7 @@ export const formSchema: FormSchema[] = [
     field: 'id',
     label: 'ID',
     show: false,
-    component:'InputNumber',
+    component: 'InputNumber',
     required: false,
   },
   {

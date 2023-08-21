@@ -60,7 +60,6 @@ export const taskSchemas: FormSchema[] = [
       offset: 2,
     },
   },
-
   {
     field: 't6',
     component: 'DatePicker',

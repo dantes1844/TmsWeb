@@ -23,19 +23,15 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-
 import { BasicTable, useTable, TableAction } from '/@/components/Table';
-
 import { useDrawer } from '/@/components/Drawer';
-
 import { columns, searchFormSchema } from './log.data';
 import { getUserLogs } from '@/api/log/log';
-
 export default defineComponent({
   name: 'UserLog',
   components: { BasicTable, TableAction },
   setup() {
-    const [registerDrawer, { openDrawer }] = useDrawer();
+    const [registerDrawer] = useDrawer();
     const [registerTable, { reload }] = useTable({
       title: '用户日志',
       api: getUserLogs,

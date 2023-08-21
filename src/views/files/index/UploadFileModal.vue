@@ -4,15 +4,14 @@
   </BasicModal>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, computed, unref } from 'vue';
+  import { defineComponent, ref, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { formSchema } from './files.data';
-
   import { cloneDeep } from 'lodash-es';
   import { CreateJobModel } from '@/api/job/model/jobModel';
-  import { createJob, createSubJob, updateJob } from '@/api/job/job';
-  import { dateUtil } from '@/utils/dateUtil';
+  import { createSubJob, updateJob } from '@/api/job/job';
+  import { formatToDate } from '@/utils/dateUtil';
 
   export default defineComponent({
     name: 'JobModal',
@@ -22,7 +21,7 @@
       const isUpdate = ref(true);
       const rowId = ref('');
 
-      const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
+      const [registerForm, { resetFields, validate }] = useForm({
         labelWidth: 100,
         baseColProps: { span: 12 },
         schemas: formSchema,
@@ -33,7 +32,7 @@
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-        resetFields();
+        await resetFields();
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
 
@@ -52,8 +51,8 @@
           setModalProps({ confirmLoading: true });
 
           const job = Object.assign({}, values);
-          job.startDate = dateUtil(job.startDate).format('YYYY-MM-DD')
-          job.endDate = dateUtil(job.endDate).format('YYYY-MM-DD')
+          job.startDate = formatToDate(job.startDate)
+          job.endDate = formatToDate(job.endDate)
 
           if (job.id) {
             await updateJob(job);

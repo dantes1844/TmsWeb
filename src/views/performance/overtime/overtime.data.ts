@@ -1,8 +1,9 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
-import {getUserList} from "@/api/user/user";
+import { getUserList } from '@/api/user/user';
 import { formatToDate } from '@/utils/dateUtil';
 import { h } from 'vue';
 import { Tag } from 'ant-design-vue';
+
 export const columns: BasicColumn[] = [
   {
     title: '人员',
@@ -11,9 +12,9 @@ export const columns: BasicColumn[] = [
   {
     title: '日期',
     dataIndex: 'date',
-    customRender:({record})=>{
+    customRender: ({ record }) => {
       return formatToDate(record.date);
-    }
+    },
   },
   {
     title: '加班时长(小时)',
@@ -22,19 +23,18 @@ export const columns: BasicColumn[] = [
   {
     title: '工作内容',
     dataIndex: 'content',
-    width: 400
+    width: 400,
   },
   {
     title: '状态',
     dataIndex: 'isVerified',
-    customRender:({record})=>{
+    customRender: ({ record }) => {
       const status = record.isVerified;
       const enable = ~~status === 1;
       const color = enable ? 'green' : 'red';
       const text = enable ? '已审核' : '待审核';
       return h(Tag, { color: color }, () => text);
-
-    }
+    },
   },
 ];
 export const searchFormSchema: FormSchema[] = [
@@ -56,12 +56,12 @@ export const searchFormSchema: FormSchema[] = [
     component: 'Select',
     colProps: { span: 8 },
     componentProps: {
-    options: [
-      { label: '已审核', value: true },
-      { label: '待审核', value: false },
-    ],
+      options: [
+        { label: '已审核', value: true },
+        { label: '待审核', value: false },
+      ],
     },
-  }
+  },
 ];
 
 export const overtimeSchema: FormSchema[] = [
@@ -73,7 +73,7 @@ export const overtimeSchema: FormSchema[] = [
     defaultValue: new Date(),
     componentProps: {
       mode: 'date',
-    }
+    },
   },
   {
     field: 'hours',
@@ -97,8 +97,8 @@ export const overtimeSchema: FormSchema[] = [
     field: 'content',
     label: '工作内容',
     component: 'InputTextArea',
-    componentProps:{
-      rows:3
-    }
+    componentProps: {
+      rows: 3,
+    },
   },
 ];

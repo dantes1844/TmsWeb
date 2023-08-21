@@ -8,11 +8,10 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { createComplexJobFormSchema } from './job.data';
-
   import { cloneDeep } from 'lodash-es';
   import { CreateJobModel } from '@/api/job/model/jobModel';
-  import { createJob, createSubJob, updateJob } from '@/api/job/job';
-  import { dateUtil } from '@/utils/dateUtil';
+  import { createSubJob, updateJob } from '@/api/job/job';
+  import { formatToDate } from "@/utils/dateUtil";
 
   export default defineComponent({
     components: { BasicModal, BasicForm },
@@ -32,7 +31,7 @@
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-        resetFields();
+        await resetFields();
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
 
@@ -41,22 +40,9 @@
         subJob.parentId = data.record.id;
         subJob['id'] = 0
 
-        setFieldsValue({
+        await setFieldsValue({
           ...subJob,
         });
-
-        // const treeData = await getDeptList();
-        // updateSchema([
-        //   {
-        //     field: 'password',
-        //     show: !refIsUpdate,
-        //     required: !refIsUpdate,
-        //   },
-        //   {
-        //     field: 'deptId',
-        //     componentProps: { treeData },
-        //   },
-        // ]);
       });
 
       const getTitle = '任务发布';
@@ -68,8 +54,8 @@
           setModalProps({ confirmLoading: true });
 
           const job = Object.assign({}, values);
-          job.startDate = dateUtil(job.startDate).format('YYYY-MM-DD')
-          job.endDate = dateUtil(job.endDate).format('YYYY-MM-DD')
+          job.startDate = formatToDate(job.startDate)
+          job.endDate = formatToDate(job.endDate)
 
           if (job.id) {
             await updateJob(job);

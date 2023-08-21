@@ -3,7 +3,7 @@ import { uploadApi } from '@/api/sys/upload';
 
 import { h } from 'vue';
 import { Progress } from 'ant-design-vue';
-import {getUserList} from "@/api/user/user";
+import { getUserList } from '@/api/user/user';
 
 export const columns: BasicColumn[] = [
   {
@@ -55,14 +55,12 @@ export const searchFormSchema: FormSchema[] = [
     colProps: { span: 4 },
   },
   {
-  field: 'range',
+    field: 'range',
     label: '时间段',
     component: 'RangePicker',
     colProps: { span: 8 },
-    componentProps:{
-
-    }
-  }
+    componentProps: {},
+  },
 ];
 export const editFormSchema: FormSchema[] = [
   {
@@ -95,7 +93,7 @@ export const editFormSchema: FormSchema[] = [
     label: '通知内容',
     component: 'InputTextArea',
     componentProps: {
-      rows: 20
+      rows: 20,
     },
   },
   {
@@ -106,7 +104,7 @@ export const editFormSchema: FormSchema[] = [
     componentProps: {
       api: uploadApi,
     },
-  }
+  },
 ];
 
 export const overtimeSchema: FormSchema[] = [
@@ -118,7 +116,7 @@ export const overtimeSchema: FormSchema[] = [
     defaultValue: new Date(),
     componentProps: {
       mode: 'date',
-    }
+    },
   },
   {
     field: 'hours',
@@ -142,8 +140,8 @@ export const overtimeSchema: FormSchema[] = [
     field: 'content',
     label: '工作内容',
     component: 'InputTextArea',
-    componentProps:{
-      rows:3
-    }
+    componentProps: {
+      rows: 3,
+    },
   },
 ];

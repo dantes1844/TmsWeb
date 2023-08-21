@@ -40,7 +40,7 @@ export const columns: BasicColumn[] = [
     width: 120,
     customRender: ({ record }) => {
       return formatToDate(record.startDate);
-    }
+    },
   },
   {
     title: '计划结束时间',
@@ -48,7 +48,7 @@ export const columns: BasicColumn[] = [
     width: 120,
     customRender: ({ record }) => {
       return formatToDate(record.endDate);
-    }
+    },
   },
   {
     title: '发布时间',
@@ -56,7 +56,7 @@ export const columns: BasicColumn[] = [
     width: 160,
     customRender: ({ record }) => {
       return formatToDateTime(record.creationTime);
-    }
+    },
   },
 ];
 
@@ -80,7 +80,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '任务状态',
     component: 'Select',
     componentProps: {
-      options: options
+      options: options,
     },
     colProps: { span: 8 },
   },
@@ -102,7 +102,7 @@ export const editFormSchema: FormSchema[] = [
     colProps: { span: 24 },
     componentProps: {
       disabled: true,
-    }
+    },
   },
   {
     field: 'startDate',
@@ -113,7 +113,7 @@ export const editFormSchema: FormSchema[] = [
     componentProps: {
       mode: 'date',
       disabled: true,
-    }
+    },
   },
   {
     field: 'endDate',
@@ -124,7 +124,7 @@ export const editFormSchema: FormSchema[] = [
     componentProps: {
       mode: 'date',
       disabled: true,
-    }
+    },
   },
   {
     field: 'supervisorId',
@@ -219,8 +219,8 @@ export const applyFormSchema: FormSchema[] = [
     required: true,
     defaultValue: new Date(),
     componentProps: {
-      mode: 'date'
-    }
+      mode: 'date',
+    },
   },
   {
     field: 'endDate',
@@ -229,8 +229,8 @@ export const applyFormSchema: FormSchema[] = [
     required: true,
     defaultValue: new Date(),
     componentProps: {
-      mode: 'date'
-    }
+      mode: 'date',
+    },
   },
   {
     field: 'description',
@@ -238,7 +238,7 @@ export const applyFormSchema: FormSchema[] = [
     component: 'InputTextArea',
     colProps: { span: 24 },
     componentProps: {
-      rows: 10
+      rows: 10,
     },
   },
 ];
@@ -276,8 +276,8 @@ export const createFormSchema: FormSchema[] = [
     required: true,
     defaultValue: new Date(),
     componentProps: {
-      mode: 'date'
-    }
+      mode: 'date',
+    },
   },
   {
     field: 'endDate',
@@ -286,8 +286,8 @@ export const createFormSchema: FormSchema[] = [
     required: true,
     defaultValue: new Date(),
     componentProps: {
-      mode: 'date'
-    }
+      mode: 'date',
+    },
   },
   {
     field: 'description',
@@ -295,7 +295,7 @@ export const createFormSchema: FormSchema[] = [
     component: 'InputTextArea',
     colProps: { span: 24 },
     componentProps: {
-      rows: 10
+      rows: 10,
     },
   },
 ];
@@ -336,8 +336,8 @@ export const createComplexJobFormSchema: FormSchema[] = [
     required: true,
     defaultValue: new Date(),
     componentProps: {
-      mode: 'date'
-    }
+      mode: 'date',
+    },
   },
   {
     field: 'endDate',
@@ -346,8 +346,8 @@ export const createComplexJobFormSchema: FormSchema[] = [
     required: true,
     defaultValue: new Date(),
     componentProps: {
-      mode: 'date'
-    }
+      mode: 'date',
+    },
   },
   {
     field: 'description',
@@ -355,7 +355,7 @@ export const createComplexJobFormSchema: FormSchema[] = [
     component: 'InputTextArea',
     colProps: { span: 24 },
     componentProps: {
-      rows: 10
+      rows: 10,
     },
   },
 ];
@@ -377,8 +377,8 @@ export const editSubJobFormSchema: FormSchema[] = [
       labelField: 'jobName',
       valueField: 'id',
       params: {
-        jobStatus: JobStatus.Todo
-      }
+        jobStatus: JobStatus.Todo,
+      },
     },
   },
   {
@@ -388,8 +388,8 @@ export const editSubJobFormSchema: FormSchema[] = [
     defaultValue: '',
     required: true,
     componentProps: {
-      disabled: true
-    }
+      disabled: true,
+    },
   },
   {
     field: 'jobName',
@@ -403,7 +403,7 @@ export const editSubJobFormSchema: FormSchema[] = [
     component: 'Select',
     defaultValue: JobStatus.Todo,
     componentProps: {
-      options: options
+      options: options,
     },
   },
   {
@@ -413,8 +413,8 @@ export const editSubJobFormSchema: FormSchema[] = [
     required: true,
     defaultValue: new Date(),
     componentProps: {
-      mode: 'date'
-    }
+      mode: 'date',
+    },
   },
   {
     field: 'endDate',
@@ -423,8 +423,8 @@ export const editSubJobFormSchema: FormSchema[] = [
     required: true,
     defaultValue: new Date(),
     componentProps: {
-      mode: 'date'
-    }
+      mode: 'date',
+    },
   },
   {
     field: 'executorId',
@@ -442,7 +442,7 @@ export const editSubJobFormSchema: FormSchema[] = [
     field: 'description',
     label: '任务简介',
     component: 'InputTextArea',
-    colProps:{ span: 24 },
+    colProps: { span: 24 },
     componentProps: {
       rows: 10,
     },
@@ -460,13 +460,13 @@ export const commitWorkProgressSchema: FormSchema[] = [
       labelField: 'jobName',
       valueField: 'id',
       params: {
-        jobStatus: JobStatus.InProgress
-      }
+        jobStatus: JobStatus.InProgress,
+      },
     },
   },
   {
     field: 'percent',
-    label:'进度',
+    label: '进度',
     required: true,
     component: 'InputNumber',
   },
@@ -475,9 +475,9 @@ export const commitWorkProgressSchema: FormSchema[] = [
     label: '说明',
     component: 'InputTextArea',
     componentProps: {
-      rows: 5
-    }
-  }
+      rows: 5,
+    },
+  },
 ];
 
 export const milestoneSchema: FormSchema[] = [
@@ -491,19 +491,19 @@ export const milestoneSchema: FormSchema[] = [
       labelField: 'jobName',
       valueField: 'id',
       params: {
-        jobStatus: JobStatus.InProgress
-      }
+        jobStatus: JobStatus.InProgress,
+      },
     },
   },
   {
     field: 'milestoneName',
-    label:'里程碑名称',
+    label: '里程碑名称',
     required: true,
     component: 'Input',
   },
   {
     field: 'endDate',
-    label:'截止时间',
+    label: '截止时间',
     required: true,
     component: 'DatePicker',
   },
@@ -521,12 +521,12 @@ export const milestoneSchema: FormSchema[] = [
   },
   {
     field: 'target',
-    label:'目标',
+    label: '目标',
     required: true,
     component: 'InputTextArea',
-    componentProps:{
-      rows: 3
-    }
+    componentProps: {
+      rows: 3,
+    },
   },
   {
     field: 'standard',
@@ -534,8 +534,8 @@ export const milestoneSchema: FormSchema[] = [
     required: true,
     component: 'InputTextArea',
     componentProps: {
-      rows: 3
-    }
+      rows: 3,
+    },
   },
   {
     field: 'finishStandard',
@@ -543,7 +543,7 @@ export const milestoneSchema: FormSchema[] = [
     required: true,
     component: 'InputTextArea',
     componentProps: {
-      rows: 3
-    }
-  }
+      rows: 3,
+    },
+  },
 ];

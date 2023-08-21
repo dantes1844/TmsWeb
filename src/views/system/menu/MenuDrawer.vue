@@ -17,7 +17,6 @@
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
 
   import { getApiList, createMenu, updateMenu } from '/@/api/menu/menu';
-  import {createAccount, updateAccount} from "@/api/account/account";
 
   export default defineComponent({
     name: 'MenuDrawer',

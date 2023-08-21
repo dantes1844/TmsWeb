@@ -1,8 +1,7 @@
-import {BasicColumn, FormSchema} from '/@/components/Table';
-import {formatToDateTime} from '@/utils/dateUtil';
+import { BasicColumn, FormSchema } from '/@/components/Table';
+import { formatToDateTime } from '@/utils/dateUtil';
 import { JobStatus, getStatusName } from '@/api/job/model/jobModel';
-import {getUserList} from '@/api/user/user';
-
+import { getUserList } from '@/api/user/user';
 
 export const columns: BasicColumn[] = [
   {
@@ -32,9 +31,9 @@ export const columns: BasicColumn[] = [
     title: '发布时间',
     dataIndex: 'creationTime',
     width: 200,
-    customRender:({record})=>{
+    customRender: ({ record }) => {
       return formatToDateTime(record.creationTime);
-    }
+    },
   },
 ];
 
@@ -44,7 +43,7 @@ export const options = [
   { label: getStatusName(JobStatus.InProgress), value: JobStatus.InProgress },
   { label: getStatusName(JobStatus.FinalCheck), value: JobStatus.FinalCheck },
   { label: getStatusName(JobStatus.Done), value: JobStatus.Done },
-]
+];
 
 export const searchFormSchema: FormSchema[] = [
   {
@@ -58,7 +57,7 @@ export const searchFormSchema: FormSchema[] = [
     label: '任务状态',
     component: 'Select',
     componentProps: {
-      options: options
+      options: options,
     },
     colProps: { span: 8 },
   },
@@ -84,7 +83,7 @@ export const editFormSchema: FormSchema[] = [
     component: 'Select',
     defaultValue: false,
     componentProps: {
-      options: options
+      options: options,
     },
   },
   {
@@ -118,7 +117,7 @@ export const editFormSchema: FormSchema[] = [
     label: '任务简介',
     component: 'InputTextArea',
     componentProps: {
-      rows: 20
+      rows: 20,
     },
   },
 ];

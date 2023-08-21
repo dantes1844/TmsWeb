@@ -1,4 +1,4 @@
-export type OvertimeDetail ={
+export type OvertimeDetail = {
   id: number;
   date: string;
   content: string;
@@ -8,27 +8,27 @@ export type OvertimeDetail ={
   supervisorId: string;
   supervisorName: string;
   isVerified: boolean;
-}
+};
 
-export type CreateOvertime ={
+export type CreateOvertime = {
   date: string;
   content: string;
   hours: number;
   userId: string;
   supervisorId: string;
-}
+};
 
-export type UpdateOvertime ={
+export type UpdateOvertime = {
   id: number;
   date: string;
   content: string;
   hours: number;
   userId: string;
   supervisorId: string;
-}
+};
 
 export type OvertimeParams = {
   isVerified?: boolean;
   userName: string;
   date: string;
-}
+};

@@ -23,11 +23,8 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
-
 import { BasicTable, useTable, TableAction } from '/@/components/Table';
-
 import { useDrawer } from '/@/components/Drawer';
-
 import { columns, searchFormSchema } from '../log.data';
 import { getErrorLogs } from '@/api/log/log';
 
@@ -35,7 +32,7 @@ export default defineComponent({
   name: 'SystemLog',
   components: { BasicTable, TableAction },
   setup() {
-    const [registerDrawer, { openDrawer }] = useDrawer();
+    const [registerDrawer] = useDrawer();
     const [registerTable, { reload }] = useTable({
       title: '系统日志',
       api: getErrorLogs,

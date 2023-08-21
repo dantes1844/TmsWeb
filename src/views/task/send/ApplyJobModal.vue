@@ -15,11 +15,10 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { applyFormSchema } from './job.data';
-
   import { cloneDeep } from 'lodash-es';
   import { CreateJobModel } from '@/api/job/model/jobModel';
   import { createSubJob, updateJob } from '@/api/job/job';
-  import { dateUtil } from '@/utils/dateUtil';
+  import { formatToDate } from '@/utils/dateUtil';
 
   export default defineComponent({
     name: 'JobModal',
@@ -59,8 +58,8 @@
           setModalProps({ confirmLoading: true });
 
           const job = Object.assign({}, values);
-          job.startDate = dateUtil(job.startDate).format('YYYY-MM-DD');
-          job.endDate = dateUtil(job.endDate).format('YYYY-MM-DD');
+          job.startDate = formatToDate(job.startDate);
+          job.endDate = formatToDate(job.endDate);
 
           if (job.id) {
             await updateJob(job);

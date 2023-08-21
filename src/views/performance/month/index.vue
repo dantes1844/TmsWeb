@@ -29,7 +29,7 @@
   import PerformanceDrawer from './PerformanceDrawer.vue';
   import { columns, searchFormSchema } from './performance.data';
   import {useModal} from "@/components/Modal";
-  import { UpdateOvertime } from '@/api/overtime/model/overtimeModel';
+  import { UpdateOvertime } from '@/api/overtime/model';
 
   export default defineComponent({
     name: 'NoticeManagement',

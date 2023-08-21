@@ -16,9 +16,8 @@
   import { editFormSchema } from './job.data';
   import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
   import { BasicTree, TreeItem } from '/@/components/Tree';
-
   import { createJob, updateJob } from '/@/api/job/job';
-  import { dateUtil } from '@/utils/dateUtil';
+  import { formatToDate } from '@/utils/dateUtil';
 
   export default defineComponent({
     name: 'JobDrawer',
@@ -36,7 +35,7 @@
       });
 
       const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-        resetFields();
+        await resetFields();
         setDrawerProps({ confirmLoading: false });
         // 需要在setFieldsValue之前先填充treeData，否则Tree组件可能会报key not exist警告
         if (unref(treeData).length === 0) {
@@ -47,13 +46,13 @@
         isUpdate.value = !!data?.isUpdate;
 
         if (unref(isUpdate)) {
-          setFieldsValue({
+          await setFieldsValue({
             ...data.record,
           });
         }
       });
 
-      const getTitle = computed(() => (!unref(isUpdate) ? '发布任务' : '编辑任务'));
+      const getTitle = computed(() => (unref(isUpdate) ? '编辑任务' : '发布任务'));
 
       async function handleSubmit() {
         try {
@@ -61,8 +60,8 @@
           setDrawerProps({ confirmLoading: true });
 
           const job = Object.assign({}, values);
-          job.startDate = dateUtil(job.startDate).format('YYYY-MM-DD')
-          job.endDate = dateUtil(job.endDate).format('YYYY-MM-DD')
+          job.startDate = formatToDate(job.startDate)
+          job.endDate = formatToDate(job.endDate)
           if (!job.id || job.id === 0) {
             await createJob(job);
           } else {

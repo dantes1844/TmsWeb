@@ -63,7 +63,6 @@ import CreateJobModal from './CreateJobModal.vue';
 import ApplyJobModal from './ApplyJobModal.vue';
 import EditJobModal from './EditJobModal.vue';
 import CreateComplexJobModal from './CreateComplexJobModal.vue';
-
 import { columns, searchFormSchema } from './job.data';
 import { deleteJob, getJobPages } from '/@/api/job/job';
 import { CreateJobModel, JobDetail } from '/@/api/job/model/jobModel';

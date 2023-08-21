@@ -8,11 +8,10 @@
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { overtimeSchema } from './overtime.data'
-
   import { cloneDeep } from 'lodash-es';
   import { CreateJobModel } from '@/api/job/model/jobModel';
   import { createOvertime, updateOvertime } from '@/api/overtime';
-  import { dateUtil } from '@/utils/dateUtil';
+  import { formatToDate } from "@/utils/dateUtil";
 
   export default defineComponent({
     name: 'JobModal',
@@ -22,7 +21,7 @@
       const isUpdate = ref(true);
       const rowId = ref('');
 
-      const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
+      const [registerForm, { setFieldsValue, resetFields, validate }] = useForm({
         labelWidth: 100,
         baseColProps: { span: 24 },
         schemas: overtimeSchema,
@@ -33,7 +32,7 @@
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-        resetFields();
+        await resetFields();
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
 
@@ -43,7 +42,7 @@
         subJob['id'] = 0
 
         if (unref(isUpdate)) {
-          setFieldsValue({
+          await setFieldsValue({
             ...data.record,
           });
         }
@@ -58,7 +57,7 @@
           setModalProps({ confirmLoading: true });
 
           const job = Object.assign({}, values);
-          job.date = dateUtil(job.date).format('YYYY-MM-DD')
+          job.date = formatToDate(job.date)
 
           debugger
           if (job.id) {

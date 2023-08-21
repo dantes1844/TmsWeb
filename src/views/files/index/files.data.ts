@@ -1,7 +1,7 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
 import { h } from 'vue';
-import { Button, Tag } from "ant-design-vue";
-import { getAllFileTypeList } from "@/api/file/filetype/filetype";
+import { Button, Tag } from 'ant-design-vue';
+import { getAllFileTypeList } from '@/api/file/filetype/filetype';
 import { uploadApi } from '@/api/sys/upload';
 import { downloadByUrlData } from '@/utils/file/download';
 
@@ -53,14 +53,16 @@ export const columns: BasicColumn[] = [
     dataIndex: 'filePath',
     width: 100,
     customRender: ({ record }) => {
-      return h(Button,
+      return h(
+        Button,
         {
           type: 'link',
-          onClick(){
-            downloadByUrlData(record.url, record.fileName, record.mimeType)
+          onClick() {
+            downloadByUrlData(record.url, record.fileName, record.mimeType);
           },
         },
-        () => "下载");
+        () => '下载',
+      );
     },
   },
 ];
@@ -105,13 +107,13 @@ export const formSchema: FormSchema[] = [
     label: '文件分类',
     required: true,
     component: 'ApiSelect',
-    componentProps:{
+    componentProps: {
       api: getAllFileTypeList,
       // use name as label
       labelField: 'typeName',
       // use id as value
       valueField: 'id',
-    }
+    },
   },
   {
     field: 'fileName',
@@ -124,9 +126,9 @@ export const formSchema: FormSchema[] = [
     label: '标签',
     component: 'Input',
     colProps: { span: 24 },
-    componentProps:{
-      placeholder:'支持多个标签，用逗号分隔'
-    }
+    componentProps: {
+      placeholder: '支持多个标签，用逗号分隔',
+    },
   },
   {
     field: 'content',
@@ -134,9 +136,9 @@ export const formSchema: FormSchema[] = [
     required: true,
     component: 'InputTextArea',
     colProps: { span: 24 },
-    componentProps:{
-      rows: 5
-    }
+    componentProps: {
+      rows: 5,
+    },
   },
   {
     field: 'file',
@@ -146,5 +148,5 @@ export const formSchema: FormSchema[] = [
     componentProps: {
       api: uploadApi,
     },
-  }
+  },
 ];

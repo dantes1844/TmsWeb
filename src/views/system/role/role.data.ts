@@ -25,11 +25,10 @@ export const columns: BasicColumn[] = [
         loading: record.pendingStatus,
         onChange(checked: boolean) {
           record.pendingStatus = true;
-          const newStatus = checked ? true : false;
           const { createMessage } = useMessage();
-          setRoleStatus(record.id, newStatus)
+          setRoleStatus(record.id, checked)
             .then(() => {
-              record.isDefault = newStatus;
+              record.isDefault = checked;
               createMessage.success(`已成功修改角色状态`);
             })
             .catch(() => {
@@ -95,6 +94,6 @@ export const formSchema: FormSchema[] = [
     field: 'permissions',
     label: '权限',
     slot: 'menu',
-    component: 'ApiTreeSelect'
+    component: 'ApiTreeSelect',
   },
 ];

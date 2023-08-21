@@ -1,8 +1,5 @@
-// import { isAccountExist } from '/@/api/demo/system';
-import { BasicColumn } from '/@/components/Table';
-import { FormSchema } from '/@/components/Table';
+import { BasicColumn, FormSchema } from '/@/components/Table';
 import { getAllRoleList } from '/@/api/role/role';
-import {formatToDateTime} from "@/utils/dateUtil";
 
 export const columns: BasicColumn[] = [
   {

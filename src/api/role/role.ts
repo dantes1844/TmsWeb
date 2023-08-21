@@ -21,19 +21,19 @@ export type RoleParams = {
 
 export type RolePermissionParams = {
   roleName: string;
-}
+};
 
 export type PermissionModel = {
   id: string;
   label: string;
   level: number;
-  children: RolePermissionModel[]
-}
+  children: RolePermissionModel[];
+};
 
 export type RolePermissionModel = {
   checkedItems: string[];
   tree: PermissionModel[];
-}
+};
 
 export type RolePageParams = BasicPageParams & RoleParams;
 
@@ -57,7 +57,7 @@ export const getAllRoleList = (params?: RoleParams) =>
   );
 
 export const getAllPermissions = (params?: RolePermissionParams) =>
-  defHttp.get<RolePermissionModel[]>(
+  defHttp.get<RolePermissionModel>(
     { url: Api.GetAllPermissions, params },
     { isTransformResponse: false },
   );

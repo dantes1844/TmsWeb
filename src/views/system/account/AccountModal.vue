@@ -30,20 +30,20 @@
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-        resetFields();
+        await resetFields();
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
 
-        var refIsUpdate = unref(isUpdate);
+        const refIsUpdate = unref(isUpdate);
         if (refIsUpdate) {
           rowId.value = data.record.id;
-          setFieldsValue({
+          await setFieldsValue({
             ...data.record,
           });
         }
 
         const treeData = await getDeptList();
-        updateSchema([
+        await updateSchema([
           {
             field: 'password',
             show: !refIsUpdate,

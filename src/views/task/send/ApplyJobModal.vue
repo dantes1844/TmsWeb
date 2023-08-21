@@ -1,17 +1,24 @@
 <template>
-  <BasicModal v-bind="$attrs" @register="registerModal" :title="getTitle" @ok="handleSubmit" :maskClosable="false" width="700px">
+  <BasicModal
+    v-bind="$attrs"
+    @register="registerModal"
+    :title="getTitle"
+    @ok="handleSubmit"
+    :maskClosable="false"
+    width="700px"
+  >
     <BasicForm @register="registerForm" />
   </BasicModal>
 </template>
 <script lang="ts">
-  import { defineComponent, ref, computed, unref } from 'vue';
+  import { defineComponent, ref, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
   import { applyFormSchema } from './job.data';
 
   import { cloneDeep } from 'lodash-es';
   import { CreateJobModel } from '@/api/job/model/jobModel';
-  import { createJob, createSubJob, updateJob } from '@/api/job/job';
+  import { createSubJob, updateJob } from '@/api/job/job';
   import { dateUtil } from '@/utils/dateUtil';
 
   export default defineComponent({
@@ -22,7 +29,7 @@
       const isUpdate = ref(true);
       const rowId = ref('');
 
-      const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
+      const [registerForm, { resetFields, validate }] = useForm({
         labelWidth: 100,
         baseColProps: { span: 12 },
         schemas: applyFormSchema,
@@ -33,14 +40,14 @@
       });
 
       const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-        resetFields();
+        await resetFields();
         setModalProps({ confirmLoading: false });
         isUpdate.value = !!data?.isUpdate;
 
         rowId.value = data.record.id;
-        const subJob: CreateJobModel = cloneDeep(data.record)
+        const subJob: CreateJobModel = cloneDeep(data.record);
         subJob.parentId = data.record.id;
-        subJob['id'] = 0
+        subJob['id'] = 0;
       });
 
       const getTitle = '任务申请';
@@ -52,8 +59,8 @@
           setModalProps({ confirmLoading: true });
 
           const job = Object.assign({}, values);
-          job.startDate = dateUtil(job.startDate).format('YYYY-MM-DD')
-          job.endDate = dateUtil(job.endDate).format('YYYY-MM-DD')
+          job.startDate = dateUtil(job.startDate).format('YYYY-MM-DD');
+          job.endDate = dateUtil(job.endDate).format('YYYY-MM-DD');
 
           if (job.id) {
             await updateJob(job);
